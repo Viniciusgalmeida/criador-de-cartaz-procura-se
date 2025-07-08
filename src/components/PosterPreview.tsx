@@ -29,6 +29,66 @@ export const PosterPreview = ({ petData }: PosterPreviewProps) => {
     }
   };
 
+  const renderPhotos = () => {
+    const photos = petData.photos;
+    
+    if (photos.length === 0) return null;
+    
+    if (photos.length === 1) {
+      // Uma foto: grande e centralizada
+      return (
+        <div className="flex justify-center mb-6">
+          <img
+            src={photos[0]}
+            alt="Pet"
+            className="w-80 h-80 object-cover rounded-lg border-2 border-gray-300"
+          />
+        </div>
+      );
+    }
+    
+    if (photos.length === 2) {
+      // Duas fotos: lado a lado centralizadas
+      return (
+        <div className="flex justify-center gap-4 mb-6">
+          {photos.slice(0, 2).map((photo, index) => (
+            <img
+              key={index}
+              src={photo}
+              alt={`Pet ${index + 1}`}
+              className="w-48 h-48 object-cover rounded-lg border-2 border-gray-300"
+            />
+          ))}
+        </div>
+      );
+    }
+    
+    if (photos.length >= 3) {
+      // Três fotos: primeira à esquerda grande, duas à direita menores empilhadas
+      return (
+        <div className="flex justify-center gap-4 mb-6">
+          <img
+            src={photos[0]}
+            alt="Pet 1"
+            className="w-64 h-80 object-cover rounded-lg border-2 border-gray-300"
+          />
+          <div className="flex flex-col gap-4">
+            <img
+              src={photos[1]}
+              alt="Pet 2"
+              className="w-48 h-38 object-cover rounded-lg border-2 border-gray-300"
+            />
+            <img
+              src={photos[2]}
+              alt="Pet 3"
+              className="w-48 h-38 object-cover rounded-lg border-2 border-gray-300"
+            />
+          </div>
+        </div>
+      );
+    }
+  };
+
   return (
     <Card className="shadow-lg border-0 bg-white/70 backdrop-blur-sm">
       <CardHeader>
@@ -63,18 +123,7 @@ export const PosterPreview = ({ petData }: PosterPreviewProps) => {
             </div>
 
             {/* Photos */}
-            {petData.photos.length > 0 && (
-              <div className="grid grid-cols-3 gap-2 mb-6">
-                {petData.photos.slice(0, 3).map((photo, index) => (
-                  <img
-                    key={index}
-                    src={photo}
-                    alt={`Pet ${index + 1}`}
-                    className="w-full aspect-square object-cover rounded-lg border-2 border-gray-300"
-                  />
-                ))}
-              </div>
-            )}
+            {renderPhotos()}
 
             {/* Pet Info */}
             <div className="flex-1 space-y-3 text-gray-800">
