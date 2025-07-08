@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Download, MessageCircle } from 'lucide-react';
 import { PetData } from '@/pages/Index';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PosterPreviewProps {
   petData: PetData;
@@ -12,6 +13,7 @@ export const PosterPreview = ({
   petData
 }: PosterPreviewProps) => {
   const posterRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useLanguage();
 
   const downloadPoster = () => {
     if (posterRef.current) {
@@ -22,20 +24,22 @@ export const PosterPreview = ({
   };
 
   const shareWhatsApp = () => {
-    const message = `🚨 PROCURA-SE: ${petData.petName || 'Pet perdido'} 🚨
+    const details = [
+      petData.petName ? `${language === 'pt' ? 'Nome' : 'Name'}: ${petData.petName}` : '',
+      petData.lastSeenAddress ? `📍 ${t('poster.lost_at')} ${petData.lastSeenAddress}` : '',
+      petData.lostTime ? `🕐 ${t('poster.lost_time')} ${petData.lostTime}` : '',
+      petData.petDescription ? `📝 ${t('poster.description')} ${petData.petDescription}` : '',
+      petData.accessories ? `🎯 ${t('poster.accessories')} ${petData.accessories}` : '',
+      petData.reward ? `🎁 ${t('poster.reward')} ${petData.reward}` : '',
+      '',
+      t('poster.contact'),
+      petData.ownerName ? `👤 ${petData.ownerName}` : '',
+      petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''
+    ].filter(Boolean).join('\n');
 
-${petData.petName ? `Nome: ${petData.petName}` : ''}
-${petData.lastSeenAddress ? `📍 Perdido em: ${petData.lastSeenAddress}` : ''}
-${petData.lostTime ? `🕐 Horário: ${petData.lostTime}` : ''}
-${petData.petDescription ? `📝 Descrição: ${petData.petDescription}` : ''}
-${petData.accessories ? `🎯 Acessórios: ${petData.accessories}` : ''}
-${petData.reward ? `🎁 Recompensa: ${petData.reward}` : ''}
-
-SE ENCONTRAR, ENTRE EM CONTATO:
-${petData.ownerName ? `👤 ${petData.ownerName}` : ''}
-${petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''}
-
-🙏 Ajudem a compartilhar para encontrarmos nosso amigo!`;
+    const message = t('whatsapp.message')
+      .replace('{name}', petData.petName || (language === 'pt' ? 'Pet perdido' : 'Lost pet'))
+      .replace('{details}', details);
 
     const whatsAppUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsAppUrl, '_blank');
@@ -104,16 +108,16 @@ ${petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''}
     <Card className="shadow-lg border-0 bg-white/70 backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="text-2xl text-gray-800 flex items-center gap-2 text-left">
-          Visualização do Cartaz
+          {t('poster.preview')}
         </CardTitle>
         <div className="flex gap-2">
           <Button onClick={downloadPoster} variant="outline" size="sm">
             <Download className="mr-2" size={16} />
-            Baixar
+            {t('poster.download')}
           </Button>
           <Button onClick={shareWhatsApp} variant="outline" size="sm">
             <MessageCircle className="mr-2" size={16} />
-            Compartilhar no WhatsApp
+            {t('poster.share')}
           </Button>
         </div>
       </CardHeader>
@@ -131,7 +135,7 @@ ${petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''}
             {/* Header */}
             <div className="text-center mb-6">
               <h1 className="text-4xl md:text-6xl font-black text-red-600 mb-2 tracking-wider">
-                PROCURA-SE
+                {t('poster.title')}
               </h1>
               <div className="h-1 bg-red-600 w-full mb-4"></div>
             </div>
@@ -151,28 +155,28 @@ ${petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''}
 
               {petData.lastSeenAddress && (
                 <div>
-                  <span className="font-bold text-red-600">📍 PERDIDO EM: </span>
+                  <span className="font-bold text-red-600">📍 {t('poster.lost_at')} </span>
                   <span className="text-lg">{petData.lastSeenAddress}</span>
                 </div>
               )}
 
               {petData.lostTime && (
                 <div>
-                  <span className="font-bold text-red-600">🕐 HORÁRIO QUE SE PERDEU: </span>
+                  <span className="font-bold text-red-600">🕐 {t('poster.lost_time')} </span>
                   <span>{petData.lostTime}</span>
                 </div>
               )}
 
               {petData.petDescription && (
                 <div>
-                  <span className="font-bold text-red-600">📝 DESCRIÇÃO DO PET: </span>
+                  <span className="font-bold text-red-600">📝 {t('poster.description')} </span>
                   <span>{petData.petDescription}</span>
                 </div>
               )}
 
               {petData.accessories && (
                 <div>
-                  <span className="font-bold text-red-600">🎯 ACESSÓRIOS: </span>
+                  <span className="font-bold text-red-600">🎯 {t('poster.accessories')} </span>
                   <span>{petData.accessories}</span>
                 </div>
               )}
@@ -190,7 +194,7 @@ ${petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''}
 
               {petData.reward && (
                 <div className="bg-yellow-100 p-3 rounded-lg border-2 border-yellow-400 text-center">
-                  <span className="font-bold text-green-700">🎁 RECOMPENSA: </span>
+                  <span className="font-bold text-green-700">🎁 {t('poster.reward')} </span>
                   <span className="text-lg font-bold text-green-700">{petData.reward}</span>
                 </div>
               )}
@@ -200,7 +204,7 @@ ${petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''}
             <div className="mt-6 pt-4 border-t-2 border-red-600 bg-red-50 p-4 rounded-lg">
               <div className="text-center">
                 <p className="text-lg font-bold text-red-700 mb-2">
-                  SE ENCONTRAR, ENTRE EM CONTATO:
+                  {t('poster.contact')}
                 </p>
                 {petData.ownerName && (
                   <p className="text-xl font-bold text-gray-800">{petData.ownerName}</p>
@@ -214,7 +218,7 @@ ${petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''}
             {/* Footer */}
             <div className="text-center mt-4">
               <p className="text-sm text-gray-600 italic">
-                🙏 Por favor, compartilhe para ajudar a encontrar nosso amigo!
+                {t('poster.share_message')}
               </p>
             </div>
           </div>

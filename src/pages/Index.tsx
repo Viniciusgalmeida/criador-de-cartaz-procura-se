@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { WelcomePopup } from '@/components/WelcomePopup';
 import { PosterEditor } from '@/components/PosterEditor';
 import { PosterPreview } from '@/components/PosterPreview';
+import { LanguageSelector } from '@/components/LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface PetData {
   photos: string[];
@@ -19,6 +21,7 @@ export interface PetData {
 
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
+  const { t } = useLanguage();
   const [petData, setPetData] = useState<PetData>({
     photos: [],
     lastSeenAddress: '',
@@ -37,13 +40,16 @@ const Index = () => {
       {showWelcome && <WelcomePopup onClose={() => setShowWelcome(false)} />}
       
       <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-8">
+        <header className="text-center mb-8 relative">
+          <div className="absolute top-0 right-0">
+            <LanguageSelector />
+          </div>
+          
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            🐾 Encontre Meu Amigo
+            {t('app.title')}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Crie um cartaz de procura-se para o seu pet perdido. 
-            Vamos ajudar você a espalhar a notícia e encontrar seu melhor amigo.
+            {t('app.subtitle')}
           </p>
         </header>
 
