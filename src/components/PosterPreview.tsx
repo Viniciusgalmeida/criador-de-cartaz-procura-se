@@ -50,10 +50,10 @@ export const PosterPreview = ({ petData }: PosterPreviewProps) => {
         <div 
           ref={posterRef}
           className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden shadow-lg"
-          style={{ width: '100%', aspectRatio: '1080/1350' }}
+          style={{ width: '100%', maxWidth: '1080px' }}
         >
           {/* Poster Content */}
-          <div className="h-full flex flex-col p-6 relative">
+          <div className="flex flex-col p-6 relative min-h-fit">
             {/* Header */}
             <div className="text-center mb-6">
               <h1 className="text-4xl md:text-6xl font-black text-red-600 mb-2 tracking-wider">
