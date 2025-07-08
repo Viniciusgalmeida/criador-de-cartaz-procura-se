@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export type Language = 'pt' | 'en';
@@ -42,7 +41,7 @@ const translations = {
     'poster.preview': 'Pré-visualização do Cartaz',
     'poster.download': 'Baixar',
     'poster.share': 'Compartilhar',
-    'poster.title': 'PET PERDIDO',
+    'poster.title': 'PROCURA-SE',
     'poster.lost_at': 'Perdido em:',
     'poster.lost_time': 'Quando:',
     'poster.description': 'Descrição:',
