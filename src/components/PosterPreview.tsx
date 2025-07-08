@@ -41,7 +41,7 @@ export const PosterPreview = ({
         </div>;
     }
     if (photos.length >= 3) {
-      // Três fotos: primeira à esquerda grande, duas à direita menores empilhadas
+      // Três fotos: primeira à esquerda com altura total, duas à direita menores empilhadas
       return <div className="flex justify-center gap-4 mb-6">
           <img src={photos[0]} alt="Pet 1" className="w-64 h-80 object-cover rounded-lg border-2 border-gray-300" />
           <div className="flex flex-col gap-4">
