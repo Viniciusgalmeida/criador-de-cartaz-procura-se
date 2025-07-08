@@ -97,7 +97,7 @@ export const PosterPreview = ({
                 </div>}
 
               {petData.lostTime && <div>
-                  <span className="font-bold text-red-600">🕐 HORÁRIO: </span>
+                  <span className="font-bold text-red-600">🕐 HORÁRIO QUE SE PERDEU: </span>
                   <span>{petData.lostTime}</span>
                 </div>}
 
