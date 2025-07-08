@@ -35,9 +35,9 @@ export const PosterPreview = ({
         </div>;
     }
     if (photos.length === 2) {
-      // Duas fotos: lado a lado centralizadas
+      // Duas fotos: lado a lado centralizadas e maiores
       return <div className="flex justify-center gap-4 mb-6">
-          {photos.slice(0, 2).map((photo, index) => <img key={index} src={photo} alt={`Pet ${index + 1}`} className="w-48 h-48 object-cover rounded-lg border-2 border-gray-300" />)}
+          {photos.slice(0, 2).map((photo, index) => <img key={index} src={photo} alt={`Pet ${index + 1}`} className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300" />)}
         </div>;
     }
     if (photos.length >= 3) {
