@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -23,8 +22,19 @@ export const PosterEditor = ({ petData, setPetData }: PosterEditorProps) => {
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const newPhotos = Array.from(files).map(file => URL.createObjectURL(file));
-      setPetData({ ...petData, photos: [...petData.photos, ...newPhotos] });
+      const availableSlots = 3 - petData.photos.length;
+      const filesToAdd = Math.min(files.length, availableSlots);
+      
+      if (filesToAdd > 0) {
+        const newPhotos = Array.from(files)
+          .slice(0, filesToAdd)
+          .map(file => URL.createObjectURL(file));
+        setPetData({ ...petData, photos: [...petData.photos, ...newPhotos] });
+      }
+    }
+    // Reset the input value so the same file can be selected again if needed
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -62,7 +72,7 @@ export const PosterEditor = ({ petData, setPetData }: PosterEditorProps) => {
         {/* Fotos do Pet */}
         <div>
           <Label className="text-lg font-semibold text-gray-700 mb-3 block">
-            Fotos do Pet *
+            Fotos do Pet * (máximo 3)
           </Label>
           <div className="grid grid-cols-3 gap-4 mb-4">
             {petData.photos.map((photo, index) => (
@@ -85,9 +95,13 @@ export const PosterEditor = ({ petData, setPetData }: PosterEditorProps) => {
             onClick={() => fileInputRef.current?.click()}
             variant="outline"
             className="w-full border-dashed border-2 border-purple-300 text-purple-600 hover:bg-purple-50"
+            disabled={petData.photos.length >= 3}
           >
             <Upload className="mr-2" size={20} />
-            Adicionar Fotos (Frente, Lado, Costas)
+            {petData.photos.length >= 3 
+              ? "Máximo de 3 fotos atingido" 
+              : `Adicionar Fotos (${petData.photos.length}/3)`
+            }
           </Button>
           <input
             ref={fileInputRef}
@@ -127,17 +141,31 @@ export const PosterEditor = ({ petData, setPetData }: PosterEditorProps) => {
           </div>
         </div>
 
-        <div>
-          <Label htmlFor="lastSeenAddress" className="text-sm font-medium text-gray-700">
-            Endereço onde foi visto pela última vez *
-          </Label>
-          <Input
-            id="lastSeenAddress"
-            value={petData.lastSeenAddress}
-            onChange={(e) => handleInputChange('lastSeenAddress', e.target.value)}
-            className="mt-1 border-purple-200 focus:border-purple-400"
-            placeholder="Rua, bairro, cidade onde o pet se perdeu"
-          />
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="petName" className="text-sm font-medium text-gray-700">
+              Nome do Pet *
+            </Label>
+            <Input
+              id="petName"
+              value={petData.petName}
+              onChange={(e) => handleInputChange('petName', e.target.value)}
+              className="mt-1 border-purple-200 focus:border-purple-400"
+              placeholder="Nome do seu pet"
+            />
+          </div>
+          <div>
+            <Label htmlFor="lastSeenAddress" className="text-sm font-medium text-gray-700">
+              Endereço onde foi visto pela última vez *
+            </Label>
+            <Input
+              id="lastSeenAddress"
+              value={petData.lastSeenAddress}
+              onChange={(e) => handleInputChange('lastSeenAddress', e.target.value)}
+              className="mt-1 border-purple-200 focus:border-purple-400"
+              placeholder="Rua, bairro, cidade onde o pet se perdeu"
+            />
+          </div>
         </div>
 
         {/* Informações Opcionais */}
@@ -146,31 +174,17 @@ export const PosterEditor = ({ petData, setPetData }: PosterEditorProps) => {
             Informações Adicionais (Opcional)
           </h3>
           
-          <div className="grid md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <Label htmlFor="petName" className="text-sm font-medium text-gray-700">
-                Nome do Pet
-              </Label>
-              <Input
-                id="petName"
-                value={petData.petName}
-                onChange={(e) => handleInputChange('petName', e.target.value)}
-                className="mt-1 border-purple-200 focus:border-purple-400"
-                placeholder="Nome do seu pet"
-              />
-            </div>
-            <div>
-              <Label htmlFor="lostTime" className="text-sm font-medium text-gray-700">
-                Horário aproximado que se perdeu
-              </Label>
-              <Input
-                id="lostTime"
-                value={petData.lostTime}
-                onChange={(e) => handleInputChange('lostTime', e.target.value)}
-                className="mt-1 border-purple-200 focus:border-purple-400"
-                placeholder="Ex: Por volta das 14h"
-              />
-            </div>
+          <div className="mb-4">
+            <Label htmlFor="lostTime" className="text-sm font-medium text-gray-700">
+              Horário aproximado que se perdeu
+            </Label>
+            <Input
+              id="lostTime"
+              value={petData.lostTime}
+              onChange={(e) => handleInputChange('lostTime', e.target.value)}
+              className="mt-1 border-purple-200 focus:border-purple-400"
+              placeholder="Ex: Por volta das 14h"
+            />
           </div>
 
           <div className="mb-4">
