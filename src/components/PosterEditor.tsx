@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -130,34 +131,7 @@ export const PosterEditor = ({
           />
         </div>
 
-        {/* Informações Obrigatórias */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="ownerName" className="text-sm font-medium text-gray-700">
-              {t('editor.owner_name')} *
-            </Label>
-            <Input 
-              id="ownerName" 
-              value={petData.ownerName} 
-              onChange={e => handleInputChange('ownerName', e.target.value)} 
-              className="mt-1 border-purple-200 focus:border-purple-400" 
-              placeholder={t('editor.owner_name_placeholder')} 
-            />
-          </div>
-          <div>
-            <Label htmlFor="ownerPhone" className="text-sm font-medium text-gray-700">
-              {t('editor.owner_phone')} *
-            </Label>
-            <Input 
-              id="ownerPhone" 
-              value={petData.ownerPhone} 
-              onChange={e => handleInputChange('ownerPhone', e.target.value)} 
-              className="mt-1 border-purple-200 focus:border-purple-400" 
-              placeholder={t('editor.owner_phone_placeholder')} 
-            />
-          </div>
-        </div>
-
+        {/* Informações Obrigatórias - Nome do Pet e Local primeiro */}
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="petName" className="text-sm font-medium text-gray-700">
@@ -181,6 +155,33 @@ export const PosterEditor = ({
               onChange={e => handleInputChange('lastSeenAddress', e.target.value)} 
               className="mt-1 border-purple-200 focus:border-purple-400" 
               placeholder={t('editor.last_seen_placeholder')} 
+            />
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="ownerName" className="text-sm font-medium text-gray-700">
+              {t('editor.owner_name')} *
+            </Label>
+            <Input 
+              id="ownerName" 
+              value={petData.ownerName} 
+              onChange={e => handleInputChange('ownerName', e.target.value)} 
+              className="mt-1 border-purple-200 focus:border-purple-400" 
+              placeholder={t('editor.owner_name_placeholder')} 
+            />
+          </div>
+          <div>
+            <Label htmlFor="ownerPhone" className="text-sm font-medium text-gray-700">
+              {t('editor.owner_phone')} *
+            </Label>
+            <Input 
+              id="ownerPhone" 
+              value={petData.ownerPhone} 
+              onChange={e => handleInputChange('ownerPhone', e.target.value)} 
+              className="mt-1 border-purple-200 focus:border-purple-400" 
+              placeholder={t('editor.owner_phone_placeholder')} 
             />
           </div>
         </div>
