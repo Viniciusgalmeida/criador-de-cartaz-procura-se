@@ -5,7 +5,7 @@ Antes de iniciar qualquer trabalho, revise este checklist que é **OBRIGATÓRIO*
 ## 🕒 VERIFICAÇÃO DE DATA OBRIGATÓRIA (PRIMEIRO PASSO)
 - [ ] Execute `date` no terminal e anote a data/hora atual
 - [ ] Esta será a referência para TODOS os timestamps durante esta sessão
-- [ ] Formato obrigatório: `YYYY-MM-DD HH:MM:00 UTC`
+- [ ] Formato obrigatório: `YYYY-MM-DD HH:MM:00 UTC-3`
 
 ## 📋 PRÉ-REQUISITOS DO AMBIENTE
 
