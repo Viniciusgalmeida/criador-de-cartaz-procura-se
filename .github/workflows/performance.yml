@@ -1,0 +1,82 @@
+name: Performance & Bundle Analysis
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  bundle-analysis:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Analyze bundle size
+        run: |
+          echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "| File | Size |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+          find dist -name "*.js" -o -name "*.css" | while read file; do
+            size=$(ls -lh "$file" | awk '{print $5}')
+            filename=$(basename "$file")
+            echo "| $filename | $size |" >> $GITHUB_STEP_SUMMARY
+          done
+
+      - name: Check bundle size limits
+        run: |
+          # Check if any individual JS file is larger than 1MB
+          large_files=$(find dist -name "*.js" -size +1M)
+          if [ -n "$large_files" ]; then
+            echo "❌ Warning: Large bundle files detected:"
+            echo "$large_files"
+            echo "Consider code splitting or optimization"
+          else
+            echo "✅ All bundle files are within size limits"
+          fi
+
+  lighthouse:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Serve build
+        run: |
+          npm install -g serve
+          serve -s dist -l 3000 &
+          sleep 5
+        
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: '.github/lighthouse/lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true 
