@@ -251,3 +251,45 @@ const LanguageContextController = ({ children, language }) => {
 - Suporte completo para bilinguismo (PT/EN)
 
 **Próximos passos**: Sub-task 15.2 (Poster Preview Component tests) ou outras sub-tasks conforme priorização. 
+
+---
+
+## 2025-07-09 16:12:00 UTC-3 - Sub-task 15.2: Test Poster Preview Component ✅
+
+**TASK COMPLETED**: Comprehensive test suite for PosterPreview component
+
+### Technical Implementation Details:
+- **Main Test File**: `src/test/components/PosterPreview.test.tsx` (26 tests)
+- **Language Integration**: `src/test/components/PosterPreviewLanguage.test.tsx` (10 tests)
+- **Total Test Coverage**: 36 tests covering all PosterPreview functionality
+
+### Key Features Tested:
+1. **Basic Rendering**: Title, buttons, poster structure validation
+2. **Photo Display System**: 0, 1, 2, 3+ photos with proper layouts and alt tags
+3. **Pet Information**: Name, address, description, accessories, reward rendering
+4. **Contact Information**: Owner name and phone display
+5. **Button Functionality**: Download and WhatsApp share with proper URL generation
+6. **Custom Fields**: Dynamic rendering of user-defined fields
+7. **Language Integration**: PT/EN switching maintaining data integrity
+8. **Dynamic Updates**: Content changes preserving language context
+
+### Technical Challenges Solved:
+- **Translation Alignment**: Fixed test expectations to match exact LanguageContext translations
+- **Type Safety**: Eliminated `any` types, used proper TypeScript mocking patterns
+- **Mock Configuration**: Properly mocked `window.open`, `console.log`, `useRef`
+- **Test Isolation**: Ensured tests don't interfere with each other
+
+### Quality Assurance Results:
+- **ESLint**: ✅ Zero errors (8 acceptable warnings about Fast Refresh)
+- **TypeScript**: ✅ Zero type errors
+- **Build**: ✅ Successful production build
+- **Tests**: ✅ 75/75 tests passing (36 new + 39 existing)
+
+### File Changes:
+- Created: `src/test/components/PosterPreview.test.tsx` 
+- Created: `src/test/components/PosterPreviewLanguage.test.tsx`
+- Used React Testing Library patterns following project standards
+
+**Commit**: `c897cc4` - "test: add comprehensive PosterPreview component tests"
+
+**Next**: Sub-task 15.4 "Test Language Context and Switching" (15.3 was skipped/removed) 
