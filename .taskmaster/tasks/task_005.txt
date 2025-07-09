@@ -1,0 +1,124 @@
+# Task ID: 5
+# Title: Implement Pet Poster Form - Required Fields
+# Status: pending
+# Dependencies: 3, 4
+# Priority: high
+# Description: Create the form component with all required fields (pet name, owner name, contact phone, last seen location) using React Hook Form.
+# Details:
+1. Create a form component using React Hook Form:
+```typescript
+import { useForm } from 'react-hook-form';
+import { useFormData } from '../hooks/useFormData';
+import { useLanguage } from '../hooks/useLanguage';
+
+const PetPosterForm: React.FC = () => {
+  const { t } = useLanguage();
+  const { formData, updateFormData } = useFormData();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: formData
+  });
+  
+  const onSubmit = (data) => {
+    updateFormData(data);
+  };
+  
+  return (
+    <form onChange={handleSubmit(onSubmit)} className="space-y-6">
+      <div>
+        <label htmlFor="petName" className="block text-sm font-medium text-gray-700">
+          {t('form.petName')} *
+        </label>
+        <input
+          id="petName"
+          type="text"
+          {...register('petName', { required: true })}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+        {errors.petName && <p className="text-red-500 text-xs mt-1">{t('form.required')}</p>}
+      </div>
+      
+      {/* Similar implementation for ownerName, contactPhone, and lastSeenLocation */}
+      
+      {/* Submit button if needed */}
+    </form>
+  );
+};
+```
+2. Implement real-time validation with visual feedback
+3. Ensure all required fields have proper labels and error states
+4. Make the form accessible with proper ARIA attributes and keyboard navigation
+5. Connect the form to the FormContext to ensure data is saved to localStorage
+
+# Test Strategy:
+Test form validation by submitting with empty required fields and verifying error messages. Test that valid input is correctly saved to the form context. Test keyboard accessibility to ensure the form can be navigated and submitted without a mouse.
+
+# Subtasks:
+## 1. Implement Pet Name and Description Fields [pending]
+### Dependencies: None
+### Description: Create and implement the pet name and description form fields with validation and accessibility features.
+### Details:
+1. Create controlled input components for pet name and description.
+2. Implement real-time validation for pet name (required, max length).
+3. Add character counter for description field.
+4. Implement error handling and display error messages.
+5. Ensure proper labeling and ARIA attributes for accessibility.
+6. Add focus management for error states.
+7. Implement keyboard navigation support.
+8. Test with screen readers and assistive technologies.
+
+## 2. Develop Pet Type and Breed Selection [pending]
+### Dependencies: 5.1
+### Description: Create dropdown or radio button components for pet type and breed selection with dynamic options.
+### Details:
+1. Implement a dropdown or radio button group for pet type selection.
+2. Create a dynamic breed selection component based on the chosen pet type.
+3. Fetch breed data from an API or use a predefined list.
+4. Implement error handling for API requests (if applicable).
+5. Add proper ARIA labels and roles for accessibility.
+6. Ensure keyboard navigation works correctly.
+7. Implement form validation for required selections.
+8. Test with various input methods and assistive technologies.
+
+## 3. Create Image Upload Functionality [pending]
+### Dependencies: 5.1
+### Description: Implement image upload feature with preview, validation, and accessibility considerations.
+### Details:
+1. Create a file input component for image upload.
+2. Implement client-side image validation (file type, size, dimensions).
+3. Add drag-and-drop functionality for image upload.
+4. Create an image preview component.
+5. Implement error handling for invalid uploads.
+6. Add progress indicator for upload process.
+7. Ensure proper ARIA labels and instructions for screen readers.
+8. Implement keyboard accessibility for upload and preview functions.
+9. Test with various input methods and assistive technologies.
+
+## 4. Implement Contact Information Fields [pending]
+### Dependencies: 5.1
+### Description: Create and validate contact information fields including name, phone, and email.
+### Details:
+1. Create controlled input components for name, phone, and email.
+2. Implement real-time validation for each field (required, format checking).
+3. Add masking for phone number input.
+4. Implement error handling and display error messages.
+5. Ensure proper labeling and ARIA attributes for accessibility.
+6. Add focus management for error states.
+7. Implement keyboard navigation support.
+8. Test with screen readers and assistive technologies.
+9. Consider adding autocomplete attributes for better user experience.
+
+## 5. Develop Form Submission and Error Handling [pending]
+### Dependencies: 5.1, 5.2, 5.3, 5.4
+### Description: Implement form submission logic, overall validation, and comprehensive error handling.
+### Details:
+1. Create a submit handler function to process form data.
+2. Implement overall form validation before submission.
+3. Display a summary of errors if form is incomplete.
+4. Add a loading state during form submission.
+5. Implement error handling for API submission failures.
+6. Create success and error messages with proper ARIA live regions.
+7. Implement focus management after form submission (success/error).
+8. Add confirmation modal before final submission.
+9. Ensure all interactive elements are reachable via keyboard.
+10. Test the entire form flow with various assistive technologies.
+

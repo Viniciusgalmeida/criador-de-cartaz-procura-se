@@ -1,0 +1,166 @@
+# Task ID: 9
+# Title: Create Poster Preview Component
+# Status: pending
+# Dependencies: 3, 4
+# Priority: high
+# Description: Implement the real-time preview component that displays the poster with all the information entered in the form.
+# Details:
+1. Create a poster preview component:
+```typescript
+const PosterPreview: React.FC = () => {
+  const { formData } = useFormData();
+  const { t, language } = useLanguage();
+  
+  // Determine the photo layout based on number of photos
+  const renderPhotos = () => {
+    if (formData.photos.length === 0) {
+      return <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-400">{t('preview.noPhotos')}</div>;
+    }
+    
+    if (formData.photos.length === 1) {
+      return (
+        <div className="h-64 overflow-hidden">
+          <img src={formData.photos[0]} alt="" className="w-full h-full object-cover" />
+        </div>
+      );
+    }
+    
+    if (formData.photos.length === 2) {
+      return (
+        <div className="grid grid-cols-2 gap-2 h-64">
+          {formData.photos.map((photo, index) => (
+            <img key={index} src={photo} alt="" className="w-full h-full object-cover" />
+          ))}
+        </div>
+      );
+    }
+    
+    // 3 photos: one large + two smaller
+    return (
+      <div className="grid grid-cols-2 gap-2 h-64">
+        <img src={formData.photos[0]} alt="" className="w-full h-full object-cover row-span-2" />
+        <img src={formData.photos[1]} alt="" className="w-full h-full object-cover" />
+        <img src={formData.photos[2]} alt="" className="w-full h-full object-cover" />
+      </div>
+    );
+  };
+  
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+      {/* Poster Header */}
+      <div className="bg-red-600 text-white text-center py-4">
+        <h1 className="text-3xl font-bold">{t('poster.title')}</h1>
+      </div>
+      
+      {/* Pet Photos */}
+      {renderPhotos()}
+      
+      {/* Pet Information */}
+      <div className="p-4 space-y-4">
+        <h2 className="text-2xl font-bold text-center">{formData.petName || t('preview.petNamePlaceholder')}</h2>
+        
+        {/* Last Seen Info */}
+        <div className="bg-gray-100 p-3 rounded">
+          <p className="font-medium">{t('poster.lastSeen')}:</p>
+          <p>{formData.lastSeenLocation || t('preview.locationPlaceholder')}</p>
+          {formData.lastSeenDateTime && (
+            <p className="text-sm text-gray-600">
+              {new Date(formData.lastSeenDateTime).toLocaleString(language === 'pt' ? 'pt-BR' : 'en-US')}
+            </p>
+          )}
+        </div>
+        
+        {/* Pet Description */}
+        {formData.petDescription && (
+          <div>
+            <p className="font-medium">{t('poster.description')}:</p>
+            <p>{formData.petDescription}</p>
+          </div>
+        )}
+        
+        {/* Accessories */}
+        {formData.accessories && (
+          <div>
+            <p className="font-medium">{t('poster.accessories')}:</p>
+            <p>{formData.accessories}</p>
+          </div>
+        )}
+        
+        {/* Custom Fields */}
+        {formData.customFields.length > 0 && (
+          <div className="space-y-1">
+            {formData.customFields.map((field, index) => (
+              <div key={index}>
+                <span className="font-medium">{field.label}: </span>
+                <span>{field.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        
+        {/* Reward */}
+        {formData.reward?.amount > 0 && (
+          <div className="bg-yellow-100 p-3 rounded text-center">
+            <p className="font-medium">{t('poster.reward')}:</p>
+            <p className="text-xl font-bold">
+              {formData.reward.currency === 'BRL' ? 'R$' : '$'} {formData.reward.amount}
+            </p>
+          </div>
+        )}
+        
+        {/* Contact Information */}
+        <div className="bg-blue-100 p-3 rounded text-center mt-4">
+          <p className="font-medium">{t('poster.contact')}:</p>
+          <p>{formData.ownerName || t('preview.ownerNamePlaceholder')}</p>
+          <p className="text-xl font-bold">{formData.contactPhone || t('preview.phonePlaceholder')}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+```
+2. Implement responsive design for the poster preview
+3. Handle different photo layouts based on the number of uploaded photos
+4. Format dates and currency according to the selected language
+5. Provide placeholders for empty fields
+
+# Test Strategy:
+Test the preview with various combinations of form data. Verify that the photo layout changes correctly based on the number of photos. Test with both languages to ensure proper formatting. Test with empty fields to ensure placeholders are displayed.
+
+# Subtasks:
+## 1. Set up responsive layout structure [pending]
+### Dependencies: None
+### Description: Create a flexible layout structure for the poster preview component that adapts to different screen sizes and orientations.
+### Details:
+Use CSS Grid or Flexbox for the main layout. Implement media queries for breakpoints at 768px, 1024px, and 1440px. Ensure the preview maintains aspect ratio across devices. Use rem units for scalable typography. Test layout on various devices and browsers.
+
+## 2. Implement dynamic content rendering [pending]
+### Dependencies: 9.1
+### Description: Develop a system to dynamically render poster content based on form data input.
+### Details:
+Create a state management solution using React Context or Redux. Set up reducers for handling form data updates. Implement useMemo or useCallback hooks for optimizing re-renders. Use React.lazy for code-splitting of heavy components. Handle empty states and loading states appropriately.
+
+## 3. Optimize for different data scenarios [pending]
+### Dependencies: 9.2
+### Description: Ensure the preview component handles various data input scenarios gracefully, including edge cases.
+### Details:
+Implement data validation and sanitization. Handle long text inputs with ellipsis or scrolling. Create fallback UI for missing images or data. Use PropTypes or TypeScript for type checking. Implement error boundaries to catch and display errors without crashing the component.
+
+## 4. Implement real-time preview updates [pending]
+### Dependencies: 9.2, 9.3
+### Description: Ensure the preview updates in real-time as the user inputs data in the form.
+### Details:
+Use debounce technique for performance optimization on frequent updates. Implement a custom hook for handling real-time updates. Use requestAnimationFrame for smooth animations if needed. Consider using Web Workers for heavy computations to prevent UI blocking.
+
+## 5. Add accessibility features [pending]
+### Dependencies: 9.1, 9.2, 9.3
+### Description: Ensure the poster preview component is fully accessible and compliant with WCAG 2.1 guidelines.
+### Details:
+Implement proper ARIA labels and roles. Ensure keyboard navigation works correctly. Add screen reader descriptions for visual elements. Implement sufficient color contrast. Test with various assistive technologies. Use the axe-core library for automated accessibility testing.
+
+## 6. Implement performance optimizations [pending]
+### Dependencies: 9.1, 9.2, 9.3, 9.4
+### Description: Optimize the preview component for performance, ensuring smooth rendering and interactions.
+### Details:
+Use React.memo for preventing unnecessary re-renders. Implement virtualization for long lists using react-window. Optimize images with lazy loading and WebP format. Use Lighthouse for performance auditing. Implement code splitting and lazy loading of components. Consider server-side rendering or static generation for initial load performance.
+

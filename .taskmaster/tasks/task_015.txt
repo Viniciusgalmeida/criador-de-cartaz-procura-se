@@ -1,0 +1,305 @@
+# Task ID: 15
+# Title: Write Comprehensive Tests
+# Status: in-progress
+# Dependencies: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+# Priority: medium
+# Description: Implement a comprehensive test suite using Vitest and React Testing Library to ensure the Pet Poster Creator application works as expected.
+# Details:
+Create tests for the main components of the Pet Poster Creator application using the existing Vitest and React Testing Library setup. Focus on testing the core functionality including form inputs, poster preview, language switching, and poster generation.
+
+1. Test the form components:
+```typescript
+// src/components/PetPosterForm.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { PetPosterForm } from './PetPosterForm';
+import { FormProvider } from '../contexts/FormContext';
+import { LanguageContext } from '../contexts/LanguageContext';
+
+describe('PetPosterForm', () => {
+  beforeEach(() => {
+    render(
+      <LanguageContext.Provider value={{ language: 'en', setLanguage: vi.fn() }}>
+        <FormProvider>
+          <PetPosterForm />
+        </FormProvider>
+      </LanguageContext.Provider>
+    );
+  });
+
+  it('renders all required fields', () => {
+    expect(screen.getByLabelText(/pet name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/owner name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/contact phone/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/last seen location/i)).toBeInTheDocument();
+  });
+
+  it('shows validation errors for empty required fields', async () => {
+    const petNameInput = screen.getByLabelText(/pet name/i);
+    fireEvent.focus(petNameInput);
+    fireEvent.blur(petNameInput);
+    
+    expect(await screen.findByText(/required/i)).toBeInTheDocument();
+  });
+
+  it('updates form data when fields are filled', () => {
+    const petNameInput = screen.getByLabelText(/pet name/i);
+    fireEvent.change(petNameInput, { target: { value: 'Rex' } });
+    
+    expect(petNameInput).toHaveValue('Rex');
+  });
+});
+```
+
+2. Test the poster preview component:
+```typescript
+// src/components/PosterPreview.test.tsx
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { PosterPreview } from './PosterPreview';
+import { FormProvider } from '../contexts/FormContext';
+import { LanguageContext } from '../contexts/LanguageContext';
+
+describe('PosterPreview', () => {
+  beforeEach(() => {
+    // Mock form data
+    const mockFormData = {
+      petName: 'Rex',
+      ownerName: 'John Doe',
+      contactPhone: '123-456-7890',
+      lastSeenLocation: 'Central Park',
+      petType: 'Dog',
+      petBreed: 'Golden Retriever',
+      petColor: 'Golden',
+      petAge: '5 years',
+      photos: [],
+      additionalInfo: 'Friendly and wearing a red collar'
+    };
+    
+    // Mock localStorage
+    vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify(mockFormData));
+    
+    render(
+      <LanguageContext.Provider value={{ language: 'en', setLanguage: vi.fn() }}>
+        <FormProvider>
+          <PosterPreview />
+        </FormProvider>
+      </LanguageContext.Provider>
+    );
+  });
+
+  it('displays the pet name prominently', () => {
+    expect(screen.getByText('Rex')).toBeInTheDocument();
+  });
+
+  it('displays the last seen location', () => {
+    expect(screen.getByText(/central park/i)).toBeInTheDocument();
+  });
+
+  it('displays the contact information', () => {
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('123-456-7890')).toBeInTheDocument();
+  });
+
+  it('displays additional pet information', () => {
+    expect(screen.getByText(/golden retriever/i)).toBeInTheDocument();
+    expect(screen.getByText(/5 years/i)).toBeInTheDocument();
+    expect(screen.getByText(/friendly and wearing a red collar/i)).toBeInTheDocument();
+  });
+});
+```
+
+3. Test the language context:
+```typescript
+// src/contexts/LanguageContext.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { LanguageProvider, useLanguage } from '../contexts/LanguageContext';
+
+// Test component that uses the language context
+const TestComponent = () => {
+  const { language, setLanguage } = useLanguage();
+  return (
+    <div>
+      <div data-testid="current-language">{language}</div>
+      <button onClick={() => setLanguage(language === 'en' ? 'pt' : 'en')}>Toggle Language</button>
+    </div>
+  );
+};
+
+describe('LanguageContext', () => {
+  it('provides default language as English', () => {
+    render(
+      <LanguageProvider>
+        <TestComponent />
+      </LanguageProvider>
+    );
+    
+    expect(screen.getByTestId('current-language').textContent).toBe('en');
+  });
+
+  it('allows language to be toggled', () => {
+    render(
+      <LanguageProvider>
+        <TestComponent />
+      </LanguageProvider>
+    );
+    
+    fireEvent.click(screen.getByText('Toggle Language'));
+    expect(screen.getByTestId('current-language').textContent).toBe('pt');
+    
+    fireEvent.click(screen.getByText('Toggle Language'));
+    expect(screen.getByTestId('current-language').textContent).toBe('en');
+  });
+});
+```
+
+4. Test the photo upload component:
+```typescript
+// src/components/PhotoUpload.test.tsx
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { PhotoUpload } from './PhotoUpload';
+import { FormProvider } from '../contexts/FormContext';
+
+describe('PhotoUpload', () => {
+  it('renders the upload button', () => {
+    render(
+      <FormProvider>
+        <PhotoUpload />
+      </FormProvider>
+    );
+    
+    expect(screen.getByText(/upload photo/i)).toBeInTheDocument();
+  });
+
+  it('handles file selection', async () => {
+    const file = new File(['dummy content'], 'example.png', { type: 'image/png' });
+    
+    render(
+      <FormProvider>
+        <PhotoUpload />
+      </FormProvider>
+    );
+    
+    const input = screen.getByLabelText(/upload photo/i);
+    Object.defineProperty(input, 'files', {
+      value: [file]
+    });
+    
+    fireEvent.change(input);
+    
+    await waitFor(() => {
+      // Check that the image preview is displayed
+      expect(screen.getByAltText(/uploaded pet photo/i)).toBeInTheDocument();
+    });
+  });
+
+  it('shows error for invalid file type', async () => {
+    const file = new File(['dummy content'], 'document.pdf', { type: 'application/pdf' });
+    
+    render(
+      <FormProvider>
+        <PhotoUpload />
+      </FormProvider>
+    );
+    
+    const input = screen.getByLabelText(/upload photo/i);
+    Object.defineProperty(input, 'files', {
+      value: [file]
+    });
+    
+    fireEvent.change(input);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/only image files are allowed/i)).toBeInTheDocument();
+    });
+  });
+});
+```
+
+5. Test the poster download functionality:
+```typescript
+// src/components/PosterDownload.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { PosterDownload } from './PosterDownload';
+import { FormProvider } from '../contexts/FormContext';
+import { LanguageContext } from '../contexts/LanguageContext';
+
+// Mock html2canvas and jsPDF
+vi.mock('html2canvas', () => ({
+  default: vi.fn().mockResolvedValue({
+    width: 800,
+    height: 1200
+  })
+}));
+
+vi.mock('jspdf', () => ({
+  default: class jsPDFMock {
+    addImage = vi.fn();
+    save = vi.fn();
+  }
+}));
+
+describe('PosterDownload', () => {
+  beforeEach(() => {
+    render(
+      <LanguageContext.Provider value={{ language: 'en', setLanguage: vi.fn() }}>
+        <FormProvider>
+          <PosterDownload />
+        </FormProvider>
+      </LanguageContext.Provider>
+    );
+  });
+
+  it('renders download buttons', () => {
+    expect(screen.getByText(/download as pdf/i)).toBeInTheDocument();
+    expect(screen.getByText(/download as image/i)).toBeInTheDocument();
+  });
+
+  it('triggers PDF download when button is clicked', async () => {
+    const downloadButton = screen.getByText(/download as pdf/i);
+    fireEvent.click(downloadButton);
+    
+    // Check that the PDF generation was triggered
+    const { default: html2canvas } = await import('html2canvas');
+    expect(html2canvas).toHaveBeenCalled();
+  });
+});
+```
+
+# Test Strategy:
+Focus on testing the core functionality of the Pet Poster Creator application using Vitest and React Testing Library. Test the main components including form inputs, validation, poster preview, language switching, photo upload, and poster download/export. Mock external dependencies like localStorage, html2canvas, and jsPDF. Ensure tests cover both happy paths and error scenarios. Aim for good test coverage of the critical user flows.
+
+# Subtasks:
+## 1. Test Form Components and Validation [done]
+### Dependencies: None
+### Description: Create tests for the pet poster form components, including input fields, validation, and form submission.
+### Details:
+Test all form fields (pet name, owner name, contact info, etc.), validation logic for required fields, error messages, and form submission. Verify that form data is correctly saved to localStorage. Test both English and Portuguese language versions of the form.
+
+## 2. Test Poster Preview Component [done]
+### Dependencies: 15.1
+### Description: Write tests for the poster preview component to ensure it correctly displays the form data.
+### Details:
+Test that the preview correctly renders all form fields (pet name, description, contact info, etc.). Verify that changes to the form data are reflected in the preview. Test the preview in both English and Portuguese.
+
+## 3. Test Photo Upload and Management [pending]
+### Dependencies: 15.1
+### Description: Create tests for the photo upload component, including file selection, preview, and management.
+### Details:
+Test file selection, image preview, multiple photo uploads, photo deletion, and error handling for invalid file types or sizes. Verify that photos are correctly stored and retrieved from localStorage.
+
+## 4. Test Language Context and Switching [pending]
+### Dependencies: None
+### Description: Write tests for the language context to ensure proper language switching functionality.
+### Details:
+Test the language context provider, language switching between English and Portuguese, and persistence of language preference. Verify that UI elements correctly update when language is changed.
+
+## 5. Test Poster Download and Export Functionality [pending]
+### Dependencies: 15.1, 15.2, 15.3
+### Description: Create tests for the poster download and export functionality.
+### Details:
+Test PDF generation, image download, and sharing functionality. Mock external libraries like html2canvas and jsPDF. Verify that the correct data is included in the exported poster.
+

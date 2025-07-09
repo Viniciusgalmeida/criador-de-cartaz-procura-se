@@ -1,0 +1,111 @@
+# Task ID: 6
+# Title: Implement Pet Poster Form - Optional Fields
+# Status: pending
+# Dependencies: 5
+# Priority: medium
+# Description: Add the optional fields to the form (date/time, pet description, accessories, reward) with appropriate validation and UI components.
+# Details:
+1. Extend the form component with optional fields:
+```typescript
+// Date and time field with datetime-local input
+<div>
+  <label htmlFor="lastSeenDateTime" className="block text-sm font-medium text-gray-700">
+    {t('form.lastSeenDateTime')}
+  </label>
+  <input
+    id="lastSeenDateTime"
+    type="datetime-local"
+    {...register('lastSeenDateTime')}
+    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+  />
+</div>
+
+// Text area for pet description
+<div>
+  <label htmlFor="petDescription" className="block text-sm font-medium text-gray-700">
+    {t('form.petDescription')}
+  </label>
+  <textarea
+    id="petDescription"
+    {...register('petDescription')}
+    rows={3}
+    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+  />
+</div>
+
+// Reward fields with currency selection
+<div>
+  <fieldset>
+    <legend className="block text-sm font-medium text-gray-700">{t('form.reward')}</legend>
+    <div className="mt-1 flex rounded-md">
+      <select
+        {...register('reward.currency')}
+        className="rounded-l-md border-r-0 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+      >
+        <option value="BRL">R$</option>
+        <option value="USD">$</option>
+      </select>
+      <input
+        type="number"
+        {...register('reward.amount', { min: 0 })}
+        className="block w-full rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+        placeholder="0.00"
+      />
+    </div>
+  </fieldset>
+</div>
+```
+2. Implement conditional rendering for reward fields (only show amount if reward is offered)
+3. Add appropriate validation for numeric and date fields
+4. Ensure all fields update the form context in real-time
+
+# Test Strategy:
+Test the optional fields by entering various valid and invalid inputs. Verify that the reward amount accepts only numeric values. Test date/time input in different formats. Verify that all optional fields correctly update the form context.
+
+# Subtasks:
+## 1. Implement conditional rendering for optional fields [pending]
+### Dependencies: None
+### Description: Create a system to show/hide optional fields based on user preferences or form state
+### Details:
+1. Create a new component for optional fields container
+2. Implement a toggle mechanism (e.g., checkbox or button) to show/hide optional fields
+3. Use React's useState hook to manage the visibility state
+4. Implement smooth transitions for showing/hiding fields using CSS transitions
+5. Ensure proper ARIA attributes for accessibility (e.g., aria-expanded, aria-controls)
+6. Add error handling for edge cases (e.g., form submission with hidden fields)
+
+## 2. Develop validation rules for optional text fields [pending]
+### Dependencies: 6.1
+### Description: Create and implement specific validation rules for optional text input fields
+### Details:
+1. Identify all optional text fields (e.g., additional details, medical history)
+2. Define validation rules for each field (e.g., character limits, allowed characters)
+3. Implement client-side validation using React hooks or a form library (e.g., Formik, react-hook-form)
+4. Create custom error messages for each validation rule
+5. Implement real-time validation feedback as the user types
+6. Ensure proper error handling and display for multiple validation errors
+
+## 3. Implement file upload for optional image fields [pending]
+### Dependencies: 6.1
+### Description: Add functionality for users to upload additional pet images as optional fields
+### Details:
+1. Create a reusable file upload component for images
+2. Implement drag-and-drop functionality for file uploads
+3. Add file type and size validation (e.g., only allow images under 5MB)
+4. Create a preview mechanism for uploaded images
+5. Implement progress indicators for file uploads
+6. Handle potential upload errors and provide user feedback
+7. Ensure proper accessibility for file upload interactions (e.g., keyboard navigation)
+
+## 4. Develop date picker for optional date fields [pending]
+### Dependencies: 6.1
+### Description: Implement a date picker component for optional date-related fields
+### Details:
+1. Choose and integrate a React-compatible date picker library (e.g., react-datepicker)
+2. Customize the date picker to match the form's design
+3. Implement date range restrictions if necessary (e.g., no future dates)
+4. Add validation for entered dates (e.g., proper format, logical date ranges)
+5. Ensure keyboard accessibility for date selection
+6. Implement localization support for date formats
+7. Handle edge cases like invalid dates or timezone issues
+

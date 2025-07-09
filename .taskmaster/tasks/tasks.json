@@ -116,7 +116,7 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -124,7 +124,7 @@
             "description": "Create a flexible grid system using CSS Grid or Flexbox for responsive layouts",
             "dependencies": [],
             "details": "1. Set up a CSS Grid or Flexbox-based system with configurable columns and rows\n2. Implement breakpoints for different screen sizes (mobile, tablet, desktop)\n3. Create utility classes for common layout patterns (e.g., full-width, centered, split)\n4. Add support for nested grids and responsive gutters\n5. Implement error handling for invalid grid configurations\n6. Ensure accessibility by maintaining proper document structure and using ARIA attributes where necessary\n7. Optimize performance by using CSS containment and will-change properties\n8. Write comprehensive unit tests for grid behavior across breakpoints",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -135,7 +135,7 @@
               1
             ],
             "details": "1. Design mobile-first navigation structure using semantic HTML5 elements\n2. Implement collapsible menu for mobile devices with smooth animations\n3. Create desktop version with dropdown menus and mega-menus as needed\n4. Add keyboard navigation support for accessibility\n5. Implement touch-friendly interactions for mobile and tablet devices\n6. Use IntersectionObserver API for lazy-loading offscreen menu items\n7. Optimize rendering performance using React.memo and useMemo hooks\n8. Implement proper ARIA roles and states for screen reader compatibility\n9. Add unit and integration tests for navigation behavior and accessibility",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -146,7 +146,7 @@
               1
             ],
             "details": "1. Implement <picture> element with multiple <source> tags for different screen sizes\n2. Use srcset and sizes attributes for resolution switching\n3. Implement lazy loading using Intersection Observer API\n4. Add support for WebP format with fallbacks for older browsers\n5. Create placeholder system for images during loading (e.g., low-res blur-up technique)\n6. Implement error handling for failed image loads\n7. Ensure proper alt text and ARIA attributes for accessibility\n8. Optimize image delivery using Content Delivery Network (CDN)\n9. Add unit tests for image loading behavior and responsiveness",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -157,7 +157,7 @@
               1
             ],
             "details": "1. Set up a modular scale for font sizes using CSS custom properties\n2. Implement fluid typography using calc() and viewport units\n3. Create responsive line-height and letter-spacing adjustments\n4. Set up a vertical rhythm system using CSS Grid or custom properties\n5. Implement responsive font-weight adjustments for different screen sizes\n6. Create utility classes for common text styles (e.g., headings, body text, captions)\n7. Ensure proper contrast ratios for accessibility across all screen sizes\n8. Implement font-loading optimizations using font-display and preload\n9. Add unit tests for typography scaling and readability across breakpoints",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -172,7 +172,7 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -180,7 +180,7 @@
             "description": "Create JSON translation files for each supported language and implement a language selection mechanism",
             "dependencies": [],
             "details": "1. Create a 'locales' folder in the project root\n2. Add JSON files for each supported language (e.g., en.json, es.json)\n3. Structure translation keys hierarchically\n4. Implement a language selector component using React hooks\n5. Store selected language in localStorage for persistence\n6. Handle fallback to default language if translation is missing",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -191,7 +191,7 @@
               1
             ],
             "details": "1. Create a LanguageContext using React.createContext()\n2. Implement a LanguageProvider component\n3. Use useReducer for language state management\n4. Provide methods for changing the language\n5. Wrap the main App component with LanguageProvider\n6. Optimize context updates using useMemo and useCallback",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -202,7 +202,7 @@
               2
             ],
             "details": "1. Implement a useTranslation hook using useContext\n2. Create a withTranslation HOC for class components\n3. Add support for interpolation in translation strings\n4. Implement plural forms handling\n5. Add type safety using TypeScript for translation keys\n6. Implement error boundary for missing translations",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -213,7 +213,7 @@
               2
             ],
             "details": "1. Use Intl.DateTimeFormat for date formatting\n2. Implement Intl.NumberFormat for number formatting\n3. Create utility functions for currency formatting\n4. Handle right-to-left (RTL) languages with CSS and component adjustments\n5. Implement locale-aware sorting for lists and tables\n6. Add unit tests for formatting functions",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -227,7 +227,7 @@
               4
             ],
             "details": "1. Implement dynamic import for language files\n2. Use React.Suspense for loading translations\n3. Implement a caching mechanism for loaded translations\n4. Optimize translation lookup using memoization\n5. Implement code splitting for large translation files\n6. Add performance monitoring for translation loading and rendering",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -1057,7 +1057,7 @@
             "id": 2,
             "title": "Test Poster Preview Component",
             "description": "Write tests for the poster preview component to ensure it correctly displays the form data.",
-            "status": "in-progress",
+            "status": "done",
             "dependencies": [
               1
             ],
@@ -1098,11 +1098,24 @@
             "testStrategy": "Mock external libraries and verify that they are called with the correct parameters. Test error handling for failed exports."
           }
         ]
+      },
+      {
+        "id": 16,
+        "title": "Implement localStorage Persistence for Language Selection",
+        "description": "Add localStorage persistence to language selection so users don't need to reselect their preferred language when they reload the page.",
+        "details": "1. Modify the language context to use localStorage for persistence:\n```typescript\n// src/contexts/LanguageContext.tsx\nimport { createContext, useState, useEffect, ReactNode } from 'react';\n\ninterface LanguageContextType {\n  language: 'en' | 'pt';\n  setLanguage: (lang: 'en' | 'pt') => void;\n  t: (key: string) => string;\n}\n\nexport const LanguageContext = createContext<LanguageContextType>({\n  language: 'en',\n  setLanguage: () => {},\n  t: (key) => key,\n});\n\nexport const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {\n  // Initialize state from localStorage or default to 'en'\n  const [language, setLanguageState] = useState<'en' | 'pt'>(() => {\n    const savedLanguage = localStorage.getItem('preferredLanguage');\n    return (savedLanguage === 'en' || savedLanguage === 'pt') ? savedLanguage : 'en';\n  });\n  \n  // Update localStorage when language changes\n  const setLanguage = (lang: 'en' | 'pt') => {\n    setLanguageState(lang);\n    localStorage.setItem('preferredLanguage', lang);\n  };\n  \n  // Load translations based on current language\n  const translations = language === 'en' ? enTranslations : ptTranslations;\n  \n  const t = (key: string) => {\n    return translations[key] || key;\n  };\n  \n  return (\n    <LanguageContext.Provider value={{ language, setLanguage, t }}>\n      {children}\n    </LanguageContext.Provider>\n  );\n};\n```\n\n2. Update the language selector component to use the updated context:\n```typescript\n// src/components/LanguageSelector.tsx\nimport { useLanguage } from '../hooks/useLanguage';\n\nexport const LanguageSelector: React.FC = () => {\n  const { language, setLanguage } = useLanguage();\n  \n  return (\n    <div className=\"language-selector\">\n      <button \n        className={`language-btn ${language === 'en' ? 'active' : ''}`}\n        onClick={() => setLanguage('en')}\n        aria-label=\"Switch to English\"\n      >\n        EN\n      </button>\n      <button \n        className={`language-btn ${language === 'pt' ? 'active' : ''}`}\n        onClick={() => setLanguage('pt')}\n        aria-label=\"Mudar para Português\"\n      >\n        PT\n      </button>\n    </div>\n  );\n};\n```\n\n3. Ensure the useLanguage hook correctly uses the updated context:\n```typescript\n// src/hooks/useLanguage.ts\nimport { useContext } from 'react';\nimport { LanguageContext } from '../contexts/LanguageContext';\n\nexport const useLanguage = () => {\n  return useContext(LanguageContext);\n};\n```\n\n4. Handle edge cases:\n   - Add error handling for localStorage access (in case it's disabled or unavailable)\n   - Implement a fallback mechanism if localStorage fails\n   - Ensure the language state is properly synchronized across tabs/windows\n\n```typescript\n// Enhanced error handling in LanguageContext.tsx\nconst [language, setLanguageState] = useState<'en' | 'pt'>(() => {\n  try {\n    const savedLanguage = localStorage.getItem('preferredLanguage');\n    return (savedLanguage === 'en' || savedLanguage === 'pt') ? savedLanguage : 'en';\n  } catch (error) {\n    console.warn('Failed to access localStorage:', error);\n    return 'en';\n  }\n});\n\nconst setLanguage = (lang: 'en' | 'pt') => {\n  setLanguageState(lang);\n  try {\n    localStorage.setItem('preferredLanguage', lang);\n  } catch (error) {\n    console.warn('Failed to save language preference:', error);\n  }\n};\n```\n\n5. Add a listener for storage events to sync language across tabs:\n```typescript\nuseEffect(() => {\n  const handleStorageChange = (event: StorageEvent) => {\n    if (event.key === 'preferredLanguage') {\n      const newLang = event.newValue;\n      if (newLang === 'en' || newLang === 'pt') {\n        setLanguageState(newLang);\n      }\n    }\n  };\n  \n  window.addEventListener('storage', handleStorageChange);\n  return () => window.removeEventListener('storage', handleStorageChange);\n}, []);",
+        "testStrategy": "1. Unit test the language persistence functionality:\n```typescript\n// src/contexts/LanguageContext.test.tsx\nimport { render, screen, act } from '@testing-library/react';\nimport { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';\nimport { LanguageProvider, LanguageContext } from '../contexts/LanguageContext';\nimport { useContext } from 'react';\n\ndescribe('LanguageContext with localStorage persistence', () => {\n  // Mock localStorage\n  const localStorageMock = (() => {\n    let store: Record<string, string> = {};\n    return {\n      getItem: vi.fn((key: string) => store[key] || null),\n      setItem: vi.fn((key: string, value: string) => {\n        store[key] = value.toString();\n      }),\n      clear: vi.fn(() => {\n        store = {};\n      })\n    };\n  })();\n\n  beforeEach(() => {\n    Object.defineProperty(window, 'localStorage', {\n      value: localStorageMock,\n      writable: true\n    });\n    localStorageMock.clear();\n  });\n\n  afterEach(() => {\n    vi.clearAllMocks();\n  });\n\n  it('initializes with default language (en) when localStorage is empty', () => {\n    const TestComponent = () => {\n      const { language } = useContext(LanguageContext);\n      return <div data-testid=\"language\">{language}</div>;\n    };\n\n    render(\n      <LanguageProvider>\n        <TestComponent />\n      </LanguageProvider>\n    );\n\n    expect(screen.getByTestId('language').textContent).toBe('en');\n    expect(localStorageMock.getItem).toHaveBeenCalledWith('preferredLanguage');\n  });\n\n  it('initializes with language from localStorage if available', () => {\n    localStorageMock.getItem.mockReturnValueOnce('pt');\n\n    const TestComponent = () => {\n      const { language } = useContext(LanguageContext);\n      return <div data-testid=\"language\">{language}</div>;\n    };\n\n    render(\n      <LanguageProvider>\n        <TestComponent />\n      </LanguageProvider>\n    );\n\n    expect(screen.getByTestId('language').textContent).toBe('pt');\n    expect(localStorageMock.getItem).toHaveBeenCalledWith('preferredLanguage');\n  });\n\n  it('updates localStorage when language changes', () => {\n    const TestComponent = () => {\n      const { language, setLanguage } = useContext(LanguageContext);\n      return (\n        <>\n          <div data-testid=\"language\">{language}</div>\n          <button onClick={() => setLanguage('pt')} data-testid=\"change-language\">\n            Change Language\n          </button>\n        </>\n      );\n    };\n\n    render(\n      <LanguageProvider>\n        <TestComponent />\n      </LanguageProvider>\n    );\n\n    act(() => {\n      screen.getByTestId('change-language').click();\n    });\n\n    expect(screen.getByTestId('language').textContent).toBe('pt');\n    expect(localStorageMock.setItem).toHaveBeenCalledWith('preferredLanguage', 'pt');\n  });\n\n  it('handles localStorage errors gracefully', () => {\n    // Simulate localStorage error\n    localStorageMock.getItem.mockImplementationOnce(() => {\n      throw new Error('localStorage disabled');\n    });\n\n    const TestComponent = () => {\n      const { language } = useContext(LanguageContext);\n      return <div data-testid=\"language\">{language}</div>;\n    };\n\n    render(\n      <LanguageProvider>\n        <TestComponent />\n      </LanguageProvider>\n    );\n\n    // Should fall back to default language\n    expect(screen.getByTestId('language').textContent).toBe('en');\n  });\n});\n```\n\n2. Integration test with the language selector component:\n```typescript\n// src/components/LanguageSelector.test.tsx\nimport { render, screen, fireEvent } from '@testing-library/react';\nimport { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';\nimport { LanguageProvider } from '../contexts/LanguageContext';\nimport { LanguageSelector } from './LanguageSelector';\n\ndescribe('LanguageSelector with localStorage persistence', () => {\n  // Mock localStorage\n  const localStorageMock = (() => {\n    let store: Record<string, string> = {};\n    return {\n      getItem: vi.fn((key: string) => store[key] || null),\n      setItem: vi.fn((key: string, value: string) => {\n        store[key] = value.toString();\n      }),\n      clear: vi.fn(() => {\n        store = {};\n      })\n    };\n  })();\n\n  beforeEach(() => {\n    Object.defineProperty(window, 'localStorage', {\n      value: localStorageMock,\n      writable: true\n    });\n    localStorageMock.clear();\n  });\n\n  afterEach(() => {\n    vi.clearAllMocks();\n  });\n\n  it('loads the saved language preference from localStorage', () => {\n    localStorageMock.getItem.mockReturnValueOnce('pt');\n\n    render(\n      <LanguageProvider>\n        <LanguageSelector />\n      </LanguageProvider>\n    );\n\n    // PT button should be active\n    const ptButton = screen.getByText('PT');\n    const enButton = screen.getByText('EN');\n    \n    expect(ptButton.classList.contains('active')).toBe(true);\n    expect(enButton.classList.contains('active')).toBe(false);\n  });\n\n  it('saves the language preference to localStorage when changed', () => {\n    render(\n      <LanguageProvider>\n        <LanguageSelector />\n      </LanguageProvider>\n    );\n\n    // Initially EN should be active\n    const ptButton = screen.getByText('PT');\n    const enButton = screen.getByText('EN');\n    \n    expect(enButton.classList.contains('active')).toBe(true);\n    \n    // Change to PT\n    fireEvent.click(ptButton);\n    \n    expect(ptButton.classList.contains('active')).toBe(true);\n    expect(enButton.classList.contains('active')).toBe(false);\n    expect(localStorageMock.setItem).toHaveBeenCalledWith('preferredLanguage', 'pt');\n  });\n});\n```\n\n3. Manual testing:\n   - Change the language in the application\n   - Reload the page and verify the selected language persists\n   - Open the application in a new tab and verify the language setting is consistent\n   - Test in private/incognito mode to verify fallback behavior\n   - Test with localStorage disabled (can be done in Chrome DevTools > Application > Storage > Clear site data and check \"Disable local storage\")",
+        "status": "done",
+        "dependencies": [
+          3
+        ],
+        "priority": "low",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-08T23:28:42.915Z",
-      "updated": "2025-07-09T18:55:43.742Z",
+      "updated": "2025-07-09T20:14:57.375Z",
       "description": "Tasks for master context"
     }
   }

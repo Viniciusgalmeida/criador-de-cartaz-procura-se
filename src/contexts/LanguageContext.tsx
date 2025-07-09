@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Language = 'pt' | 'en';
 
@@ -98,7 +98,41 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('pt');
+  // Initialize state from localStorage or default to 'pt'
+  const [language, setLanguageState] = useState<Language>(() => {
+    try {
+      const savedLanguage = localStorage.getItem('preferredLanguage');
+      return (savedLanguage === 'pt' || savedLanguage === 'en') ? savedLanguage : 'pt';
+    } catch (error) {
+      console.warn('Failed to access localStorage:', error);
+      return 'pt';
+    }
+  });
+
+  // Update localStorage when language changes
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    try {
+      localStorage.setItem('preferredLanguage', lang);
+    } catch (error) {
+      console.warn('Failed to save language preference:', error);
+    }
+  };
+
+  // Sync language across tabs
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'preferredLanguage') {
+        const newLang = event.newValue;
+        if (newLang === 'pt' || newLang === 'en') {
+          setLanguageState(newLang);
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations['pt']] || key;
