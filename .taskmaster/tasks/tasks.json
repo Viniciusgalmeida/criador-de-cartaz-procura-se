@@ -1048,7 +1048,7 @@
             "id": 1,
             "title": "Test Form Components and Validation",
             "description": "Create tests for the pet poster form components, including input fields, validation, and form submission.",
-            "status": "in-progress",
+            "status": "done",
             "dependencies": [],
             "details": "Test all form fields (pet name, owner name, contact info, etc.), validation logic for required fields, error messages, and form submission. Verify that form data is correctly saved to localStorage. Test both English and Portuguese language versions of the form.",
             "testStrategy": "Use React Testing Library to render components with necessary context providers. Test input changes, validation triggers, and form submission. Mock localStorage for persistence tests."
@@ -1057,7 +1057,7 @@
             "id": 2,
             "title": "Test Poster Preview Component",
             "description": "Write tests for the poster preview component to ensure it correctly displays the form data.",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [
               1
             ],
@@ -1102,7 +1102,7 @@
     ],
     "metadata": {
       "created": "2025-07-08T23:28:42.915Z",
-      "updated": "2025-07-09T18:16:03.747Z",
+      "updated": "2025-07-09T18:55:43.742Z",
       "description": "Tasks for master context"
     }
   }
