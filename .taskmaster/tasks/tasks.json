@@ -1,0 +1,1169 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Project Setup and Configuration",
+        "description": "Initialize the React + TypeScript project with Tailwind CSS, Radix UI, React Hook Form, and other required dependencies.",
+        "details": "1. Create a new React project with TypeScript using Vite:\n```bash\nnpm create vite@latest encontre-meu-amigo -- --template react-ts\n```\n2. Install and configure Tailwind CSS:\n```bash\nnpm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p\n```\n3. Configure Tailwind CSS in tailwind.config.js to include the project paths\n4. Install Radix UI components:\n```bash\nnpm install @radix-ui/react-dialog @radix-ui/react-select @radix-ui/react-form\n```\n5. Install React Hook Form:\n```bash\nnpm install react-hook-form\n```\n6. Set up Vitest and React Testing Library:\n```bash\nnpm install -D vitest @testing-library/react @testing-library/jest-dom jsdom\n```\n7. Configure Prettier:\n```bash\nnpm install -D prettier\n```\n8. Create basic project structure with folders for components, hooks, contexts, utils, and assets",
+        "testStrategy": "Verify that all dependencies are correctly installed and configured by running a simple smoke test that renders a basic component. Ensure the build process works without errors.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install and configure Node.js and npm",
+            "description": "Set up the Node.js environment and npm package manager for the project",
+            "dependencies": [],
+            "details": "1. Download and install the latest LTS version of Node.js\n2. Verify installation with 'node --version' and 'npm --version'\n3. Configure npm settings (proxy, registry if needed)\n4. Set up .npmrc file for project-specific configurations\n5. Install nvm for managing multiple Node.js versions (optional)",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Initialize React project with Create React App",
+            "description": "Set up the basic React project structure using Create React App",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Run 'npx create-react-app my-app --template typescript'\n2. Navigate to project directory\n3. Review and update package.json for latest dependencies\n4. Set up .env files for environment-specific configurations\n5. Configure absolute imports in tsconfig.json\n<info added on 2025-07-09T02:05:24.789Z>\nCOMPLETED - The project was initialized using Vite + React + TypeScript, which is a superior choice to the originally planned Create React App (CRA). Vite offers faster initialization, more efficient hot reloading, and better development performance. The basic structure is ready with all necessary configurations.\n</info added on 2025-07-09T02:05:24.789Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Install and configure ESLint and Prettier",
+            "description": "Set up code linting and formatting tools for consistent code style",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Install ESLint and Prettier as dev dependencies\n2. Set up .eslintrc.js with React and TypeScript rules\n3. Create .prettierrc with project-specific formatting rules\n4. Add lint and format scripts to package.json\n5. Set up pre-commit hooks with husky and lint-staged\n<info added on 2025-07-09T02:05:32.387Z>\n✅ PARTIALLY COMPLETED\n- ESLint is fully configured and working with React and TypeScript rules\n- Lint scripts are functioning in package.json\n- TODO: Install Prettier and create .prettierrc file for automatic code formatting\n</info added on 2025-07-09T02:05:32.387Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Set up React Router for navigation",
+            "description": "Install and configure React Router for handling application routing",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Install react-router-dom\n2. Set up basic route structure in App.tsx\n3. Create placeholder components for main routes\n4. Implement nested routing for complex views\n5. Add error boundary and 404 route handling\n<info added on 2025-07-09T02:05:40.515Z>\n✅ COMPLETED - React Router DOM is installed and configured in App.tsx. The basic routing structure is working with BrowserRouter, Routes and Route. Implemented routes: main route (\"/\") for Index, catch-all route (\"*\") for NotFound. The routing system is ready for expansion as new pages are created.\n</info added on 2025-07-09T02:05:40.515Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Configure state management with Redux Toolkit",
+            "description": "Set up Redux Toolkit for efficient state management in the application",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Install @reduxjs/toolkit and react-redux\n2. Set up store configuration with configureStore\n3. Create initial slices for main data entities\n4. Implement Redux hooks in components\n5. Set up async thunks for API calls\n<info added on 2025-07-09T02:05:07.707Z>\nThis subtask has been canceled because the project adopted a more modern architecture using React Query for server-side state management and Context API for local state. This approach is more suitable for modern applications than Redux Toolkit, offering better performance and lower complexity.\n</info added on 2025-07-09T02:05:07.707Z>",
+            "status": "cancelled",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Set up testing environment with Jest and React Testing Library",
+            "description": "Configure the testing setup for unit and integration tests",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "1. Verify Jest installation (comes with CRA)\n2. Install @testing-library/react and @testing-library/jest-dom\n3. Set up custom render function for tests with Redux provider\n4. Create test utils file for common testing functions\n5. Set up mock service worker for API mocking in tests\n<info added on 2025-07-09T11:57:12.707Z>\n## Test Environment Configuration Update (2025-07-09)\n\n### Modern Test Setup with Vitest\n1. Implemented Vitest + React Testing Library instead of Jest for better Vite compatibility\n2. Installed required packages:\n   - Vitest (modern testing framework)\n   - @testing-library/react (React component testing)\n   - @testing-library/jest-dom (custom matchers)\n   - @testing-library/user-event (user interaction simulation)\n   - jsdom (simulated DOM environment)\n   - @vitest/ui (visual test interface)\n\n### Configuration Files\n- Updated vite.config.ts with Vitest configuration and jsdom environment\n- Created src/test/setup.ts with automatic mocks for:\n  - matchMedia\n  - ResizeObserver\n  - scrollIntoView\n- Updated tsconfig.app.json with Vitest type definitions\n- Added test scripts to package.json:\n  - test\n  - test:run\n  - test:ui\n\n### Test Structure\n- src/test/ - Test configuration and setup\n- tests/ - Directory for specific tests\n- src/test/example.test.tsx - Working example test\n\n### Technical Rationale\nVitest was selected over Jest due to:\n- Native Vite integration\n- Superior performance\n- Simpler configuration\n- Hot Module Replacement for tests\n- Full compatibility with Jest API\n\nAll tests are running successfully with proper TypeScript integration.\n</info added on 2025-07-09T11:57:12.707Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Configure Styled Components for styling",
+            "description": "Set up Styled Components for CSS-in-JS styling solution",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Install styled-components and @types/styled-components\n2. Set up global styles and theme provider\n3. Create a basic component with styled-components\n4. Set up styled-components babel plugin for better debugging\n5. Implement server-side rendering support for styled-components\n<info added on 2025-07-09T02:05:16.921Z>\nThis subtask has been canceled because the project has adopted Tailwind CSS + shadcn/ui as the styling solution. This combination offers better performance, maintainability, and productivity compared to Styled Components, while providing a consistent and accessible design system through shadcn/ui components based on Radix UI.\n</info added on 2025-07-09T02:05:16.921Z>",
+            "status": "cancelled",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Set up continuous integration and deployment pipeline",
+            "description": "Configure CI/CD for automated testing and deployment",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "details": "1. Set up GitHub Actions workflow for CI\n2. Configure build and test jobs in CI pipeline\n3. Set up deployment to staging environment on PR merge\n4. Configure production deployment on release tag\n5. Implement environment-specific build configurations",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Create Base Layout Components",
+        "description": "Develop the responsive two-column layout that will contain the editor form on the left and the preview on the right.",
+        "details": "1. Create a Layout component that handles the responsive behavior:\n```tsx\nconst Layout: React.FC = ({ children }) => {\n  return (\n    <div className=\"min-h-screen bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 p-4 md:p-8\">\n      <div className=\"max-w-7xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden\">\n        <div className=\"flex flex-col md:flex-row\">\n          {children}\n        </div>\n      </div>\n    </div>\n  );\n};\n```\n2. Create EditorColumn and PreviewColumn components:\n```tsx\nconst EditorColumn: React.FC = ({ children }) => (\n  <div className=\"w-full md:w-1/2 p-4 md:p-6 overflow-y-auto\">{children}</div>\n);\n\nconst PreviewColumn: React.FC = ({ children }) => (\n  <div className=\"w-full md:w-1/2 bg-gray-50 p-4 md:p-6 overflow-y-auto\">{children}</div>\n);\n```\n3. Implement responsive behavior that stacks columns vertically on mobile and side-by-side on desktop\n4. Add header with app title and language selector",
+        "testStrategy": "Test the layout components with various viewport sizes to ensure they respond correctly. Verify that the columns stack on mobile and display side-by-side on desktop. Use React Testing Library to test the rendering of the components.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Responsive Grid System",
+            "description": "Create a flexible grid system using CSS Grid or Flexbox for responsive layouts",
+            "dependencies": [],
+            "details": "1. Set up a CSS Grid or Flexbox-based system with configurable columns and rows\n2. Implement breakpoints for different screen sizes (mobile, tablet, desktop)\n3. Create utility classes for common layout patterns (e.g., full-width, centered, split)\n4. Add support for nested grids and responsive gutters\n5. Implement error handling for invalid grid configurations\n6. Ensure accessibility by maintaining proper document structure and using ARIA attributes where necessary\n7. Optimize performance by using CSS containment and will-change properties\n8. Write comprehensive unit tests for grid behavior across breakpoints",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop Responsive Navigation Component",
+            "description": "Create a navigation component that adapts to different screen sizes and devices",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Design mobile-first navigation structure using semantic HTML5 elements\n2. Implement collapsible menu for mobile devices with smooth animations\n3. Create desktop version with dropdown menus and mega-menus as needed\n4. Add keyboard navigation support for accessibility\n5. Implement touch-friendly interactions for mobile and tablet devices\n6. Use IntersectionObserver API for lazy-loading offscreen menu items\n7. Optimize rendering performance using React.memo and useMemo hooks\n8. Implement proper ARIA roles and states for screen reader compatibility\n9. Add unit and integration tests for navigation behavior and accessibility",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create Responsive Image Component",
+            "description": "Develop a component for handling responsive images across different screen sizes and resolutions",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Implement <picture> element with multiple <source> tags for different screen sizes\n2. Use srcset and sizes attributes for resolution switching\n3. Implement lazy loading using Intersection Observer API\n4. Add support for WebP format with fallbacks for older browsers\n5. Create placeholder system for images during loading (e.g., low-res blur-up technique)\n6. Implement error handling for failed image loads\n7. Ensure proper alt text and ARIA attributes for accessibility\n8. Optimize image delivery using Content Delivery Network (CDN)\n9. Add unit tests for image loading behavior and responsiveness",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Responsive Typography System",
+            "description": "Create a scalable typography system that adapts to different screen sizes and maintains readability",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Set up a modular scale for font sizes using CSS custom properties\n2. Implement fluid typography using calc() and viewport units\n3. Create responsive line-height and letter-spacing adjustments\n4. Set up a vertical rhythm system using CSS Grid or custom properties\n5. Implement responsive font-weight adjustments for different screen sizes\n6. Create utility classes for common text styles (e.g., headings, body text, captions)\n7. Ensure proper contrast ratios for accessibility across all screen sizes\n8. Implement font-loading optimizations using font-display and preload\n9. Add unit tests for typography scaling and readability across breakpoints",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Implement Internationalization (i18n)",
+        "description": "Set up the internationalization system to support both Portuguese (BR) and English (US) languages throughout the application.",
+        "details": "1. Create a translations directory with JSON files for each language:\n```typescript\n// i18n/en.json\n{\n  \"app.title\": \"Find My Pet\",\n  \"poster.title\": \"MISSING\",\n  \"form.petName\": \"Pet Name\",\n  // ... other translations\n}\n\n// i18n/pt.json\n{\n  \"app.title\": \"Encontre Meu Amigo\",\n  \"poster.title\": \"PROCURA-SE\",\n  \"form.petName\": \"Nome do Pet\",\n  // ... other translations\n}\n```\n2. Create a language context to manage the current language:\n```typescript\nconst LanguageContext = createContext<{\n  language: 'pt' | 'en';\n  setLanguage: (lang: 'pt' | 'en') => void;\n  t: (key: string) => string;\n}>({ language: 'pt', setLanguage: () => {}, t: (key) => key });\n\nexport const LanguageProvider: React.FC = ({ children }) => {\n  const [language, setLanguage] = useState<'pt' | 'en'>('pt');\n  const translations = useMemo(() => {\n    return language === 'pt' ? ptTranslations : enTranslations;\n  }, [language]);\n  \n  const t = useCallback((key: string) => {\n    return translations[key] || key;\n  }, [translations]);\n  \n  return (\n    <LanguageContext.Provider value={{ language, setLanguage, t }}>\n      {children}\n    </LanguageContext.Provider>\n  );\n};\n```\n3. Create a language selector component with flag icons\n4. Implement locale-specific formatting for dates, currency, and other culturally variable content",
+        "testStrategy": "Test the language switching functionality to ensure all UI elements update correctly. Verify that translations are applied properly and that no hardcoded text remains. Test the formatting of dates and currency in both languages.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up translation files and language selection",
+            "description": "Create JSON translation files for each supported language and implement a language selection mechanism",
+            "dependencies": [],
+            "details": "1. Create a 'locales' folder in the project root\n2. Add JSON files for each supported language (e.g., en.json, es.json)\n3. Structure translation keys hierarchically\n4. Implement a language selector component using React hooks\n5. Store selected language in localStorage for persistence\n6. Handle fallback to default language if translation is missing",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement language context and provider",
+            "description": "Create a React context for managing the current language and provide it throughout the application",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Create a LanguageContext using React.createContext()\n2. Implement a LanguageProvider component\n3. Use useReducer for language state management\n4. Provide methods for changing the language\n5. Wrap the main App component with LanguageProvider\n6. Optimize context updates using useMemo and useCallback",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop translation hook and HOC",
+            "description": "Create a custom hook and higher-order component for easy access to translations throughout the application",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Implement a useTranslation hook using useContext\n2. Create a withTranslation HOC for class components\n3. Add support for interpolation in translation strings\n4. Implement plural forms handling\n5. Add type safety using TypeScript for translation keys\n6. Implement error boundary for missing translations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Handle language-specific formatting",
+            "description": "Implement formatting utilities for dates, numbers, and currencies based on the selected language",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Use Intl.DateTimeFormat for date formatting\n2. Implement Intl.NumberFormat for number formatting\n3. Create utility functions for currency formatting\n4. Handle right-to-left (RTL) languages with CSS and component adjustments\n5. Implement locale-aware sorting for lists and tables\n6. Add unit tests for formatting functions",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Optimize internationalization performance",
+            "description": "Implement lazy loading for translations and optimize the internationalization process",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "1. Implement dynamic import for language files\n2. Use React.Suspense for loading translations\n3. Implement a caching mechanism for loaded translations\n4. Optimize translation lookup using memoization\n5. Implement code splitting for large translation files\n6. Add performance monitoring for translation loading and rendering",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Create Form Context and LocalStorage Persistence",
+        "description": "Implement a global form context using Context API and set up localStorage persistence to prevent data loss on page refresh.",
+        "details": "1. Create a form context to manage the state of the form:\n```typescript\ninterface FormData {\n  petName: string;\n  ownerName: string;\n  contactPhone: string;\n  lastSeenLocation: string;\n  lastSeenDateTime?: string;\n  petDescription?: string;\n  accessories?: string;\n  reward?: {\n    amount: number;\n    currency: 'BRL' | 'USD';\n  };\n  photos: string[];\n  customFields: { label: string; value: string }[];\n}\n\nconst FormContext = createContext<{\n  formData: FormData;\n  updateFormData: (data: Partial<FormData>) => void;\n  addPhoto: (photo: string) => void;\n  removePhoto: (index: number) => void;\n  addCustomField: () => void;\n  updateCustomField: (index: number, field: { label: string; value: string }) => void;\n  removeCustomField: (index: number) => void;\n  resetForm: () => void;\n}>({ /* default values */ });\n```\n2. Implement localStorage persistence in the provider:\n```typescript\nexport const FormProvider: React.FC = ({ children }) => {\n  const [formData, setFormData] = useState<FormData>(() => {\n    const savedData = localStorage.getItem('petPosterFormData');\n    return savedData ? JSON.parse(savedData) : defaultFormData;\n  });\n  \n  useEffect(() => {\n    localStorage.setItem('petPosterFormData', JSON.stringify(formData));\n  }, [formData]);\n  \n  // Implement all the context methods\n  \n  return (\n    <FormContext.Provider value={{ formData, updateFormData, /* other methods */ }}>\n      {children}\n    </FormContext.Provider>\n  );\n};\n```\n3. Create a custom hook for easy access to the form context:\n```typescript\nexport const useFormData = () => useContext(FormContext);\n```",
+        "testStrategy": "Test the persistence by simulating form input, refreshing the page, and verifying that data is restored. Test all context methods to ensure they correctly update the state. Mock localStorage for testing to verify save and load operations.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create FormContext with React Context API",
+            "description": "Implement a FormContext using React's Context API to manage global form state",
+            "dependencies": [],
+            "details": "1. Create a new file 'FormContext.js'\n2. Import necessary React hooks (createContext, useContext, useReducer)\n3. Define initial state object with form fields\n4. Create a reducer function to handle state updates\n5. Implement FormProvider component with useReducer\n6. Export custom hook useFormContext for consuming components\n7. Implement memoization for performance optimization",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement localStorage persistence logic",
+            "description": "Develop functions to save and retrieve form data from localStorage",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Create utility functions: saveToLocalStorage and getFromLocalStorage\n2. Implement JSON stringify/parse for data serialization\n3. Add error handling for localStorage operations\n4. Implement data compression techniques for large datasets\n5. Add a debounce mechanism to limit storage writes\n6. Implement versioning for stored data structure",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Integrate persistence with FormContext",
+            "description": "Connect localStorage persistence functions with the FormContext",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "1. Update FormProvider to load initial state from localStorage\n2. Implement useEffect hook to save state changes to localStorage\n3. Add error boundary for handling localStorage failures\n4. Implement retry mechanism for failed storage operations\n5. Add loading state to FormContext during initial data retrieval",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement form data validation",
+            "description": "Create a robust validation system for form inputs",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Define validation rules for each form field\n2. Implement a validateField function for individual field validation\n3. Create a validateForm function for full form validation\n4. Integrate validation with FormContext state updates\n5. Implement custom hooks for reusable validation logic\n6. Add support for async validation (e.g., API calls)\n7. Implement error message localization",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Optimize performance for large datasets",
+            "description": "Implement performance optimizations for handling large amounts of form data",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "1. Implement virtualization for long lists of form fields\n2. Use React.memo and useMemo for expensive computations\n3. Implement batch updates for multiple state changes\n4. Add pagination for large forms\n5. Implement lazy loading for form sections\n6. Use Web Workers for heavy computations\n7. Implement IndexedDB for larger datasets exceeding localStorage limits",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Enhance accessibility and error handling",
+            "description": "Improve form accessibility and implement comprehensive error handling",
+            "dependencies": [
+              1,
+              3,
+              4
+            ],
+            "details": "1. Add ARIA attributes to form elements\n2. Implement keyboard navigation for form fields\n3. Create focus management system for error states\n4. Implement error boundary components for graceful failure handling\n5. Add screen reader announcements for dynamic content changes\n6. Implement color contrast checking for form elements\n7. Create comprehensive logging system for error tracking",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement Pet Poster Form - Required Fields",
+        "description": "Create the form component with all required fields (pet name, owner name, contact phone, last seen location) using React Hook Form.",
+        "details": "1. Create a form component using React Hook Form:\n```typescript\nimport { useForm } from 'react-hook-form';\nimport { useFormData } from '../hooks/useFormData';\nimport { useLanguage } from '../hooks/useLanguage';\n\nconst PetPosterForm: React.FC = () => {\n  const { t } = useLanguage();\n  const { formData, updateFormData } = useFormData();\n  const { register, handleSubmit, formState: { errors } } = useForm({\n    defaultValues: formData\n  });\n  \n  const onSubmit = (data) => {\n    updateFormData(data);\n  };\n  \n  return (\n    <form onChange={handleSubmit(onSubmit)} className=\"space-y-6\">\n      <div>\n        <label htmlFor=\"petName\" className=\"block text-sm font-medium text-gray-700\">\n          {t('form.petName')} *\n        </label>\n        <input\n          id=\"petName\"\n          type=\"text\"\n          {...register('petName', { required: true })}\n          className=\"mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500\"\n        />\n        {errors.petName && <p className=\"text-red-500 text-xs mt-1\">{t('form.required')}</p>}\n      </div>\n      \n      {/* Similar implementation for ownerName, contactPhone, and lastSeenLocation */}\n      \n      {/* Submit button if needed */}\n    </form>\n  );\n};\n```\n2. Implement real-time validation with visual feedback\n3. Ensure all required fields have proper labels and error states\n4. Make the form accessible with proper ARIA attributes and keyboard navigation\n5. Connect the form to the FormContext to ensure data is saved to localStorage",
+        "testStrategy": "Test form validation by submitting with empty required fields and verifying error messages. Test that valid input is correctly saved to the form context. Test keyboard accessibility to ensure the form can be navigated and submitted without a mouse.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Pet Name and Description Fields",
+            "description": "Create and implement the pet name and description form fields with validation and accessibility features.",
+            "dependencies": [],
+            "details": "1. Create controlled input components for pet name and description.\n2. Implement real-time validation for pet name (required, max length).\n3. Add character counter for description field.\n4. Implement error handling and display error messages.\n5. Ensure proper labeling and ARIA attributes for accessibility.\n6. Add focus management for error states.\n7. Implement keyboard navigation support.\n8. Test with screen readers and assistive technologies.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop Pet Type and Breed Selection",
+            "description": "Create dropdown or radio button components for pet type and breed selection with dynamic options.",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Implement a dropdown or radio button group for pet type selection.\n2. Create a dynamic breed selection component based on the chosen pet type.\n3. Fetch breed data from an API or use a predefined list.\n4. Implement error handling for API requests (if applicable).\n5. Add proper ARIA labels and roles for accessibility.\n6. Ensure keyboard navigation works correctly.\n7. Implement form validation for required selections.\n8. Test with various input methods and assistive technologies.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create Image Upload Functionality",
+            "description": "Implement image upload feature with preview, validation, and accessibility considerations.",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Create a file input component for image upload.\n2. Implement client-side image validation (file type, size, dimensions).\n3. Add drag-and-drop functionality for image upload.\n4. Create an image preview component.\n5. Implement error handling for invalid uploads.\n6. Add progress indicator for upload process.\n7. Ensure proper ARIA labels and instructions for screen readers.\n8. Implement keyboard accessibility for upload and preview functions.\n9. Test with various input methods and assistive technologies.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Contact Information Fields",
+            "description": "Create and validate contact information fields including name, phone, and email.",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Create controlled input components for name, phone, and email.\n2. Implement real-time validation for each field (required, format checking).\n3. Add masking for phone number input.\n4. Implement error handling and display error messages.\n5. Ensure proper labeling and ARIA attributes for accessibility.\n6. Add focus management for error states.\n7. Implement keyboard navigation support.\n8. Test with screen readers and assistive technologies.\n9. Consider adding autocomplete attributes for better user experience.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Develop Form Submission and Error Handling",
+            "description": "Implement form submission logic, overall validation, and comprehensive error handling.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "1. Create a submit handler function to process form data.\n2. Implement overall form validation before submission.\n3. Display a summary of errors if form is incomplete.\n4. Add a loading state during form submission.\n5. Implement error handling for API submission failures.\n6. Create success and error messages with proper ARIA live regions.\n7. Implement focus management after form submission (success/error).\n8. Add confirmation modal before final submission.\n9. Ensure all interactive elements are reachable via keyboard.\n10. Test the entire form flow with various assistive technologies.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Implement Pet Poster Form - Optional Fields",
+        "description": "Add the optional fields to the form (date/time, pet description, accessories, reward) with appropriate validation and UI components.",
+        "details": "1. Extend the form component with optional fields:\n```typescript\n// Date and time field with datetime-local input\n<div>\n  <label htmlFor=\"lastSeenDateTime\" className=\"block text-sm font-medium text-gray-700\">\n    {t('form.lastSeenDateTime')}\n  </label>\n  <input\n    id=\"lastSeenDateTime\"\n    type=\"datetime-local\"\n    {...register('lastSeenDateTime')}\n    className=\"mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500\"\n  />\n</div>\n\n// Text area for pet description\n<div>\n  <label htmlFor=\"petDescription\" className=\"block text-sm font-medium text-gray-700\">\n    {t('form.petDescription')}\n  </label>\n  <textarea\n    id=\"petDescription\"\n    {...register('petDescription')}\n    rows={3}\n    className=\"mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500\"\n  />\n</div>\n\n// Reward fields with currency selection\n<div>\n  <fieldset>\n    <legend className=\"block text-sm font-medium text-gray-700\">{t('form.reward')}</legend>\n    <div className=\"mt-1 flex rounded-md\">\n      <select\n        {...register('reward.currency')}\n        className=\"rounded-l-md border-r-0 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500\"\n      >\n        <option value=\"BRL\">R$</option>\n        <option value=\"USD\">$</option>\n      </select>\n      <input\n        type=\"number\"\n        {...register('reward.amount', { min: 0 })}\n        className=\"block w-full rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500\"\n        placeholder=\"0.00\"\n      />\n    </div>\n  </fieldset>\n</div>\n```\n2. Implement conditional rendering for reward fields (only show amount if reward is offered)\n3. Add appropriate validation for numeric and date fields\n4. Ensure all fields update the form context in real-time",
+        "testStrategy": "Test the optional fields by entering various valid and invalid inputs. Verify that the reward amount accepts only numeric values. Test date/time input in different formats. Verify that all optional fields correctly update the form context.",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement conditional rendering for optional fields",
+            "description": "Create a system to show/hide optional fields based on user preferences or form state",
+            "dependencies": [],
+            "details": "1. Create a new component for optional fields container\n2. Implement a toggle mechanism (e.g., checkbox or button) to show/hide optional fields\n3. Use React's useState hook to manage the visibility state\n4. Implement smooth transitions for showing/hiding fields using CSS transitions\n5. Ensure proper ARIA attributes for accessibility (e.g., aria-expanded, aria-controls)\n6. Add error handling for edge cases (e.g., form submission with hidden fields)",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop validation rules for optional text fields",
+            "description": "Create and implement specific validation rules for optional text input fields",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Identify all optional text fields (e.g., additional details, medical history)\n2. Define validation rules for each field (e.g., character limits, allowed characters)\n3. Implement client-side validation using React hooks or a form library (e.g., Formik, react-hook-form)\n4. Create custom error messages for each validation rule\n5. Implement real-time validation feedback as the user types\n6. Ensure proper error handling and display for multiple validation errors",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement file upload for optional image fields",
+            "description": "Add functionality for users to upload additional pet images as optional fields",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Create a reusable file upload component for images\n2. Implement drag-and-drop functionality for file uploads\n3. Add file type and size validation (e.g., only allow images under 5MB)\n4. Create a preview mechanism for uploaded images\n5. Implement progress indicators for file uploads\n6. Handle potential upload errors and provide user feedback\n7. Ensure proper accessibility for file upload interactions (e.g., keyboard navigation)",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Develop date picker for optional date fields",
+            "description": "Implement a date picker component for optional date-related fields",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Choose and integrate a React-compatible date picker library (e.g., react-datepicker)\n2. Customize the date picker to match the form's design\n3. Implement date range restrictions if necessary (e.g., no future dates)\n4. Add validation for entered dates (e.g., proper format, logical date ranges)\n5. Ensure keyboard accessibility for date selection\n6. Implement localization support for date formats\n7. Handle edge cases like invalid dates or timezone issues",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Photo Upload Functionality",
+        "description": "Create the photo upload component that allows users to upload up to 3 photos of their pet.",
+        "details": "1. Create a photo upload component:\n```typescript\nconst PhotoUpload: React.FC = () => {\n  const { formData, addPhoto, removePhoto } = useFormData();\n  const { t } = useLanguage();\n  \n  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    if (e.target.files && e.target.files.length > 0) {\n      const file = e.target.files[0];\n      if (formData.photos.length >= 3) {\n        alert(t('form.maxPhotosReached'));\n        return;\n      }\n      \n      const reader = new FileReader();\n      reader.onloadend = () => {\n        addPhoto(reader.result as string);\n      };\n      reader.readAsDataURL(file);\n    }\n  };\n  \n  return (\n    <div className=\"space-y-4\">\n      <label className=\"block text-sm font-medium text-gray-700\">\n        {t('form.photos')} ({formData.photos.length}/3)\n      </label>\n      \n      <div className=\"flex flex-wrap gap-4\">\n        {formData.photos.map((photo, index) => (\n          <div key={index} className=\"relative w-24 h-24\">\n            <img src={photo} alt=\"\" className=\"w-full h-full object-cover rounded\" />\n            <button\n              type=\"button\"\n              onClick={() => removePhoto(index)}\n              className=\"absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1\"\n            >\n              ×\n            </button>\n          </div>\n        ))}\n        \n        {formData.photos.length < 3 && (\n          <label className=\"w-24 h-24 border-2 border-dashed border-gray-300 rounded flex items-center justify-center cursor-pointer hover:border-indigo-500\">\n            <span className=\"text-3xl text-gray-400\">+</span>\n            <input\n              type=\"file\"\n              accept=\"image/*\"\n              onChange={handleFileChange}\n              className=\"hidden\"\n            />\n          </label>\n        )}\n      </div>\n    </div>\n  );\n};\n```\n2. Implement file validation to ensure only image files are accepted\n3. Add preview thumbnails for uploaded photos\n4. Implement the ability to remove photos\n5. Store photos as base64 strings in the form context",
+        "testStrategy": "Test uploading various image types and sizes. Verify that the limit of 3 photos is enforced. Test the removal of photos. Test that invalid file types are rejected. Verify that photos are correctly stored in the form context and localStorage.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement file input and validation",
+            "description": "Create a file input component and implement client-side file validation",
+            "dependencies": [],
+            "details": "1. Create a React component for file input\n2. Implement onChange handler to capture selected files\n3. Validate file types (e.g., .jpg, .png, .gif)\n4. Validate file size (e.g., max 5MB)\n5. Display error messages for invalid files\n6. Use React hooks (useState, useCallback) for state management\n7. Implement accessibility features (proper labeling, keyboard navigation)\n8. Add drag-and-drop functionality using react-dropzone",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Generate and display image previews",
+            "description": "Create image previews for selected files and display them to the user",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Use FileReader API to read file contents\n2. Create data URLs for image previews\n3. Implement a preview component to display thumbnails\n4. Handle loading states and display placeholders\n5. Implement lazy loading for multiple previews\n6. Add ability to remove individual previews\n7. Ensure responsive design for various screen sizes\n8. Implement error handling for failed preview generation",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement multiple file upload handling",
+            "description": "Add support for selecting and uploading multiple files simultaneously",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "1. Modify file input to accept multiple files\n2. Update state management to handle an array of files\n3. Implement batch preview generation\n4. Create a queue system for uploading multiple files\n5. Add progress indicators for each file upload\n6. Implement cancel functionality for individual uploads\n7. Handle errors for individual file uploads\n8. Optimize performance for large numbers of files",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement server-side upload endpoint",
+            "description": "Create a server-side endpoint to handle file uploads and storage",
+            "dependencies": [],
+            "details": "1. Set up a Node.js/Express server (if not already in place)\n2. Implement a POST endpoint for file uploads\n3. Use multer middleware for handling multipart/form-data\n4. Implement server-side file validation\n5. Set up cloud storage (e.g., AWS S3) for file storage\n6. Generate unique filenames to prevent conflicts\n7. Implement error handling and appropriate HTTP responses\n8. Add security measures (e.g., rate limiting, authentication)",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Integrate client-side upload with server",
+            "description": "Connect the React frontend with the server-side upload endpoint",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "1. Use axios or fetch API to send files to the server\n2. Implement progress tracking using XMLHttpRequest\n3. Handle successful uploads (update UI, clear form)\n4. Implement comprehensive error handling\n5. Add retry functionality for failed uploads\n6. Implement request cancellation for aborted uploads\n7. Use React Query or SWR for efficient API calls and caching\n8. Add end-to-end tests for the upload process",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Implement Custom Fields Functionality",
+        "description": "Create the dynamic custom fields component that allows users to add, edit, and remove additional information fields.",
+        "details": "1. Create a custom fields component:\n```typescript\nconst CustomFields: React.FC = () => {\n  const { formData, addCustomField, updateCustomField, removeCustomField } = useFormData();\n  const { t } = useLanguage();\n  \n  return (\n    <div className=\"space-y-4\">\n      <div className=\"flex justify-between items-center\">\n        <label className=\"block text-sm font-medium text-gray-700\">\n          {t('form.customFields')}\n        </label>\n        <button\n          type=\"button\"\n          onClick={addCustomField}\n          className=\"text-sm bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200\"\n        >\n          {t('form.addField')}\n        </button>\n      </div>\n      \n      {formData.customFields.map((field, index) => (\n        <div key={index} className=\"flex gap-2\">\n          <input\n            type=\"text\"\n            value={field.label}\n            onChange={(e) => updateCustomField(index, { ...field, label: e.target.value })}\n            placeholder={t('form.fieldLabel')}\n            className=\"w-1/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500\"\n          />\n          <input\n            type=\"text\"\n            value={field.value}\n            onChange={(e) => updateCustomField(index, { ...field, value: e.target.value })}\n            placeholder={t('form.fieldValue')}\n            className=\"w-2/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500\"\n          />\n          <button\n            type=\"button\"\n            onClick={() => removeCustomField(index)}\n            className=\"text-red-500\"\n          >\n            ×\n          </button>\n        </div>\n      ))}\n    </div>\n  );\n};\n```\n2. Implement the ability to add new custom fields\n3. Allow users to edit both the label and value of custom fields\n4. Provide the ability to remove custom fields\n5. Ensure custom fields are saved in the form context and localStorage",
+        "testStrategy": "Test adding, editing, and removing custom fields. Verify that custom fields are correctly stored in the form context. Test with a large number of custom fields to ensure the UI handles them properly.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement dynamic field creation mechanism",
+            "description": "Create a system for dynamically generating and rendering custom form fields based on user input or configuration.",
+            "dependencies": [],
+            "details": "1. Design a flexible data structure to represent custom fields (e.g., {type, label, validation, options})\n2. Implement a factory function to generate React components for different field types (text, number, dropdown, etc.)\n3. Create a CustomFieldRenderer component that takes field config and renders appropriate field component\n4. Implement state management for dynamic fields using React hooks (useState, useReducer)\n5. Add functionality to add, remove, and reorder custom fields\n6. Ensure proper key management for dynamic field lists to optimize rendering\n7. Implement error boundary to catch and handle rendering errors for custom fields",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop custom field validation system",
+            "description": "Create a flexible validation system that can handle various validation rules for custom fields and integrate with the form context.",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Design a validation rule schema that supports common validations (required, min/max length, regex, etc.)\n2. Implement a validation engine that can process field values against defined rules\n3. Create custom hooks (e.g., useFieldValidation) to manage field-level validation state\n4. Integrate field validation with form-level validation in the form context\n5. Implement real-time validation feedback for better user experience\n6. Add support for custom validation functions for complex use cases\n7. Implement localization support for validation error messages\n8. Ensure validation logic handles different field types correctly (e.g., date fields, multi-select)",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Integrate custom fields with form context",
+            "description": "Ensure seamless integration of custom fields with the existing form management system, including state management and submission handling.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "1. Extend the form context to support dynamic field registration and deregistration\n2. Implement custom hooks (e.g., useCustomField) to connect custom fields to form context\n3. Update form state management to handle custom field values and validation states\n4. Modify form submission logic to include custom field data\n5. Implement data transformation layer to convert between API and form data structures\n6. Add support for field dependencies and conditional rendering based on other field values\n7. Ensure proper cleanup of custom field data when fields are removed\n8. Implement performance optimizations (e.g., memoization) to handle forms with many custom fields",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Enhance accessibility and user experience for custom fields",
+            "description": "Improve the accessibility and overall user experience of custom fields, ensuring they meet WCAG standards and provide a smooth interaction for all users.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "1. Implement proper ARIA attributes for all custom field components\n2. Ensure keyboard navigation works correctly for all custom field types\n3. Add support for screen readers, including descriptive labels and error messages\n4. Implement focus management for dynamically added/removed fields\n5. Create custom field templates that follow design system guidelines for consistency\n6. Add animations for smooth transitions when adding/removing fields\n7. Implement error highlighting and visual feedback for validation errors\n8. Ensure color contrast meets WCAG AA standards for all custom field states\n9. Add support for responsive design to ensure custom fields work well on various devices",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Create Poster Preview Component",
+        "description": "Implement the real-time preview component that displays the poster with all the information entered in the form.",
+        "details": "1. Create a poster preview component:\n```typescript\nconst PosterPreview: React.FC = () => {\n  const { formData } = useFormData();\n  const { t, language } = useLanguage();\n  \n  // Determine the photo layout based on number of photos\n  const renderPhotos = () => {\n    if (formData.photos.length === 0) {\n      return <div className=\"h-40 bg-gray-200 flex items-center justify-center text-gray-400\">{t('preview.noPhotos')}</div>;\n    }\n    \n    if (formData.photos.length === 1) {\n      return (\n        <div className=\"h-64 overflow-hidden\">\n          <img src={formData.photos[0]} alt=\"\" className=\"w-full h-full object-cover\" />\n        </div>\n      );\n    }\n    \n    if (formData.photos.length === 2) {\n      return (\n        <div className=\"grid grid-cols-2 gap-2 h-64\">\n          {formData.photos.map((photo, index) => (\n            <img key={index} src={photo} alt=\"\" className=\"w-full h-full object-cover\" />\n          ))}\n        </div>\n      );\n    }\n    \n    // 3 photos: one large + two smaller\n    return (\n      <div className=\"grid grid-cols-2 gap-2 h-64\">\n        <img src={formData.photos[0]} alt=\"\" className=\"w-full h-full object-cover row-span-2\" />\n        <img src={formData.photos[1]} alt=\"\" className=\"w-full h-full object-cover\" />\n        <img src={formData.photos[2]} alt=\"\" className=\"w-full h-full object-cover\" />\n      </div>\n    );\n  };\n  \n  return (\n    <div className=\"bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden\">\n      {/* Poster Header */}\n      <div className=\"bg-red-600 text-white text-center py-4\">\n        <h1 className=\"text-3xl font-bold\">{t('poster.title')}</h1>\n      </div>\n      \n      {/* Pet Photos */}\n      {renderPhotos()}\n      \n      {/* Pet Information */}\n      <div className=\"p-4 space-y-4\">\n        <h2 className=\"text-2xl font-bold text-center\">{formData.petName || t('preview.petNamePlaceholder')}</h2>\n        \n        {/* Last Seen Info */}\n        <div className=\"bg-gray-100 p-3 rounded\">\n          <p className=\"font-medium\">{t('poster.lastSeen')}:</p>\n          <p>{formData.lastSeenLocation || t('preview.locationPlaceholder')}</p>\n          {formData.lastSeenDateTime && (\n            <p className=\"text-sm text-gray-600\">\n              {new Date(formData.lastSeenDateTime).toLocaleString(language === 'pt' ? 'pt-BR' : 'en-US')}\n            </p>\n          )}\n        </div>\n        \n        {/* Pet Description */}\n        {formData.petDescription && (\n          <div>\n            <p className=\"font-medium\">{t('poster.description')}:</p>\n            <p>{formData.petDescription}</p>\n          </div>\n        )}\n        \n        {/* Accessories */}\n        {formData.accessories && (\n          <div>\n            <p className=\"font-medium\">{t('poster.accessories')}:</p>\n            <p>{formData.accessories}</p>\n          </div>\n        )}\n        \n        {/* Custom Fields */}\n        {formData.customFields.length > 0 && (\n          <div className=\"space-y-1\">\n            {formData.customFields.map((field, index) => (\n              <div key={index}>\n                <span className=\"font-medium\">{field.label}: </span>\n                <span>{field.value}</span>\n              </div>\n            ))}\n          </div>\n        )}\n        \n        {/* Reward */}\n        {formData.reward?.amount > 0 && (\n          <div className=\"bg-yellow-100 p-3 rounded text-center\">\n            <p className=\"font-medium\">{t('poster.reward')}:</p>\n            <p className=\"text-xl font-bold\">\n              {formData.reward.currency === 'BRL' ? 'R$' : '$'} {formData.reward.amount}\n            </p>\n          </div>\n        )}\n        \n        {/* Contact Information */}\n        <div className=\"bg-blue-100 p-3 rounded text-center mt-4\">\n          <p className=\"font-medium\">{t('poster.contact')}:</p>\n          <p>{formData.ownerName || t('preview.ownerNamePlaceholder')}</p>\n          <p className=\"text-xl font-bold\">{formData.contactPhone || t('preview.phonePlaceholder')}</p>\n        </div>\n      </div>\n    </div>\n  );\n};\n```\n2. Implement responsive design for the poster preview\n3. Handle different photo layouts based on the number of uploaded photos\n4. Format dates and currency according to the selected language\n5. Provide placeholders for empty fields",
+        "testStrategy": "Test the preview with various combinations of form data. Verify that the photo layout changes correctly based on the number of photos. Test with both languages to ensure proper formatting. Test with empty fields to ensure placeholders are displayed.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up responsive layout structure",
+            "description": "Create a flexible layout structure for the poster preview component that adapts to different screen sizes and orientations.",
+            "dependencies": [],
+            "details": "Use CSS Grid or Flexbox for the main layout. Implement media queries for breakpoints at 768px, 1024px, and 1440px. Ensure the preview maintains aspect ratio across devices. Use rem units for scalable typography. Test layout on various devices and browsers.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement dynamic content rendering",
+            "description": "Develop a system to dynamically render poster content based on form data input.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a state management solution using React Context or Redux. Set up reducers for handling form data updates. Implement useMemo or useCallback hooks for optimizing re-renders. Use React.lazy for code-splitting of heavy components. Handle empty states and loading states appropriately.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Optimize for different data scenarios",
+            "description": "Ensure the preview component handles various data input scenarios gracefully, including edge cases.",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement data validation and sanitization. Handle long text inputs with ellipsis or scrolling. Create fallback UI for missing images or data. Use PropTypes or TypeScript for type checking. Implement error boundaries to catch and display errors without crashing the component.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement real-time preview updates",
+            "description": "Ensure the preview updates in real-time as the user inputs data in the form.",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Use debounce technique for performance optimization on frequent updates. Implement a custom hook for handling real-time updates. Use requestAnimationFrame for smooth animations if needed. Consider using Web Workers for heavy computations to prevent UI blocking.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add accessibility features",
+            "description": "Ensure the poster preview component is fully accessible and compliant with WCAG 2.1 guidelines.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Implement proper ARIA labels and roles. Ensure keyboard navigation works correctly. Add screen reader descriptions for visual elements. Implement sufficient color contrast. Test with various assistive technologies. Use the axe-core library for automated accessibility testing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement performance optimizations",
+            "description": "Optimize the preview component for performance, ensuring smooth rendering and interactions.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Use React.memo for preventing unnecessary re-renders. Implement virtualization for long lists using react-window. Optimize images with lazy loading and WebP format. Use Lighthouse for performance auditing. Implement code splitting and lazy loading of components. Consider server-side rendering or static generation for initial load performance.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Implement Poster Download Functionality",
+        "description": "Create the functionality to download the poster as a PNG or JPEG image.",
+        "details": "1. Install html-to-image library:\n```bash\nnpm install html-to-image\n```\n2. Create a download button component:\n```typescript\nimport { toPng, toJpeg } from 'html-to-image';\nimport { useRef } from 'react';\nimport { useLanguage } from '../hooks/useLanguage';\nimport { useFormData } from '../hooks/useFormData';\n\nconst DownloadButton: React.FC<{ posterRef: React.RefObject<HTMLDivElement> }> = ({ posterRef }) => {\n  const { t } = useLanguage();\n  const { formData } = useFormData();\n  \n  const downloadAsPng = async () => {\n    if (!posterRef.current) return;\n    \n    try {\n      const dataUrl = await toPng(posterRef.current, { quality: 0.95 });\n      const link = document.createElement('a');\n      link.download = `${formData.petName || 'pet'}_poster.png`;\n      link.href = dataUrl;\n      link.click();\n    } catch (error) {\n      console.error('Error generating image:', error);\n    }\n  };\n  \n  const downloadAsJpeg = async () => {\n    if (!posterRef.current) return;\n    \n    try {\n      const dataUrl = await toJpeg(posterRef.current, { quality: 0.95 });\n      const link = document.createElement('a');\n      link.download = `${formData.petName || 'pet'}_poster.jpg`;\n      link.href = dataUrl;\n      link.click();\n    } catch (error) {\n      console.error('Error generating image:', error);\n    }\n  };\n  \n  return (\n    <div className=\"flex gap-2\">\n      <button\n        onClick={downloadAsPng}\n        className=\"bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded\"\n      >\n        {t('download.png')}\n      </button>\n      <button\n        onClick={downloadAsJpeg}\n        className=\"bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded\"\n      >\n        {t('download.jpeg')}\n      </button>\n    </div>\n  );\n};\n```\n3. Update the main component to include the poster reference:\n```typescript\nconst PosterPage: React.FC = () => {\n  const posterRef = useRef<HTMLDivElement>(null);\n  \n  return (\n    <Layout>\n      <EditorColumn>\n        <PetPosterForm />\n      </EditorColumn>\n      <PreviewColumn>\n        <div ref={posterRef}>\n          <PosterPreview />\n        </div>\n        <div className=\"mt-4\">\n          <DownloadButton posterRef={posterRef} />\n        </div>\n      </PreviewColumn>\n    </Layout>\n  );\n};\n```",
+        "testStrategy": "Test the download functionality with various poster configurations. Verify that both PNG and JPEG downloads work correctly. Test with different browsers to ensure compatibility. Mock the html-to-image functions for unit testing.",
+        "priority": "high",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement image format conversion",
+            "description": "Create a utility function to convert HTML content to different image formats (PNG, JPEG, WebP)",
+            "dependencies": [],
+            "details": "Use html2canvas library to capture HTML content. Implement conversion logic for PNG, JPEG, and WebP formats. Handle different color spaces and compression levels. Ensure proper error handling for unsupported formats or conversion failures.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop cross-browser compatible download mechanism",
+            "description": "Create a robust download function that works across different browsers and devices",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement Blob creation and URL.createObjectURL for modern browsers. Fall back to data URI for older browsers. Handle iOS Safari limitations by opening image in a new tab. Test thoroughly on Chrome, Firefox, Safari, Edge, and mobile browsers.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement error handling and user feedback",
+            "description": "Add comprehensive error handling and provide clear feedback to users during the download process",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create custom error types for different failure scenarios (e.g., ConversionError, DownloadError). Implement try-catch blocks in critical sections. Display user-friendly error messages using a toast or modal component. Add loading indicators during the conversion and download process.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Optimize performance for large posters",
+            "description": "Implement techniques to handle large or complex poster designs efficiently",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Use Web Workers for image processing to prevent UI blocking. Implement progressive rendering for large posters. Add option for users to choose image quality vs file size. Optimize memory usage by releasing resources after download completion.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Enhance accessibility and user experience",
+            "description": "Improve the download functionality's accessibility and overall user experience",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Add proper ARIA attributes to download buttons and progress indicators. Implement keyboard navigation for the download process. Provide clear instructions and alt text for screen readers. Add option to customize file name before download. Implement undo/redo functionality for accidental downloads.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Implement WhatsApp Sharing Functionality",
+        "description": "Create the functionality to share the poster via WhatsApp with a pre-formatted message.",
+        "details": "1. Create a WhatsApp share button component:\n```typescript\nconst WhatsAppShareButton: React.FC = () => {\n  const { t, language } = useLanguage();\n  const { formData } = useFormData();\n  \n  const generateMessage = () => {\n    const title = language === 'pt' ? 'PROCURA-SE' : 'MISSING';\n    let message = `${title}: ${formData.petName}\\n`;\n    \n    if (formData.lastSeenLocation) {\n      message += `${t('poster.lastSeen')}: ${formData.lastSeenLocation}\\n`;\n    }\n    \n    if (formData.petDescription) {\n      message += `${t('poster.description')}: ${formData.petDescription}\\n`;\n    }\n    \n    if (formData.reward?.amount > 0) {\n      const currency = formData.reward.currency === 'BRL' ? 'R$' : '$';\n      message += `${t('poster.reward')}: ${currency}${formData.reward.amount}\\n`;\n    }\n    \n    message += `\\n${t('poster.contact')}: ${formData.ownerName}\\n${formData.contactPhone}`;\n    \n    return encodeURIComponent(message);\n  };\n  \n  const shareViaWhatsApp = () => {\n    const message = generateMessage();\n    window.open(`https://wa.me/?text=${message}`, '_blank');\n  };\n  \n  return (\n    <button\n      onClick={shareViaWhatsApp}\n      className=\"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2\"\n    >\n      <svg className=\"w-5 h-5\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n        <path d=\"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z\" />\n      </svg>\n      {t('share.whatsApp')}\n    </button>\n  );\n};\n```\n2. Add the WhatsApp share button to the poster page\n3. Generate a formatted message that includes all relevant poster information\n4. Ensure the message is properly encoded for URL use",
+        "testStrategy": "Test the WhatsApp sharing functionality by verifying the generated message contains all the relevant information. Test with various form data combinations. Verify that the URL is properly encoded. Mock the window.open function for unit testing.",
+        "priority": "medium",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement WhatsApp sharing button and message formatting",
+            "description": "Create a reusable React component for the WhatsApp sharing button and implement message formatting logic",
+            "dependencies": [],
+            "details": "1. Create a new React component called 'WhatsAppShareButton'\n2. Design the button UI using styled-components or CSS modules\n3. Implement a function to format the share message, including:\n   - Product title\n   - Short description\n   - Price\n   - URL to the product page\n4. Add proper accessibility attributes (aria-label, role)\n5. Implement error handling for message formatting\n6. Create unit tests for the component and message formatting function\n7. Optimize the component for performance using React.memo or useMemo where appropriate",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement platform-specific WhatsApp sharing logic",
+            "description": "Create separate sharing logic for different mobile platforms (iOS, Android) and desktop",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Implement a utility function to detect the user's platform (iOS, Android, desktop)\n2. For mobile platforms:\n   - Use the WhatsApp URL scheme (whatsapp://send?text=)\n   - Encode the formatted message for URL usage\n3. For desktop:\n   - Use the web.whatsapp.com link with encoded message\n4. Implement fallback logic for unsupported platforms\n5. Add error handling for failed share attempts\n6. Create platform-specific tests to ensure correct behavior\n7. Implement analytics tracking for successful shares and errors\n8. Optimize the sharing process for quick loading and response",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Integrate WhatsApp sharing into the product detail page",
+            "description": "Add the WhatsApp sharing functionality to the product detail page and ensure proper context management",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "1. Import the WhatsAppShareButton component into the product detail page\n2. Add the sharing button in an appropriate location (e.g., near other sharing options)\n3. Implement a custom hook (useWhatsAppShare) to manage sharing state and logic\n4. Connect the sharing button to the product context to access necessary details\n5. Implement loading and error states for the sharing process\n6. Add success and error notifications for user feedback\n7. Ensure the sharing functionality works with server-side rendering (if applicable)\n8. Implement proper SEO considerations for the sharing feature\n9. Conduct thorough cross-browser and cross-device testing\n10. Update the product detail page documentation to include the new sharing feature",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Implement Copy to Clipboard Functionality",
+        "description": "Create the functionality to copy a formatted text version of the poster information to the clipboard.",
+        "details": "1. Create a copy to clipboard button component:\n```typescript\nimport { useState } from 'react';\nimport { useLanguage } from '../hooks/useLanguage';\nimport { useFormData } from '../hooks/useFormData';\n\nconst CopyToClipboardButton: React.FC = () => {\n  const { t, language } = useLanguage();\n  const { formData } = useFormData();\n  const [copied, setCopied] = useState(false);\n  \n  const generateText = () => {\n    const title = language === 'pt' ? 'PROCURA-SE' : 'MISSING';\n    let text = `${title}: ${formData.petName}\\n\\n`;\n    \n    if (formData.lastSeenLocation) {\n      text += `${t('poster.lastSeen')}: ${formData.lastSeenLocation}\\n`;\n    }\n    \n    if (formData.lastSeenDateTime) {\n      const dateTime = new Date(formData.lastSeenDateTime).toLocaleString(\n        language === 'pt' ? 'pt-BR' : 'en-US'\n      );\n      text += `${t('poster.when')}: ${dateTime}\\n`;\n    }\n    \n    if (formData.petDescription) {\n      text += `\\n${t('poster.description')}: ${formData.petDescription}\\n`;\n    }\n    \n    if (formData.accessories) {\n      text += `${t('poster.accessories')}: ${formData.accessories}\\n`;\n    }\n    \n    // Add custom fields\n    if (formData.customFields.length > 0) {\n      text += '\\n';\n      formData.customFields.forEach(field => {\n        text += `${field.label}: ${field.value}\\n`;\n      });\n    }\n    \n    // Add reward if available\n    if (formData.reward?.amount > 0) {\n      const currency = formData.reward.currency === 'BRL' ? 'R$' : '$';\n      text += `\\n${t('poster.reward')}: ${currency}${formData.reward.amount}\\n`;\n    }\n    \n    // Add contact information\n    text += `\\n${t('poster.contact')}:\\n${formData.ownerName}\\n${formData.contactPhone}`;\n    \n    return text;\n  };\n  \n  const copyToClipboard = () => {\n    const text = generateText();\n    navigator.clipboard.writeText(text).then(() => {\n      setCopied(true);\n      setTimeout(() => setCopied(false), 2000);\n    });\n  };\n  \n  return (\n    <button\n      onClick={copyToClipboard}\n      className=\"bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded flex items-center gap-2\"\n    >\n      <svg className=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n        <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth=\"2\" d=\"M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3\" />\n      </svg>\n      {copied ? t('share.copied') : t('share.copyText')}\n    </button>\n  );\n};\n```\n2. Add the copy to clipboard button to the poster page\n3. Generate a formatted text that includes all relevant poster information\n4. Provide visual feedback when the text is copied",
+        "testStrategy": "Test the copy to clipboard functionality by verifying the generated text contains all the relevant information. Test with various form data combinations. Mock the navigator.clipboard.writeText function for unit testing. Verify that the copied state changes correctly.",
+        "priority": "medium",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement primary clipboard API functionality",
+            "description": "Implement the main clipboard functionality using the modern Clipboard API for supported browsers",
+            "dependencies": [],
+            "details": "1. Use navigator.clipboard.writeText() for modern browsers\n2. Wrap the functionality in a try-catch block to handle potential errors\n3. Create a utility function copyToClipboard(text) that returns a Promise\n4. Implement proper type checking and error handling for invalid input\n5. Add appropriate ARIA attributes for accessibility",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop fallback methods for unsupported browsers",
+            "description": "Create fallback methods using document.execCommand('copy') for browsers that don't support the Clipboard API",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Check for Clipboard API support using feature detection\n2. Implement document.execCommand('copy') fallback method\n3. Create a temporary textarea element to hold the text for copying\n4. Handle edge cases like empty strings or long text\n5. Ensure proper cleanup of temporary elements\n6. Test thoroughly across different browsers and versions",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement user feedback mechanism",
+            "description": "Add visual and accessibility-friendly feedback to inform users about the success or failure of the copy operation",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "1. Create a reusable Toast component for visual feedback\n2. Implement success and error states with appropriate styling\n3. Use React hooks to manage the visibility and content of the feedback\n4. Add screen reader announcements using aria-live regions\n5. Implement auto-dismissal of feedback after a set duration\n6. Allow users to manually dismiss the feedback\n7. Ensure the feedback is keyboard accessible",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Form Validation and Error Handling",
+        "description": "Enhance the form with comprehensive validation, error messages, and visual feedback.",
+        "details": "1. Update the form component with enhanced validation:\n```typescript\nimport { useForm } from 'react-hook-form';\n\nconst PetPosterForm: React.FC = () => {\n  const { t } = useLanguage();\n  const { formData, updateFormData } = useFormData();\n  const { register, handleSubmit, formState: { errors }, watch } = useForm({\n    defaultValues: formData,\n    mode: 'onChange' // Enable real-time validation\n  });\n  \n  // Watch form values for real-time preview\n  const formValues = watch();\n  \n  // Update form context when values change\n  useEffect(() => {\n    updateFormData(formValues);\n  }, [formValues, updateFormData]);\n  \n  return (\n    <form className=\"space-y-6\">\n      {/* Pet Name Field */}\n      <div>\n        <label htmlFor=\"petName\" className=\"block text-sm font-medium text-gray-700\">\n          {t('form.petName')} *\n        </label>\n        <input\n          id=\"petName\"\n          type=\"text\"\n          {...register('petName', { \n            required: t('form.errors.required'),\n            maxLength: {\n              value: 50,\n              message: t('form.errors.maxLength', { length: 50 })\n            }\n          })}\n          aria-invalid={errors.petName ? 'true' : 'false'}\n          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.petName ? 'border-red-300' : 'border-gray-300'}`}\n        />\n        {errors.petName && (\n          <p className=\"mt-1 text-sm text-red-600\" role=\"alert\">\n            {errors.petName.message}\n          </p>\n        )}\n      </div>\n      \n      {/* Owner Name Field */}\n      <div>\n        <label htmlFor=\"ownerName\" className=\"block text-sm font-medium text-gray-700\">\n          {t('form.ownerName')} *\n        </label>\n        <input\n          id=\"ownerName\"\n          type=\"text\"\n          {...register('ownerName', { \n            required: t('form.errors.required'),\n            maxLength: {\n              value: 100,\n              message: t('form.errors.maxLength', { length: 100 })\n            }\n          })}\n          aria-invalid={errors.ownerName ? 'true' : 'false'}\n          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.ownerName ? 'border-red-300' : 'border-gray-300'}`}\n        />\n        {errors.ownerName && (\n          <p className=\"mt-1 text-sm text-red-600\" role=\"alert\">\n            {errors.ownerName.message}\n          </p>\n        )}\n      </div>\n      \n      {/* Phone Field */}\n      <div>\n        <label htmlFor=\"contactPhone\" className=\"block text-sm font-medium text-gray-700\">\n          {t('form.contactPhone')} *\n        </label>\n        <input\n          id=\"contactPhone\"\n          type=\"tel\"\n          {...register('contactPhone', { \n            required: t('form.errors.required'),\n            pattern: {\n              value: /^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/,\n              message: t('form.errors.invalidPhone')\n            }\n          })}\n          aria-invalid={errors.contactPhone ? 'true' : 'false'}\n          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.contactPhone ? 'border-red-300' : 'border-gray-300'}`}\n        />\n        {errors.contactPhone && (\n          <p className=\"mt-1 text-sm text-red-600\" role=\"alert\">\n            {errors.contactPhone.message}\n          </p>\n        )}\n      </div>\n      \n      {/* Last Seen Location Field */}\n      <div>\n        <label htmlFor=\"lastSeenLocation\" className=\"block text-sm font-medium text-gray-700\">\n          {t('form.lastSeenLocation')} *\n        </label>\n        <input\n          id=\"lastSeenLocation\"\n          type=\"text\"\n          {...register('lastSeenLocation', { \n            required: t('form.errors.required')\n          })}\n          aria-invalid={errors.lastSeenLocation ? 'true' : 'false'}\n          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.lastSeenLocation ? 'border-red-300' : 'border-gray-300'}`}\n        />\n        {errors.lastSeenLocation && (\n          <p className=\"mt-1 text-sm text-red-600\" role=\"alert\">\n            {errors.lastSeenLocation.message}\n          </p>\n        )}\n      </div>\n      \n      {/* Similar validation for optional fields */}\n    </form>\n  );\n};\n```\n2. Implement real-time validation with visual feedback\n3. Add appropriate validation rules for each field type:\n   - Text fields: required, max length\n   - Phone: required, pattern matching\n   - Date/time: format validation\n   - Reward amount: numeric validation\n4. Ensure all error messages are translated\n5. Add ARIA attributes for accessibility",
+        "testStrategy": "Test form validation by submitting with invalid data and verifying error messages. Test each validation rule separately. Test that error states are properly displayed and that ARIA attributes are correctly set. Test keyboard navigation through the form.",
+        "priority": "high",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up form state management",
+            "description": "Implement form state management using React hooks or a form library",
+            "dependencies": [],
+            "details": "Choose between useState for simple forms or a library like Formik for complex forms. Set up initial state for form fields, errors, and touched status. Implement handleChange and handleBlur functions to update state.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement client-side validation logic",
+            "description": "Create validation functions for each form field",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop reusable validation functions for common patterns (e.g., email, password strength). Implement custom validation logic for specific field requirements. Use regular expressions and conditional checks as needed.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement real-time validation",
+            "description": "Trigger validation on user input and display immediate feedback",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Use the onChange event to trigger validation as the user types. Implement debounce functionality to avoid excessive validation calls. Update error state in real-time and display visual indicators for valid/invalid fields.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create custom error messages",
+            "description": "Design and implement a system for displaying custom error messages",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create an error message mapping object or function. Implement logic to generate context-specific error messages. Consider internationalization for multi-language support. Ensure error messages are clear, concise, and actionable.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement form submission validation",
+            "description": "Perform final validation before form submission and handle errors",
+            "dependencies": [
+              1,
+              2,
+              4
+            ],
+            "details": "Create a handleSubmit function that performs a final validation check. Prevent form submission if errors exist. Display a summary of errors if submission fails. Implement server-side validation handling for additional security.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Enhance accessibility for form validation",
+            "description": "Implement accessibility features for error messages and form navigation",
+            "dependencies": [
+              3,
+              4,
+              5
+            ],
+            "details": "Use aria-invalid attribute for invalid fields. Implement error message association using aria-describedby. Ensure keyboard navigation works correctly with error states. Use role='alert' for dynamically displayed error messages. Test with screen readers to verify accessibility.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement visual feedback and UI enhancements",
+            "description": "Design and implement visual cues for form validation states",
+            "dependencies": [
+              3,
+              4,
+              6
+            ],
+            "details": "Create CSS styles for valid, invalid, and focused form states. Implement icons or color changes to indicate field status. Design and implement an error summary component for form-wide errors. Ensure visual feedback meets WCAG color contrast requirements.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Implement Accessibility Features",
+        "description": "Enhance the application with accessibility features to ensure it's usable by everyone, including keyboard navigation and screen reader support.",
+        "details": "1. Add focus management and keyboard navigation:\n```typescript\n// Example of making a component keyboard accessible\nconst AccessibleButton: React.FC<{\n  onClick: () => void;\n  children: React.ReactNode;\n  className?: string;\n}> = ({ onClick, children, className }) => {\n  return (\n    <button\n      onClick={onClick}\n      className={className}\n      onKeyDown={(e) => {\n        if (e.key === 'Enter' || e.key === ' ') {\n          onClick();\n        }\n      }}\n      tabIndex={0}\n      role=\"button\"\n      aria-pressed=\"false\"\n    >\n      {children}\n    </button>\n  );\n};\n```\n2. Add ARIA labels and roles to all interactive elements:\n```typescript\n// Example of adding ARIA attributes to form fields\n<label id=\"petNameLabel\" htmlFor=\"petName\" className=\"block text-sm font-medium text-gray-700\">\n  {t('form.petName')} *\n</label>\n<input\n  id=\"petName\"\n  type=\"text\"\n  aria-labelledby=\"petNameLabel\"\n  aria-required=\"true\"\n  aria-invalid={errors.petName ? 'true' : 'false'}\n  {...register('petName', { required: true })}\n  className=\"mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500\"\n/>\n{errors.petName && (\n  <p id=\"petNameError\" className=\"text-red-500 text-xs mt-1\" role=\"alert\" aria-live=\"assertive\">\n    {t('form.required')}\n  </p>\n)}\n```\n3. Implement skip navigation links for keyboard users\n4. Ensure proper heading hierarchy (h1, h2, etc.)\n5. Add sufficient color contrast for all text and UI elements\n6. Implement focus styles that are visible and consistent\n7. Add screen reader announcements for dynamic content changes",
+        "testStrategy": "Test keyboard navigation through the entire application. Verify that all interactive elements can be accessed and operated using only the keyboard. Test with screen readers to ensure all content is properly announced. Verify that ARIA attributes are correctly implemented. Use automated accessibility testing tools like axe-core.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          5,
+          6,
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement keyboard navigation",
+            "description": "Develop a robust keyboard navigation system for the entire application",
+            "dependencies": [],
+            "details": "Use React's useRef and useEffect hooks to manage focus. Implement custom key handlers for complex components. Ensure all interactive elements are reachable and operable via keyboard. Test with various keyboard layouts.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Add ARIA attributes",
+            "description": "Integrate ARIA (Accessible Rich Internet Applications) attributes throughout the application",
+            "dependencies": [
+              1
+            ],
+            "details": "Use aria-label, aria-describedby, and role attributes appropriately. Implement live regions for dynamic content updates. Ensure proper heading structure and landmark regions. Validate ARIA usage with automated tools.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement screen reader compatibility",
+            "description": "Ensure the application is fully compatible with popular screen readers",
+            "dependencies": [
+              2
+            ],
+            "details": "Test with NVDA, JAWS, and VoiceOver. Create custom announcements for complex UI interactions. Implement skip links and proper focus management. Ensure all content is read in a logical order.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Develop color contrast and visibility features",
+            "description": "Implement features to enhance color contrast and visibility for users with visual impairments",
+            "dependencies": [],
+            "details": "Use CSS custom properties for theming. Implement high contrast mode toggle. Ensure all text meets WCAG AA contrast requirements. Add focus indicators and hover states that don't rely solely on color.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create text alternatives for non-text content",
+            "description": "Provide text alternatives for all non-text content in the application",
+            "dependencies": [],
+            "details": "Add alt text to all images. Implement descriptive labels for form controls. Create transcripts for audio content. Use aria-label for icons and SVGs. Ensure complex visualizations have text summaries.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement responsive design for various devices",
+            "description": "Ensure the application is accessible on different devices and screen sizes",
+            "dependencies": [
+              4
+            ],
+            "details": "Use CSS Grid and Flexbox for layouts. Implement responsive typography with rem units. Create mobile-first breakpoints. Test on various devices and screen readers. Ensure touch targets are large enough for mobile use.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Develop accessibility testing suite",
+            "description": "Create a comprehensive testing suite for accessibility features",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "details": "Integrate axe-core for automated testing. Write unit tests for keyboard navigation and ARIA attributes. Implement end-to-end tests with Cypress for screen reader compatibility. Create a checklist for manual testing of all WCAG success criteria.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Document accessibility features and guidelines",
+            "description": "Create comprehensive documentation for all implemented accessibility features",
+            "dependencies": [
+              7
+            ],
+            "details": "Document keyboard shortcuts and navigation patterns. Create guidelines for content creators on writing alt text and captions. Provide examples of accessible component usage. Include a section on known limitations and workarounds.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Write Comprehensive Tests",
+        "description": "Implement a comprehensive test suite using Vitest and React Testing Library to ensure the application works as expected.",
+        "details": "1. Set up Vitest configuration:\n```typescript\n// vitest.config.ts\nimport { defineConfig } from 'vitest/config';\nimport react from '@vitejs/plugin-react';\n\nexport default defineConfig({\n  plugins: [react()],\n  test: {\n    environment: 'jsdom',\n    setupFiles: ['./src/test/setup.ts'],\n    globals: true,\n    coverage: {\n      reporter: ['text', 'json', 'html'],\n    },\n  },\n});\n```\n2. Create test setup file:\n```typescript\n// src/test/setup.ts\nimport '@testing-library/jest-dom';\nimport { vi } from 'vitest';\n\n// Mock localStorage\nconst localStorageMock = (() => {\n  let store: Record<string, string> = {};\n  return {\n    getItem: vi.fn((key: string) => store[key] || null),\n    setItem: vi.fn((key: string, value: string) => {\n      store[key] = value.toString();\n    }),\n    removeItem: vi.fn((key: string) => {\n      delete store[key];\n    }),\n    clear: vi.fn(() => {\n      store = {};\n    }),\n  };\n})();\n\nObject.defineProperty(window, 'localStorage', { value: localStorageMock });\n```\n3. Write tests for form components:\n```typescript\n// src/components/PetPosterForm.test.tsx\nimport { render, screen, fireEvent } from '@testing-library/react';\nimport { describe, it, expect, beforeEach } from 'vitest';\nimport { PetPosterForm } from './PetPosterForm';\nimport { FormProvider } from '../contexts/FormContext';\nimport { LanguageProvider } from '../contexts/LanguageContext';\n\ndescribe('PetPosterForm', () => {\n  beforeEach(() => {\n    render(\n      <LanguageProvider>\n        <FormProvider>\n          <PetPosterForm />\n        </FormProvider>\n      </LanguageProvider>\n    );\n  });\n\n  it('renders all required fields', () => {\n    expect(screen.getByLabelText(/pet name/i)).toBeInTheDocument();\n    expect(screen.getByLabelText(/owner name/i)).toBeInTheDocument();\n    expect(screen.getByLabelText(/contact phone/i)).toBeInTheDocument();\n    expect(screen.getByLabelText(/last seen location/i)).toBeInTheDocument();\n  });\n\n  it('shows validation errors for empty required fields', async () => {\n    const petNameInput = screen.getByLabelText(/pet name/i);\n    fireEvent.focus(petNameInput);\n    fireEvent.blur(petNameInput);\n    \n    expect(await screen.findByText(/required/i)).toBeInTheDocument();\n  });\n\n  it('updates form data when fields are filled', () => {\n    const petNameInput = screen.getByLabelText(/pet name/i);\n    fireEvent.change(petNameInput, { target: { value: 'Rex' } });\n    \n    expect(petNameInput).toHaveValue('Rex');\n    // Additional assertions to verify the form context was updated\n  });\n});\n```\n4. Write tests for the poster preview:\n```typescript\n// src/components/PosterPreview.test.tsx\nimport { render, screen } from '@testing-library/react';\nimport { describe, it, expect, beforeEach } from 'vitest';\nimport { PosterPreview } from './PosterPreview';\nimport { FormProvider } from '../contexts/FormContext';\nimport { LanguageProvider } from '../contexts/LanguageContext';\n\ndescribe('PosterPreview', () => {\n  beforeEach(() => {\n    // Mock form data\n    const mockFormData = {\n      petName: 'Rex',\n      ownerName: 'John Doe',\n      contactPhone: '123-456-7890',\n      lastSeenLocation: 'Central Park',\n      photos: [],\n      customFields: [],\n    };\n    \n    // Mock localStorage to return the form data\n    localStorage.getItem.mockReturnValue(JSON.stringify(mockFormData));\n    \n    render(\n      <LanguageProvider>\n        <FormProvider>\n          <PosterPreview />\n        </FormProvider>\n      </LanguageProvider>\n    );\n  });\n\n  it('displays the pet name', () => {\n    expect(screen.getByText('Rex')).toBeInTheDocument();\n  });\n\n  it('displays the last seen location', () => {\n    expect(screen.getByText(/central park/i)).toBeInTheDocument();\n  });\n\n  it('displays the contact information', () => {\n    expect(screen.getByText('John Doe')).toBeInTheDocument();\n    expect(screen.getByText('123-456-7890')).toBeInTheDocument();\n  });\n});\n```\n5. Write tests for the language switching functionality\n6. Write tests for the photo upload component\n7. Write tests for the download and sharing functionality (mocking the required APIs)\n8. Write tests for localStorage persistence",
+        "testStrategy": "Run the test suite with Vitest to ensure all components function as expected. Aim for high test coverage, especially for critical functionality like form validation, preview rendering, and data persistence. Use mocks for external dependencies like localStorage and browser APIs.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Test Strategy and Framework Setup",
+            "description": "Establish the overall testing strategy and set up the necessary testing frameworks for unit, integration, and end-to-end tests.",
+            "dependencies": [],
+            "details": "Choose Jest for unit and integration tests, and Cypress for end-to-end tests. Set up the project structure for tests, configure test runners, and establish code coverage tools. Define naming conventions and best practices for writing tests.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Unit Tests for Core Components",
+            "description": "Create comprehensive unit tests for all core React components, ensuring proper rendering and behavior.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use React Testing Library for component testing. Cover props, state changes, and event handlers. Implement snapshot testing for UI consistency. Ensure accessibility by testing ARIA attributes and keyboard navigation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop Unit Tests for Utility Functions",
+            "description": "Write unit tests for all utility functions and helper modules used throughout the application.",
+            "dependencies": [
+              1
+            ],
+            "details": "Focus on edge cases and error handling. Use parameterized tests for functions with multiple input scenarios. Aim for 100% code coverage for utility functions. Mock external dependencies when necessary.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create Integration Tests for API Interactions",
+            "description": "Implement integration tests to verify correct interactions between the frontend and backend APIs.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Use MSW (Mock Service Worker) to intercept and mock API requests. Test successful and error scenarios for all API endpoints. Verify proper state updates and UI changes based on API responses. Include tests for authentication and authorization flows.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Develop Integration Tests for State Management",
+            "description": "Write integration tests to ensure proper functioning of the state management system (e.g., Redux or Context API).",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Test action creators, reducers, and selectors individually. Verify correct state updates for complex user interactions. Include tests for asynchronous actions and middleware. Ensure proper error handling and loading states are managed correctly.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement End-to-End Tests for Critical User Flows",
+            "description": "Create end-to-end tests for the most critical user journeys and workflows in the application.",
+            "dependencies": [
+              1,
+              4,
+              5
+            ],
+            "details": "Use Cypress to simulate user interactions. Cover key flows such as user registration, login, and main feature usage. Test across different viewport sizes for responsiveness. Include accessibility checks using Cypress-axe.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Develop Performance and Load Tests",
+            "description": "Implement performance tests to ensure the application meets performance benchmarks and can handle expected load.",
+            "dependencies": [
+              1,
+              6
+            ],
+            "details": "Use Lighthouse for performance audits. Implement React Profiler tests for component rendering performance. Create load tests using tools like k6 for API endpoints. Set up continuous performance monitoring in the CI/CD pipeline.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Create Security and Penetration Tests",
+            "description": "Develop security-focused tests to identify vulnerabilities and ensure the application follows security best practices.",
+            "dependencies": [
+              1,
+              4,
+              6
+            ],
+            "details": "Implement tests for common security issues like XSS, CSRF, and SQL injection. Use tools like OWASP ZAP for automated security testing. Include tests for proper implementation of authentication and authorization. Verify secure handling of sensitive data.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Set Up Continuous Integration and Test Automation",
+            "description": "Configure the CI/CD pipeline to automatically run all tests and generate reports for each build and deployment.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "details": "Integrate test runs into the existing CI/CD workflow. Set up parallel test execution for faster feedback. Configure test result reporting and notifications. Implement test coverage thresholds as quality gates for deployments. Set up nightly runs for longer end-to-end and performance tests.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-08T23:28:42.915Z",
+      "updated": "2025-07-09T11:57:49.504Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

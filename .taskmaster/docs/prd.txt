@@ -1,0 +1,153 @@
+# 📄 PRD – Encontre Meu Amigo
+
+## 🧩 Visão Geral
+
+**Nome do Projeto:** Encontre Meu Amigo  
+**Tipo:** Aplicação Web SPA (Single Page Application)  
+**Responsável:** Lovable  
+**Propósito:** Ajudar donos de pets perdidos a criarem cartazes personalizados, informativos e prontos para serem compartilhados, sem precisar de conhecimento em design.
+
+---
+
+## 🎯 Objetivo do Produto
+
+Oferecer uma ferramenta simples, gratuita e visualmente impactante que permita aos usuários criarem e baixarem cartazes de pets perdidos, com preview em tempo real e suporte bilíngue.
+
+---
+
+## 🧑‍🤝‍🧑 Público-Alvo
+
+- Donos de animais perdidos
+- ONGs e protetores independentes
+- Clínicas veterinárias
+- Cuidadores de pets
+- Comunidades de bairro ou grupos locais
+
+---
+
+## ⚙️ Funcionalidades
+
+### 1. Editor de Cartaz (Formulário de Entrada)
+
+#### Campos Obrigatórios:
+- Nome do Pet
+- Nome do Responsável
+- Telefone de Contato
+- Último local visto
+
+#### Campos Opcionais:
+- Data e horário aproximado
+- Descrição física do pet
+- Acessórios visíveis (ex: coleira, roupa)
+- Recompensa (valor e moeda)
+
+#### Recursos:
+- Upload de até 3 fotos
+- Campos personalizados dinâmicos
+- Validação visual em tempo real
+- Formulário acessível com teclado
+- **Persistência Local:**  
+  - As informações de texto preenchidas no formulário serão **automaticamente salvas no `localStorage`** do navegador para evitar perda de dados em caso de recarregamento ou navegação acidental.
+
+---
+
+### 2. Visualização em Tempo Real
+
+- Renderização instantânea do cartaz com os dados inseridos
+- Layout profissional, limpo e responsivo
+- Variação automática da disposição das imagens:
+  - 1 imagem: centralizada
+  - 2 imagens: lado a lado
+  - 3 imagens: uma grande + duas menores
+
+---
+
+### 3. Design do Cartaz
+
+- Título grande e em destaque: "PROCURA-SE" / "MISSING"
+- Nome do pet em destaque
+- Informações organizadas com ícones e cores temáticas
+- Caixa de recompensa destacada (amarela)
+- Bloco de contato visualmente separado e chamativo
+
+---
+
+### 4. Compartilhamento
+
+- Botão de download (formato .png ou .jpeg)
+- Botão para compartilhamento via WhatsApp
+- Texto pronto para copiar e colar em outras redes
+
+---
+
+### 5. Internacionalização (i18n)
+
+- Seletor de idioma (🇧🇷 / 🇺🇸)
+- Interface traduzida completamente
+- Adaptação cultural (ex: moeda, formatação de data/hora)
+
+---
+
+## 🎨 Design e UX
+
+- Gradientes suaves (azul, roxo, rosa)
+- Emojis e ícones que transmitem empatia
+- Navegação em duas colunas:
+  - Editor à esquerda
+  - Preview à direita
+- Responsivo (funciona bem em mobile e desktop)
+- Interface sem curva de aprendizado
+
+---
+
+## 🧪 Testes e Qualidade
+
+- **Testes Unitários e de Integração:**  
+  - Framework: [Vitest](https://vitest.dev/)  
+  - Utilitários: [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)  
+  - Testes cobrindo:  
+    - Comportamento do formulário  
+    - Preview do cartaz  
+    - Renderização de elementos condicionais  
+    - Acessibilidade e navegação via teclado
+
+- **Lint & Format:**  
+  - [Prettier](https://prettier.io/) para padronização do código  
+  - Sem backend ou persistência de dados no servidor
+
+---
+
+## 🏗️ Tecnologias Utilizadas
+
+| Camada         | Tecnologias                    |
+|----------------|--------------------------------|
+| Frontend       | React + TypeScript             |
+| UI Styling     | Tailwind CSS                   |
+| Componentes    | Radix UI                       |
+| Formulários    | React Hook Form                |
+| Estado Global  | Context API                    |
+| Persistência   | localStorage (navegador)       |
+| Testes         | Vitest + React Testing Library |
+| Formatação     | Prettier                       |
+
+---
+
+## 🚫 Limitações (MVP)
+
+- **Sem Backend:**  
+  - Nenhum dado será armazenado após a navegação (exceto via localStorage)
+  - Sem autenticação ou histórico entre dispositivos
+- **Sem Banco de Dados**
+- **Download local apenas** (não será hospedado o cartaz)
+- **Sem editor de imagem ou filtros**
+
+---
+
+## 📌 Critérios de Sucesso
+
+- Usuário consegue gerar um cartaz completo em menos de 2 minutos
+- Layout visualmente agradável e fiel ao preview
+- Cartaz é legível e atraente ao ser compartilhado
+- Código limpo, testável e com alta cobertura de testes
+- Alta compatibilidade com dispositivos móveis
+- Dados do formulário não são perdidos com reload 
