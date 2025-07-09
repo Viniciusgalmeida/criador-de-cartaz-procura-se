@@ -1,0 +1,93 @@
+# Task ID: 2
+# Title: Create Base Layout Components
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Develop the responsive two-column layout that will contain the editor form on the left and the preview on the right.
+# Details:
+1. Create a Layout component that handles the responsive behavior:
+```tsx
+const Layout: React.FC = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 p-4 md:p-8">
+      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="flex flex-col md:flex-row">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
+```
+2. Create EditorColumn and PreviewColumn components:
+```tsx
+const EditorColumn: React.FC = ({ children }) => (
+  <div className="w-full md:w-1/2 p-4 md:p-6 overflow-y-auto">{children}</div>
+);
+
+const PreviewColumn: React.FC = ({ children }) => (
+  <div className="w-full md:w-1/2 bg-gray-50 p-4 md:p-6 overflow-y-auto">{children}</div>
+);
+```
+3. Implement responsive behavior that stacks columns vertically on mobile and side-by-side on desktop
+4. Add header with app title and language selector
+
+# Test Strategy:
+Test the layout components with various viewport sizes to ensure they respond correctly. Verify that the columns stack on mobile and display side-by-side on desktop. Use React Testing Library to test the rendering of the components.
+
+# Subtasks:
+## 1. Implement Responsive Grid System [done]
+### Dependencies: None
+### Description: Create a flexible grid system using CSS Grid or Flexbox for responsive layouts
+### Details:
+1. Set up a CSS Grid or Flexbox-based system with configurable columns and rows
+2. Implement breakpoints for different screen sizes (mobile, tablet, desktop)
+3. Create utility classes for common layout patterns (e.g., full-width, centered, split)
+4. Add support for nested grids and responsive gutters
+5. Implement error handling for invalid grid configurations
+6. Ensure accessibility by maintaining proper document structure and using ARIA attributes where necessary
+7. Optimize performance by using CSS containment and will-change properties
+8. Write comprehensive unit tests for grid behavior across breakpoints
+
+## 2. Develop Responsive Navigation Component [done]
+### Dependencies: 2.1
+### Description: Create a navigation component that adapts to different screen sizes and devices
+### Details:
+1. Design mobile-first navigation structure using semantic HTML5 elements
+2. Implement collapsible menu for mobile devices with smooth animations
+3. Create desktop version with dropdown menus and mega-menus as needed
+4. Add keyboard navigation support for accessibility
+5. Implement touch-friendly interactions for mobile and tablet devices
+6. Use IntersectionObserver API for lazy-loading offscreen menu items
+7. Optimize rendering performance using React.memo and useMemo hooks
+8. Implement proper ARIA roles and states for screen reader compatibility
+9. Add unit and integration tests for navigation behavior and accessibility
+
+## 3. Create Responsive Image Component [done]
+### Dependencies: 2.1
+### Description: Develop a component for handling responsive images across different screen sizes and resolutions
+### Details:
+1. Implement <picture> element with multiple <source> tags for different screen sizes
+2. Use srcset and sizes attributes for resolution switching
+3. Implement lazy loading using Intersection Observer API
+4. Add support for WebP format with fallbacks for older browsers
+5. Create placeholder system for images during loading (e.g., low-res blur-up technique)
+6. Implement error handling for failed image loads
+7. Ensure proper alt text and ARIA attributes for accessibility
+8. Optimize image delivery using Content Delivery Network (CDN)
+9. Add unit tests for image loading behavior and responsiveness
+
+## 4. Implement Responsive Typography System [done]
+### Dependencies: 2.1
+### Description: Create a scalable typography system that adapts to different screen sizes and maintains readability
+### Details:
+1. Set up a modular scale for font sizes using CSS custom properties
+2. Implement fluid typography using calc() and viewport units
+3. Create responsive line-height and letter-spacing adjustments
+4. Set up a vertical rhythm system using CSS Grid or custom properties
+5. Implement responsive font-weight adjustments for different screen sizes
+6. Create utility classes for common text styles (e.g., headings, body text, captions)
+7. Ensure proper contrast ratios for accessibility across all screen sizes
+8. Implement font-loading optimizations using font-display and preload
+9. Add unit tests for typography scaling and readability across breakpoints
+

@@ -1,0 +1,336 @@
+# Task ID: 16
+# Title: Implement localStorage Persistence for Language Selection
+# Status: pending
+# Dependencies: 3
+# Priority: low
+# Description: Add localStorage persistence to language selection so users don't need to reselect their preferred language when they reload the page.
+# Details:
+1. Modify the language context to use localStorage for persistence:
+```typescript
+// src/contexts/LanguageContext.tsx
+import { createContext, useState, useEffect, ReactNode } from 'react';
+
+interface LanguageContextType {
+  language: 'en' | 'pt';
+  setLanguage: (lang: 'en' | 'pt') => void;
+  t: (key: string) => string;
+}
+
+export const LanguageContext = createContext<LanguageContextType>({
+  language: 'en',
+  setLanguage: () => {},
+  t: (key) => key,
+});
+
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // Initialize state from localStorage or default to 'en'
+  const [language, setLanguageState] = useState<'en' | 'pt'>(() => {
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    return (savedLanguage === 'en' || savedLanguage === 'pt') ? savedLanguage : 'en';
+  });
+  
+  // Update localStorage when language changes
+  const setLanguage = (lang: 'en' | 'pt') => {
+    setLanguageState(lang);
+    localStorage.setItem('preferredLanguage', lang);
+  };
+  
+  // Load translations based on current language
+  const translations = language === 'en' ? enTranslations : ptTranslations;
+  
+  const t = (key: string) => {
+    return translations[key] || key;
+  };
+  
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+```
+
+2. Update the language selector component to use the updated context:
+```typescript
+// src/components/LanguageSelector.tsx
+import { useLanguage } from '../hooks/useLanguage';
+
+export const LanguageSelector: React.FC = () => {
+  const { language, setLanguage } = useLanguage();
+  
+  return (
+    <div className="language-selector">
+      <button 
+        className={`language-btn ${language === 'en' ? 'active' : ''}`}
+        onClick={() => setLanguage('en')}
+        aria-label="Switch to English"
+      >
+        EN
+      </button>
+      <button 
+        className={`language-btn ${language === 'pt' ? 'active' : ''}`}
+        onClick={() => setLanguage('pt')}
+        aria-label="Mudar para Português"
+      >
+        PT
+      </button>
+    </div>
+  );
+};
+```
+
+3. Ensure the useLanguage hook correctly uses the updated context:
+```typescript
+// src/hooks/useLanguage.ts
+import { useContext } from 'react';
+import { LanguageContext } from '../contexts/LanguageContext';
+
+export const useLanguage = () => {
+  return useContext(LanguageContext);
+};
+```
+
+4. Handle edge cases:
+   - Add error handling for localStorage access (in case it's disabled or unavailable)
+   - Implement a fallback mechanism if localStorage fails
+   - Ensure the language state is properly synchronized across tabs/windows
+
+```typescript
+// Enhanced error handling in LanguageContext.tsx
+const [language, setLanguageState] = useState<'en' | 'pt'>(() => {
+  try {
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    return (savedLanguage === 'en' || savedLanguage === 'pt') ? savedLanguage : 'en';
+  } catch (error) {
+    console.warn('Failed to access localStorage:', error);
+    return 'en';
+  }
+});
+
+const setLanguage = (lang: 'en' | 'pt') => {
+  setLanguageState(lang);
+  try {
+    localStorage.setItem('preferredLanguage', lang);
+  } catch (error) {
+    console.warn('Failed to save language preference:', error);
+  }
+};
+```
+
+5. Add a listener for storage events to sync language across tabs:
+```typescript
+useEffect(() => {
+  const handleStorageChange = (event: StorageEvent) => {
+    if (event.key === 'preferredLanguage') {
+      const newLang = event.newValue;
+      if (newLang === 'en' || newLang === 'pt') {
+        setLanguageState(newLang);
+      }
+    }
+  };
+  
+  window.addEventListener('storage', handleStorageChange);
+  return () => window.removeEventListener('storage', handleStorageChange);
+}, []);
+
+# Test Strategy:
+1. Unit test the language persistence functionality:
+```typescript
+// src/contexts/LanguageContext.test.tsx
+import { render, screen, act } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { LanguageProvider, LanguageContext } from '../contexts/LanguageContext';
+import { useContext } from 'react';
+
+describe('LanguageContext with localStorage persistence', () => {
+  // Mock localStorage
+  const localStorageMock = (() => {
+    let store: Record<string, string> = {};
+    return {
+      getItem: vi.fn((key: string) => store[key] || null),
+      setItem: vi.fn((key: string, value: string) => {
+        store[key] = value.toString();
+      }),
+      clear: vi.fn(() => {
+        store = {};
+      })
+    };
+  })();
+
+  beforeEach(() => {
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock,
+      writable: true
+    });
+    localStorageMock.clear();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('initializes with default language (en) when localStorage is empty', () => {
+    const TestComponent = () => {
+      const { language } = useContext(LanguageContext);
+      return <div data-testid="language">{language}</div>;
+    };
+
+    render(
+      <LanguageProvider>
+        <TestComponent />
+      </LanguageProvider>
+    );
+
+    expect(screen.getByTestId('language').textContent).toBe('en');
+    expect(localStorageMock.getItem).toHaveBeenCalledWith('preferredLanguage');
+  });
+
+  it('initializes with language from localStorage if available', () => {
+    localStorageMock.getItem.mockReturnValueOnce('pt');
+
+    const TestComponent = () => {
+      const { language } = useContext(LanguageContext);
+      return <div data-testid="language">{language}</div>;
+    };
+
+    render(
+      <LanguageProvider>
+        <TestComponent />
+      </LanguageProvider>
+    );
+
+    expect(screen.getByTestId('language').textContent).toBe('pt');
+    expect(localStorageMock.getItem).toHaveBeenCalledWith('preferredLanguage');
+  });
+
+  it('updates localStorage when language changes', () => {
+    const TestComponent = () => {
+      const { language, setLanguage } = useContext(LanguageContext);
+      return (
+        <>
+          <div data-testid="language">{language}</div>
+          <button onClick={() => setLanguage('pt')} data-testid="change-language">
+            Change Language
+          </button>
+        </>
+      );
+    };
+
+    render(
+      <LanguageProvider>
+        <TestComponent />
+      </LanguageProvider>
+    );
+
+    act(() => {
+      screen.getByTestId('change-language').click();
+    });
+
+    expect(screen.getByTestId('language').textContent).toBe('pt');
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('preferredLanguage', 'pt');
+  });
+
+  it('handles localStorage errors gracefully', () => {
+    // Simulate localStorage error
+    localStorageMock.getItem.mockImplementationOnce(() => {
+      throw new Error('localStorage disabled');
+    });
+
+    const TestComponent = () => {
+      const { language } = useContext(LanguageContext);
+      return <div data-testid="language">{language}</div>;
+    };
+
+    render(
+      <LanguageProvider>
+        <TestComponent />
+      </LanguageProvider>
+    );
+
+    // Should fall back to default language
+    expect(screen.getByTestId('language').textContent).toBe('en');
+  });
+});
+```
+
+2. Integration test with the language selector component:
+```typescript
+// src/components/LanguageSelector.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { LanguageProvider } from '../contexts/LanguageContext';
+import { LanguageSelector } from './LanguageSelector';
+
+describe('LanguageSelector with localStorage persistence', () => {
+  // Mock localStorage
+  const localStorageMock = (() => {
+    let store: Record<string, string> = {};
+    return {
+      getItem: vi.fn((key: string) => store[key] || null),
+      setItem: vi.fn((key: string, value: string) => {
+        store[key] = value.toString();
+      }),
+      clear: vi.fn(() => {
+        store = {};
+      })
+    };
+  })();
+
+  beforeEach(() => {
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock,
+      writable: true
+    });
+    localStorageMock.clear();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('loads the saved language preference from localStorage', () => {
+    localStorageMock.getItem.mockReturnValueOnce('pt');
+
+    render(
+      <LanguageProvider>
+        <LanguageSelector />
+      </LanguageProvider>
+    );
+
+    // PT button should be active
+    const ptButton = screen.getByText('PT');
+    const enButton = screen.getByText('EN');
+    
+    expect(ptButton.classList.contains('active')).toBe(true);
+    expect(enButton.classList.contains('active')).toBe(false);
+  });
+
+  it('saves the language preference to localStorage when changed', () => {
+    render(
+      <LanguageProvider>
+        <LanguageSelector />
+      </LanguageProvider>
+    );
+
+    // Initially EN should be active
+    const ptButton = screen.getByText('PT');
+    const enButton = screen.getByText('EN');
+    
+    expect(enButton.classList.contains('active')).toBe(true);
+    
+    // Change to PT
+    fireEvent.click(ptButton);
+    
+    expect(ptButton.classList.contains('active')).toBe(true);
+    expect(enButton.classList.contains('active')).toBe(false);
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('preferredLanguage', 'pt');
+  });
+});
+```
+
+3. Manual testing:
+   - Change the language in the application
+   - Reload the page and verify the selected language persists
+   - Open the application in a new tab and verify the language setting is consistent
+   - Test in private/incognito mode to verify fallback behavior
+   - Test with localStorage disabled (can be done in Chrome DevTools > Application > Storage > Clear site data and check "Disable local storage")

@@ -1,0 +1,185 @@
+# Task ID: 13
+# Title: Implement Form Validation and Error Handling
+# Status: pending
+# Dependencies: 5, 6
+# Priority: high
+# Description: Enhance the form with comprehensive validation, error messages, and visual feedback.
+# Details:
+1. Update the form component with enhanced validation:
+```typescript
+import { useForm } from 'react-hook-form';
+
+const PetPosterForm: React.FC = () => {
+  const { t } = useLanguage();
+  const { formData, updateFormData } = useFormData();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm({
+    defaultValues: formData,
+    mode: 'onChange' // Enable real-time validation
+  });
+  
+  // Watch form values for real-time preview
+  const formValues = watch();
+  
+  // Update form context when values change
+  useEffect(() => {
+    updateFormData(formValues);
+  }, [formValues, updateFormData]);
+  
+  return (
+    <form className="space-y-6">
+      {/* Pet Name Field */}
+      <div>
+        <label htmlFor="petName" className="block text-sm font-medium text-gray-700">
+          {t('form.petName')} *
+        </label>
+        <input
+          id="petName"
+          type="text"
+          {...register('petName', { 
+            required: t('form.errors.required'),
+            maxLength: {
+              value: 50,
+              message: t('form.errors.maxLength', { length: 50 })
+            }
+          })}
+          aria-invalid={errors.petName ? 'true' : 'false'}
+          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.petName ? 'border-red-300' : 'border-gray-300'}`}
+        />
+        {errors.petName && (
+          <p className="mt-1 text-sm text-red-600" role="alert">
+            {errors.petName.message}
+          </p>
+        )}
+      </div>
+      
+      {/* Owner Name Field */}
+      <div>
+        <label htmlFor="ownerName" className="block text-sm font-medium text-gray-700">
+          {t('form.ownerName')} *
+        </label>
+        <input
+          id="ownerName"
+          type="text"
+          {...register('ownerName', { 
+            required: t('form.errors.required'),
+            maxLength: {
+              value: 100,
+              message: t('form.errors.maxLength', { length: 100 })
+            }
+          })}
+          aria-invalid={errors.ownerName ? 'true' : 'false'}
+          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.ownerName ? 'border-red-300' : 'border-gray-300'}`}
+        />
+        {errors.ownerName && (
+          <p className="mt-1 text-sm text-red-600" role="alert">
+            {errors.ownerName.message}
+          </p>
+        )}
+      </div>
+      
+      {/* Phone Field */}
+      <div>
+        <label htmlFor="contactPhone" className="block text-sm font-medium text-gray-700">
+          {t('form.contactPhone')} *
+        </label>
+        <input
+          id="contactPhone"
+          type="tel"
+          {...register('contactPhone', { 
+            required: t('form.errors.required'),
+            pattern: {
+              value: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
+              message: t('form.errors.invalidPhone')
+            }
+          })}
+          aria-invalid={errors.contactPhone ? 'true' : 'false'}
+          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.contactPhone ? 'border-red-300' : 'border-gray-300'}`}
+        />
+        {errors.contactPhone && (
+          <p className="mt-1 text-sm text-red-600" role="alert">
+            {errors.contactPhone.message}
+          </p>
+        )}
+      </div>
+      
+      {/* Last Seen Location Field */}
+      <div>
+        <label htmlFor="lastSeenLocation" className="block text-sm font-medium text-gray-700">
+          {t('form.lastSeenLocation')} *
+        </label>
+        <input
+          id="lastSeenLocation"
+          type="text"
+          {...register('lastSeenLocation', { 
+            required: t('form.errors.required')
+          })}
+          aria-invalid={errors.lastSeenLocation ? 'true' : 'false'}
+          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.lastSeenLocation ? 'border-red-300' : 'border-gray-300'}`}
+        />
+        {errors.lastSeenLocation && (
+          <p className="mt-1 text-sm text-red-600" role="alert">
+            {errors.lastSeenLocation.message}
+          </p>
+        )}
+      </div>
+      
+      {/* Similar validation for optional fields */}
+    </form>
+  );
+};
+```
+2. Implement real-time validation with visual feedback
+3. Add appropriate validation rules for each field type:
+   - Text fields: required, max length
+   - Phone: required, pattern matching
+   - Date/time: format validation
+   - Reward amount: numeric validation
+4. Ensure all error messages are translated
+5. Add ARIA attributes for accessibility
+
+# Test Strategy:
+Test form validation by submitting with invalid data and verifying error messages. Test each validation rule separately. Test that error states are properly displayed and that ARIA attributes are correctly set. Test keyboard navigation through the form.
+
+# Subtasks:
+## 1. Set up form state management [pending]
+### Dependencies: None
+### Description: Implement form state management using React hooks or a form library
+### Details:
+Choose between useState for simple forms or a library like Formik for complex forms. Set up initial state for form fields, errors, and touched status. Implement handleChange and handleBlur functions to update state.
+
+## 2. Implement client-side validation logic [pending]
+### Dependencies: 13.1
+### Description: Create validation functions for each form field
+### Details:
+Develop reusable validation functions for common patterns (e.g., email, password strength). Implement custom validation logic for specific field requirements. Use regular expressions and conditional checks as needed.
+
+## 3. Implement real-time validation [pending]
+### Dependencies: 13.1, 13.2
+### Description: Trigger validation on user input and display immediate feedback
+### Details:
+Use the onChange event to trigger validation as the user types. Implement debounce functionality to avoid excessive validation calls. Update error state in real-time and display visual indicators for valid/invalid fields.
+
+## 4. Create custom error messages [pending]
+### Dependencies: 13.2, 13.3
+### Description: Design and implement a system for displaying custom error messages
+### Details:
+Create an error message mapping object or function. Implement logic to generate context-specific error messages. Consider internationalization for multi-language support. Ensure error messages are clear, concise, and actionable.
+
+## 5. Implement form submission validation [pending]
+### Dependencies: 13.1, 13.2, 13.4
+### Description: Perform final validation before form submission and handle errors
+### Details:
+Create a handleSubmit function that performs a final validation check. Prevent form submission if errors exist. Display a summary of errors if submission fails. Implement server-side validation handling for additional security.
+
+## 6. Enhance accessibility for form validation [pending]
+### Dependencies: 13.3, 13.4, 13.5
+### Description: Implement accessibility features for error messages and form navigation
+### Details:
+Use aria-invalid attribute for invalid fields. Implement error message association using aria-describedby. Ensure keyboard navigation works correctly with error states. Use role='alert' for dynamically displayed error messages. Test with screen readers to verify accessibility.
+
+## 7. Implement visual feedback and UI enhancements [pending]
+### Dependencies: 13.3, 13.4, 13.6
+### Description: Design and implement visual cues for form validation states
+### Details:
+Create CSS styles for valid, invalid, and focused form states. Implement icons or color changes to indicate field status. Design and implement an error summary component for form-wide errors. Ensure visual feedback meets WCAG color contrast requirements.
+

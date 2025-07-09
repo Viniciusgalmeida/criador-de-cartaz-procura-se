@@ -1,0 +1,139 @@
+# Task ID: 7
+# Title: Implement Photo Upload Functionality
+# Status: pending
+# Dependencies: 4
+# Priority: medium
+# Description: Create the photo upload component that allows users to upload up to 3 photos of their pet.
+# Details:
+1. Create a photo upload component:
+```typescript
+const PhotoUpload: React.FC = () => {
+  const { formData, addPhoto, removePhoto } = useFormData();
+  const { t } = useLanguage();
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      if (formData.photos.length >= 3) {
+        alert(t('form.maxPhotosReached'));
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        addPhoto(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+  return (
+    <div className="space-y-4">
+      <label className="block text-sm font-medium text-gray-700">
+        {t('form.photos')} ({formData.photos.length}/3)
+      </label>
+      
+      <div className="flex flex-wrap gap-4">
+        {formData.photos.map((photo, index) => (
+          <div key={index} className="relative w-24 h-24">
+            <img src={photo} alt="" className="w-full h-full object-cover rounded" />
+            <button
+              type="button"
+              onClick={() => removePhoto(index)}
+              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+            >
+              ×
+            </button>
+          </div>
+        ))}
+        
+        {formData.photos.length < 3 && (
+          <label className="w-24 h-24 border-2 border-dashed border-gray-300 rounded flex items-center justify-center cursor-pointer hover:border-indigo-500">
+            <span className="text-3xl text-gray-400">+</span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
+        )}
+      </div>
+    </div>
+  );
+};
+```
+2. Implement file validation to ensure only image files are accepted
+3. Add preview thumbnails for uploaded photos
+4. Implement the ability to remove photos
+5. Store photos as base64 strings in the form context
+
+# Test Strategy:
+Test uploading various image types and sizes. Verify that the limit of 3 photos is enforced. Test the removal of photos. Test that invalid file types are rejected. Verify that photos are correctly stored in the form context and localStorage.
+
+# Subtasks:
+## 1. Implement file input and validation [pending]
+### Dependencies: None
+### Description: Create a file input component and implement client-side file validation
+### Details:
+1. Create a React component for file input
+2. Implement onChange handler to capture selected files
+3. Validate file types (e.g., .jpg, .png, .gif)
+4. Validate file size (e.g., max 5MB)
+5. Display error messages for invalid files
+6. Use React hooks (useState, useCallback) for state management
+7. Implement accessibility features (proper labeling, keyboard navigation)
+8. Add drag-and-drop functionality using react-dropzone
+
+## 2. Generate and display image previews [pending]
+### Dependencies: 7.1
+### Description: Create image previews for selected files and display them to the user
+### Details:
+1. Use FileReader API to read file contents
+2. Create data URLs for image previews
+3. Implement a preview component to display thumbnails
+4. Handle loading states and display placeholders
+5. Implement lazy loading for multiple previews
+6. Add ability to remove individual previews
+7. Ensure responsive design for various screen sizes
+8. Implement error handling for failed preview generation
+
+## 3. Implement multiple file upload handling [pending]
+### Dependencies: 7.1, 7.2
+### Description: Add support for selecting and uploading multiple files simultaneously
+### Details:
+1. Modify file input to accept multiple files
+2. Update state management to handle an array of files
+3. Implement batch preview generation
+4. Create a queue system for uploading multiple files
+5. Add progress indicators for each file upload
+6. Implement cancel functionality for individual uploads
+7. Handle errors for individual file uploads
+8. Optimize performance for large numbers of files
+
+## 4. Implement server-side upload endpoint [pending]
+### Dependencies: None
+### Description: Create a server-side endpoint to handle file uploads and storage
+### Details:
+1. Set up a Node.js/Express server (if not already in place)
+2. Implement a POST endpoint for file uploads
+3. Use multer middleware for handling multipart/form-data
+4. Implement server-side file validation
+5. Set up cloud storage (e.g., AWS S3) for file storage
+6. Generate unique filenames to prevent conflicts
+7. Implement error handling and appropriate HTTP responses
+8. Add security measures (e.g., rate limiting, authentication)
+
+## 5. Integrate client-side upload with server [pending]
+### Dependencies: 7.1, 7.2, 7.3, 7.4
+### Description: Connect the React frontend with the server-side upload endpoint
+### Details:
+1. Use axios or fetch API to send files to the server
+2. Implement progress tracking using XMLHttpRequest
+3. Handle successful uploads (update UI, clear form)
+4. Implement comprehensive error handling
+5. Add retry functionality for failed uploads
+6. Implement request cancellation for aborted uploads
+7. Use React Query or SWR for efficient API calls and caching
+8. Add end-to-end tests for the upload process
+

@@ -1,0 +1,123 @@
+# Task ID: 12
+# Title: Implement Copy to Clipboard Functionality
+# Status: pending
+# Dependencies: 9
+# Priority: medium
+# Description: Create the functionality to copy a formatted text version of the poster information to the clipboard.
+# Details:
+1. Create a copy to clipboard button component:
+```typescript
+import { useState } from 'react';
+import { useLanguage } from '../hooks/useLanguage';
+import { useFormData } from '../hooks/useFormData';
+
+const CopyToClipboardButton: React.FC = () => {
+  const { t, language } = useLanguage();
+  const { formData } = useFormData();
+  const [copied, setCopied] = useState(false);
+  
+  const generateText = () => {
+    const title = language === 'pt' ? 'PROCURA-SE' : 'MISSING';
+    let text = `${title}: ${formData.petName}\n\n`;
+    
+    if (formData.lastSeenLocation) {
+      text += `${t('poster.lastSeen')}: ${formData.lastSeenLocation}\n`;
+    }
+    
+    if (formData.lastSeenDateTime) {
+      const dateTime = new Date(formData.lastSeenDateTime).toLocaleString(
+        language === 'pt' ? 'pt-BR' : 'en-US'
+      );
+      text += `${t('poster.when')}: ${dateTime}\n`;
+    }
+    
+    if (formData.petDescription) {
+      text += `\n${t('poster.description')}: ${formData.petDescription}\n`;
+    }
+    
+    if (formData.accessories) {
+      text += `${t('poster.accessories')}: ${formData.accessories}\n`;
+    }
+    
+    // Add custom fields
+    if (formData.customFields.length > 0) {
+      text += '\n';
+      formData.customFields.forEach(field => {
+        text += `${field.label}: ${field.value}\n`;
+      });
+    }
+    
+    // Add reward if available
+    if (formData.reward?.amount > 0) {
+      const currency = formData.reward.currency === 'BRL' ? 'R$' : '$';
+      text += `\n${t('poster.reward')}: ${currency}${formData.reward.amount}\n`;
+    }
+    
+    // Add contact information
+    text += `\n${t('poster.contact')}:\n${formData.ownerName}\n${formData.contactPhone}`;
+    
+    return text;
+  };
+  
+  const copyToClipboard = () => {
+    const text = generateText();
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+  
+  return (
+    <button
+      onClick={copyToClipboard}
+      className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded flex items-center gap-2"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+      </svg>
+      {copied ? t('share.copied') : t('share.copyText')}
+    </button>
+  );
+};
+```
+2. Add the copy to clipboard button to the poster page
+3. Generate a formatted text that includes all relevant poster information
+4. Provide visual feedback when the text is copied
+
+# Test Strategy:
+Test the copy to clipboard functionality by verifying the generated text contains all the relevant information. Test with various form data combinations. Mock the navigator.clipboard.writeText function for unit testing. Verify that the copied state changes correctly.
+
+# Subtasks:
+## 1. Implement primary clipboard API functionality [pending]
+### Dependencies: None
+### Description: Implement the main clipboard functionality using the modern Clipboard API for supported browsers
+### Details:
+1. Use navigator.clipboard.writeText() for modern browsers
+2. Wrap the functionality in a try-catch block to handle potential errors
+3. Create a utility function copyToClipboard(text) that returns a Promise
+4. Implement proper type checking and error handling for invalid input
+5. Add appropriate ARIA attributes for accessibility
+
+## 2. Develop fallback methods for unsupported browsers [pending]
+### Dependencies: 12.1
+### Description: Create fallback methods using document.execCommand('copy') for browsers that don't support the Clipboard API
+### Details:
+1. Check for Clipboard API support using feature detection
+2. Implement document.execCommand('copy') fallback method
+3. Create a temporary textarea element to hold the text for copying
+4. Handle edge cases like empty strings or long text
+5. Ensure proper cleanup of temporary elements
+6. Test thoroughly across different browsers and versions
+
+## 3. Implement user feedback mechanism [pending]
+### Dependencies: 12.1, 12.2
+### Description: Add visual and accessibility-friendly feedback to inform users about the success or failure of the copy operation
+### Details:
+1. Create a reusable Toast component for visual feedback
+2. Implement success and error states with appropriate styling
+3. Use React hooks to manage the visibility and content of the feedback
+4. Add screen reader announcements using aria-live regions
+5. Implement auto-dismissal of feedback after a set duration
+6. Allow users to manually dismiss the feedback
+7. Ensure the feedback is keyboard accessible
+
