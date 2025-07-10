@@ -1,4 +1,4 @@
-# CHECKLIST DE DESENVOLVIMENTO - Lista de Compras App
+# CHECKLIST DE DESENVOLVIMENTO - Gerador de Cartaz Procura-se
 
 Antes de iniciar qualquer trabalho, revise este checklist que é **OBRIGATÓRIO** para qualquer tipo de desenvolvimento:
 
@@ -113,7 +113,7 @@ npm run test:run      # Vitest - todos os testes devem passar
   docs: update API documentation
   refactor: improve component structure
   ```
-- [ ] **Não incluir**: ID da tarefa na mensagem de commit
+- [ ] **Não incluir**: ID da task nem da sub task na mensagem de commit
 
 ### Verificação Final
 - [ ] **QA Re-run**: Executar todas as ferramentas QA novamente
