@@ -4,11 +4,21 @@ import { PosterPreview } from '@/components/PosterPreview';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { PetData } from '@/pages/Index';
 
+// Mock html2canvas
+vi.mock('html2canvas', () => ({
+  default: vi.fn(() => Promise.resolve({
+    toDataURL: vi.fn(() => 'data:image/png;base64,mock-canvas-data')
+  }))
+}));
+
 // Mock global functions
 Object.defineProperty(window, 'open', {
   value: vi.fn(),
   writable: true,
 });
+
+// Mock URL.createObjectURL for file uploads
+global.URL.createObjectURL = vi.fn(() => 'mock-url');
 
 const mockConsoleLog = vi.fn();
 console.log = mockConsoleLog;
@@ -249,13 +259,18 @@ describe('PosterPreview Component', () => {
   });
 
   describe('Button Functionality', () => {
-    it('calls download function when download button is clicked', () => {
+    it('calls download function when download button is clicked', async () => {
       renderWithLanguageProvider(completePetData);
       
       const downloadButton = screen.getByRole('button', { name: /baixar/i });
       fireEvent.click(downloadButton);
       
-      expect(mockConsoleLog).toHaveBeenCalledWith('Download functionality would be implemented here');
+      // Wait for async operation to complete
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Verify that html2canvas was called (mocked)
+      const html2canvas = await import('html2canvas');
+      expect(html2canvas.default).toHaveBeenCalled();
     });
 
     it('opens WhatsApp when share button is clicked', () => {

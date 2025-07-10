@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Download, MessageCircle } from 'lucide-react';
 import { PetData } from '@/pages/Index';
 import { useLanguage } from '@/contexts/LanguageContext';
+import html2canvas from 'html2canvas';
 
 interface PosterPreviewProps {
   petData: PetData;
@@ -15,11 +16,33 @@ export const PosterPreview = ({
   const posterRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
 
-  const downloadPoster = () => {
+  const downloadPoster = async () => {
     if (posterRef.current) {
-      // Aqui você pode implementar a funcionalidade de download
-      // Por exemplo, usando html2canvas
-      console.log('Download functionality would be implemented here');
+      try {
+        // Configurações para html2canvas
+        const canvas = await html2canvas(posterRef.current, {
+          backgroundColor: '#ffffff',
+          scale: 2, // Qualidade alta (2x resolution)
+          useCORS: true, // Para carregar imagens externas
+          allowTaint: false,
+          removeContainer: true,
+          width: posterRef.current.scrollWidth,
+          height: posterRef.current.scrollHeight
+        });
+        
+        // Criar link de download
+        const link = document.createElement('a');
+        link.download = `cartaz-${petData.petName ? petData.petName.replace(/[^a-zA-Z0-9]/g, '-') : 'pet'}.png`;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        
+        // Iniciar download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error('Erro ao gerar download do cartaz:', error);
+        // Fallback silencioso - usuário pode tentar novamente
+      }
     }
   };
 
