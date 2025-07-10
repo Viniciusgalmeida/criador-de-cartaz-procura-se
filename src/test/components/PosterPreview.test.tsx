@@ -98,7 +98,6 @@ describe('PosterPreview Component', () => {
       
       expect(screen.getByText('Pré-visualização do Cartaz')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /baixar/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /compartilhar/i })).toBeInTheDocument();
     });
 
     it('renders poster title "PROCURA-SE"', () => {
@@ -113,11 +112,7 @@ describe('PosterPreview Component', () => {
       expect(screen.getByText('SE ENCONTRAR, ENTRE EM CONTATO:')).toBeInTheDocument();
     });
 
-    it('renders share message footer', () => {
-      renderWithLanguageProvider(emptyPetData);
-      
-      expect(screen.getByText('Ajude compartilhando este cartaz!')).toBeInTheDocument();
-    });
+
   });
 
   describe('Pet Information Rendering', () => {
@@ -271,35 +266,6 @@ describe('PosterPreview Component', () => {
       // Verify that html2canvas was called (mocked)
       const html2canvas = await import('html2canvas');
       expect(html2canvas.default).toHaveBeenCalled();
-    });
-
-    it('opens WhatsApp when share button is clicked', () => {
-      renderWithLanguageProvider(completePetData);
-      
-      const shareButton = screen.getByRole('button', { name: /compartilhar/i });
-      fireEvent.click(shareButton);
-      
-      expect(window.open).toHaveBeenCalledTimes(1);
-      const mockWindowOpen = window.open as ReturnType<typeof vi.fn>;
-      const call = mockWindowOpen.mock.calls[0];
-      expect(call[0]).toContain('https://wa.me/?text=');
-      expect(call[1]).toBe('_blank');
-    });
-
-    it('includes pet information in WhatsApp message', () => {
-      renderWithLanguageProvider(completePetData);
-      
-      const shareButton = screen.getByRole('button', { name: /compartilhar/i });
-      fireEvent.click(shareButton);
-      
-      const mockWindowOpen = window.open as ReturnType<typeof vi.fn>;
-      const call = mockWindowOpen.mock.calls[0];
-      const url = decodeURIComponent(call[0]);
-      
-      expect(url).toContain('Bella');
-      expect(url).toContain('Parque do Ibirapuera');
-      expect(url).toContain('Maria Santos');
-      expect(url).toContain('(11) 98765-4321');
     });
   });
 

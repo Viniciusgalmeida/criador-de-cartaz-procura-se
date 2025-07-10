@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, MessageCircle } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { PetData } from '@/pages/Index';
 import { useLanguage } from '@/contexts/LanguageContext';
 import html2canvas from 'html2canvas';
@@ -46,27 +46,7 @@ export const PosterPreview = ({
     }
   };
 
-  const shareWhatsApp = () => {
-    const details = [
-      petData.petName ? `${language === 'pt' ? 'Nome' : 'Name'}: ${petData.petName}` : '',
-      petData.lastSeenAddress ? `📍 ${t('poster.lost_at')} ${petData.lastSeenAddress}` : '',
-      petData.lostTime ? `🕐 ${t('poster.lost_time')} ${petData.lostTime}` : '',
-      petData.petDescription ? `📝 ${t('poster.description')} ${petData.petDescription}` : '',
-      petData.accessories ? `🎯 ${t('poster.accessories')} ${petData.accessories}` : '',
-      petData.reward ? `🎁 ${t('poster.reward')} ${petData.reward}` : '',
-      '',
-      t('poster.contact'),
-      petData.ownerName ? `👤 ${petData.ownerName}` : '',
-      petData.ownerPhone ? `📱 ${petData.ownerPhone}` : ''
-    ].filter(Boolean).join('\n');
 
-    const message = t('whatsapp.message')
-      .replace('{name}', petData.petName || (language === 'pt' ? 'Pet perdido' : 'Lost pet'))
-      .replace('{details}', details);
-
-    const whatsAppUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsAppUrl, '_blank');
-  };
 
   const renderPhotos = () => {
     const photos = petData.photos;
@@ -137,10 +117,6 @@ export const PosterPreview = ({
           <Button onClick={downloadPoster} variant="outline" size="sm">
             <Download className="mr-2" size={16} />
             {t('poster.download')}
-          </Button>
-          <Button onClick={shareWhatsApp} variant="outline" size="sm">
-            <MessageCircle className="mr-2" size={16} />
-            {t('poster.share')}
           </Button>
         </div>
       </CardHeader>
@@ -238,12 +214,7 @@ export const PosterPreview = ({
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="text-center mt-4">
-              <p className="text-sm text-gray-600 italic">
-                {t('poster.share_message')}
-              </p>
-            </div>
+
           </div>
         </div>
       </CardContent>

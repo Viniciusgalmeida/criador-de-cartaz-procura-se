@@ -111,12 +111,8 @@ describe('PosterPreview Language Integration', () => {
       // Contact section
       expect(screen.getByText('SE ENCONTRAR, ENTRE EM CONTATO:')).toBeInTheDocument();
       
-      // Footer message
-      expect(screen.getByText('Ajude compartilhando este cartaz!')).toBeInTheDocument();
-      
       // Buttons
       expect(screen.getByRole('button', { name: /baixar/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /compartilhar/i })).toBeInTheDocument();
     });
   });
 
@@ -138,12 +134,8 @@ describe('PosterPreview Language Integration', () => {
       // Contact section
       expect(screen.getByText('IF FOUND, PLEASE CONTACT:')).toBeInTheDocument();
       
-      // Footer message
-      expect(screen.getByText('Help by sharing this poster!')).toBeInTheDocument();
-      
       // Buttons
       expect(screen.getByRole('button', { name: /download/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /share/i })).toBeInTheDocument();
     });
   });
 
@@ -212,34 +204,7 @@ describe('PosterPreview Language Integration', () => {
       expect(screen.getByText('John Smith')).toBeInTheDocument();
     });
 
-    it('updates button functionality across languages', () => {
-      renderWithLanguageControl(completePetData, 'pt');
-      
-      // Test WhatsApp share in PT
-      const ptShareButton = screen.getByRole('button', { name: /compartilhar/i });
-      fireEvent.click(ptShareButton);
-      
-             expect(window.open).toHaveBeenCalledTimes(1);
-       let mockWindowOpen = window.open as ReturnType<typeof vi.fn>;
-       let call = mockWindowOpen.mock.calls[0];
-       let url = decodeURIComponent(call[0]);
-       expect(url).toContain('PET PERDIDO');
-       
-       // Clear mocks and switch to English
-       vi.clearAllMocks();
-       const languageToggle = screen.getByTestId('language-toggle');
-       fireEvent.click(languageToggle);
-       
-       // Test WhatsApp share in EN
-       const enShareButton = screen.getByRole('button', { name: /share/i });
-       fireEvent.click(enShareButton);
-       
-       expect(window.open).toHaveBeenCalledTimes(1);
-       mockWindowOpen = window.open as ReturnType<typeof vi.fn>;
-       call = mockWindowOpen.mock.calls[0];
-       url = decodeURIComponent(call[0]);
-      expect(url).toContain('LOST PET');
-    });
+
 
     it('updates custom fields labels format across languages', () => {
       renderWithLanguageControl(completePetData, 'pt');
@@ -261,33 +226,7 @@ describe('PosterPreview Language Integration', () => {
       expect(screen.getByText('30kg')).toBeInTheDocument();
     });
 
-    it('handles empty pet name correctly across languages', () => {
-      const emptyNameData = { ...completePetData, petName: '' };
-      renderWithLanguageControl(emptyNameData, 'pt');
-      
-             // Test WhatsApp share with empty name in PT
-       const ptShareButton = screen.getByRole('button', { name: /compartilhar/i });
-       fireEvent.click(ptShareButton);
-       
-       let mockWindowOpen = window.open as ReturnType<typeof vi.fn>;
-       let call = mockWindowOpen.mock.calls[0];
-       let url = decodeURIComponent(call[0]);
-       expect(url).toContain('PET PERDIDO');
-       
-       // Clear mocks and switch to English
-       vi.clearAllMocks();
-       const languageToggle = screen.getByTestId('language-toggle');
-       fireEvent.click(languageToggle);
-       
-       // Test WhatsApp share with empty name in EN
-       const enShareButton = screen.getByRole('button', { name: /share/i });
-       fireEvent.click(enShareButton);
-       
-       mockWindowOpen = window.open as ReturnType<typeof vi.fn>;
-       call = mockWindowOpen.mock.calls[0];
-       url = decodeURIComponent(call[0]);
-      expect(url).toContain('Lost pet');
-    });
+
   });
 
   describe('Dynamic Content Updates with Language', () => {
