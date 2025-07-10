@@ -57,6 +57,7 @@ export interface FormData {
 }
 
 export interface FormContextType {
+  // Dados do formulário
   formData: FormData;
   updateFormData: (data: Partial<FormData>) => void;
   addPhoto: (photo: string) => void;
@@ -65,4 +66,11 @@ export interface FormContextType {
   updateCustomField: (index: number, field: CustomField) => void;
   removeCustomField: (index: number) => void;
   resetForm: () => void;
+  
+  // Estados de persistência e error handling
+  isLoading: boolean;
+  hasError: boolean;
+  errorMessage: string;
+  retryOperation: () => void;
+  clearError: () => void;
 } 
