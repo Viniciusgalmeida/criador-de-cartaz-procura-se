@@ -30,4 +30,39 @@ export interface Language {
   flag: string;
 }
 
-export type FormStep = 'info' | 'photos' | 'preview' | 'download'; 
+export type FormStep = 'info' | 'photos' | 'preview' | 'download';
+
+// Tipos específicos para o FormContext
+export interface CustomField {
+  label: string;
+  value: string;
+}
+
+export interface RewardInfo {
+  amount: number;
+  currency: 'BRL' | 'USD';
+}
+
+export interface FormData {
+  petName: string;
+  ownerName: string;
+  contactPhone: string;
+  lastSeenLocation: string;
+  lastSeenDateTime?: string;
+  petDescription?: string;
+  accessories?: string;
+  reward?: RewardInfo;
+  photos: string[];
+  customFields: CustomField[];
+}
+
+export interface FormContextType {
+  formData: FormData;
+  updateFormData: (data: Partial<FormData>) => void;
+  addPhoto: (photo: string) => void;
+  removePhoto: (index: number) => void;
+  addCustomField: () => void;
+  updateCustomField: (index: number, field: CustomField) => void;
+  removeCustomField: (index: number) => void;
+  resetForm: () => void;
+} 

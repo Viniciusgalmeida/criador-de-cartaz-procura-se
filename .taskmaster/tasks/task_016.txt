@@ -1,6 +1,6 @@
 # Task ID: 16
 # Title: Implement localStorage Persistence for Language Selection
-# Status: pending
+# Status: done
 # Dependencies: 3
 # Priority: low
 # Description: Add localStorage persistence to language selection so users don't need to reselect their preferred language when they reload the page.
