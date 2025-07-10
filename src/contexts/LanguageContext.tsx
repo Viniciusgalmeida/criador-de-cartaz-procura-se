@@ -40,7 +40,7 @@ const translations = {
     'editor.field_value': 'Valor do campo',
     'poster.preview': 'Pré-visualização do Cartaz',
     'poster.download': 'Baixar',
-    'poster.share': 'Compartilhar',
+    
     'poster.title': 'PROCURA-SE',
     'poster.lost_at': 'Perdido em:',
     'poster.lost_time': 'Quando:',
@@ -48,8 +48,7 @@ const translations = {
     'poster.accessories': 'Acessórios:',
     'poster.reward': 'RECOMPENSA:',
     'poster.contact': 'SE ENCONTRAR, ENTRE EM CONTATO:',
-    'poster.share_message': 'Ajude compartilhando este cartaz!',
-    'whatsapp.message': '🐾 PET PERDIDO: {name}\n\n{details}\n\n🙏 Por favor, ajudem compartilhando!'
+    
   },
   en: {
     'app.title': 'Lost Pet Poster Generator',
@@ -82,7 +81,7 @@ const translations = {
     'editor.field_value': 'Field value',
     'poster.preview': 'Poster Preview',
     'poster.download': 'Download',
-    'poster.share': 'Share',
+    
     'poster.title': 'LOST PET',
     'poster.lost_at': 'Lost at:',
     'poster.lost_time': 'When:',
@@ -90,8 +89,7 @@ const translations = {
     'poster.accessories': 'Accessories:',
     'poster.reward': 'REWARD:',
     'poster.contact': 'IF FOUND, PLEASE CONTACT:',
-    'poster.share_message': 'Help by sharing this poster!',
-    'whatsapp.message': '🐾 LOST PET: {name}\n\n{details}\n\n🙏 Please help by sharing!'
+    
   }
 };
 
