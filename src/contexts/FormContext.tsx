@@ -1,11 +1,17 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
-import { FormData, FormContextType, CustomField, RewardInfo } from '../types';
+import { FormData, FormContextType, CustomField, RewardInfo, FormValidationState, FieldValidation, ValidationResult } from '../types';
 import { 
   saveFormData, 
   loadFormData, 
   clearFormData, 
   isLocalStorageAvailable 
 } from '../lib/localStorage';
+import { 
+  validateField as validateFieldUtil, 
+  validateForm as validateFormUtil, 
+  clearFieldError as clearFieldErrorUtil, 
+  isFormValid as isFormValidUtil 
+} from '../lib/validation';
 
 // Estado inicial padrão do formulário
 const defaultFormData: FormData = {
@@ -32,6 +38,9 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
   const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [retryCount, setRetryCount] = useState<number>(0);
+  
+  // Estados de validação
+  const [validationState, setValidationState] = useState<FormValidationState>({});
 
   // Configurações para retry mechanism
   const MAX_RETRY_ATTEMPTS = 3;
@@ -114,60 +123,137 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [formData, isLoading, saveDataSafely]);
 
+  // ================== VALIDAÇÃO ==================
+
+  // Função para validar um campo específico
+  const validateField = useCallback((fieldName: string, value: unknown): FieldValidation => {
+    const validation = validateFieldUtil(fieldName, value);
+    
+    setValidationState(prev => ({
+      ...prev,
+      [fieldName]: validation,
+    }));
+
+    return validation;
+  }, []);
+
+  // Função para validar todo o formulário
+  const validateForm = useCallback((): ValidationResult => {
+    const result = validateFormUtil(formData);
+    setValidationState(result.errors);
+    return result;
+  }, [formData]);
+
+  // Função para limpar erro de um campo específico
+  const clearFieldError = useCallback((fieldName: string) => {
+    setValidationState(prev => clearFieldErrorUtil(prev, fieldName));
+  }, []);
+
+  // Verificar se o formulário é válido
+  const isFormValid = React.useMemo(() => {
+    return isFormValidUtil(validationState);
+  }, [validationState]);
+
+  // ================== MANIPULAÇÃO DE DADOS ==================
+
   // Função para atualizar dados do formulário (memoizada para performance)
   const updateFormData = useCallback((data: Partial<FormData>) => {
-    setFormData(prevData => ({
-      ...prevData,
-      ...data
-    }));
-  }, []);
+    setFormData(prevData => {
+      const newData = { ...prevData, ...data };
+      
+      // Validar campos alterados automaticamente
+      Object.keys(data).forEach(fieldName => {
+        const fieldValue = data[fieldName as keyof FormData];
+        validateField(fieldName, fieldValue);
+      });
+      
+      return newData;
+    });
+  }, [validateField]);
 
   // Função para adicionar foto (memoizada)
   const addPhoto = useCallback((photo: string) => {
-    setFormData(prevData => ({
-      ...prevData,
-      photos: [...prevData.photos, photo]
-    }));
-  }, []);
+    setFormData(prevData => {
+      const newData = {
+        ...prevData,
+        photos: [...prevData.photos, photo]
+      };
+      
+      // Validar campo de fotos
+      validateField('photos', newData.photos);
+      
+      return newData;
+    });
+  }, [validateField]);
 
   // Função para remover foto por índice (memoizada)
   const removePhoto = useCallback((index: number) => {
-    setFormData(prevData => ({
-      ...prevData,
-      photos: prevData.photos.filter((_, i) => i !== index)
-    }));
-  }, []);
+    setFormData(prevData => {
+      const newData = {
+        ...prevData,
+        photos: prevData.photos.filter((_, i) => i !== index)
+      };
+      
+      // Validar campo de fotos
+      validateField('photos', newData.photos);
+      
+      return newData;
+    });
+  }, [validateField]);
 
   // Função para adicionar campo personalizado (memoizada)
   const addCustomField = useCallback(() => {
     const newField: CustomField = { label: '', value: '' };
-    setFormData(prevData => ({
-      ...prevData,
-      customFields: [...prevData.customFields, newField]
-    }));
-  }, []);
+    setFormData(prevData => {
+      const newData = {
+        ...prevData,
+        customFields: [...prevData.customFields, newField]
+      };
+      
+      // Validar campos personalizados
+      validateField('customFields', newData.customFields);
+      
+      return newData;
+    });
+  }, [validateField]);
 
   // Função para atualizar campo personalizado (memoizada)
   const updateCustomField = useCallback((index: number, field: CustomField) => {
-    setFormData(prevData => ({
-      ...prevData,
-      customFields: prevData.customFields.map((existingField, i) => 
-        i === index ? field : existingField
-      )
-    }));
-  }, []);
+    setFormData(prevData => {
+      const newData = {
+        ...prevData,
+        customFields: prevData.customFields.map((existingField, i) => 
+          i === index ? field : existingField
+        )
+      };
+      
+      // Validar campos personalizados
+      validateField('customFields', newData.customFields);
+      
+      return newData;
+    });
+  }, [validateField]);
 
   // Função para remover campo personalizado (memoizada)
   const removeCustomField = useCallback((index: number) => {
-    setFormData(prevData => ({
-      ...prevData,
-      customFields: prevData.customFields.filter((_, i) => i !== index)
-    }));
-  }, []);
+    setFormData(prevData => {
+      const newData = {
+        ...prevData,
+        customFields: prevData.customFields.filter((_, i) => i !== index)
+      };
+      
+      // Validar campos personalizados
+      validateField('customFields', newData.customFields);
+      
+      return newData;
+    });
+  }, [validateField]);
 
-  // Função para resetar formulário (memoizada) - agora também limpa localStorage
+  // Função para resetar formulário (memoizada) - agora também limpa localStorage e validação
   const resetForm = useCallback(() => {
     setFormData(defaultFormData);
+    setValidationState({}); // Limpar estado de validação
+    
     try {
       if (isLocalStorageAvailable()) {
         clearFormData();
@@ -179,6 +265,7 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
 
   // Valor do contexto (memoizado para evitar re-renders desnecessários)
   const contextValue = React.useMemo(() => ({
+    // Dados do formulário
     formData,
     updateFormData,
     addPhoto,
@@ -187,11 +274,20 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
     updateCustomField,
     removeCustomField,
     resetForm,
+    
+    // Estados de persistência e error handling
     isLoading,
     hasError,
     errorMessage,
     retryOperation,
-    clearError
+    clearError,
+    
+    // Estados de validação
+    validationState,
+    validateField,
+    validateForm,
+    clearFieldError,
+    isFormValid
   }), [
     formData,
     updateFormData,
@@ -205,7 +301,12 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
     hasError,
     errorMessage,
     retryOperation,
-    clearError
+    clearError,
+    validationState,
+    validateField,
+    validateForm,
+    clearFieldError,
+    isFormValid
   ]);
 
   return (
@@ -215,14 +316,11 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook customizado para consumir o contexto
+// Hook para usar o contexto
 export const useFormData = () => {
   const context = useContext(FormContext);
   if (context === undefined) {
     throw new Error('useFormData must be used within a FormProvider');
   }
   return context;
-};
-
-// Export para compatibilidade
-export default FormContext; 
+}; 

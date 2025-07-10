@@ -56,6 +56,38 @@ export interface FormData {
   customFields: CustomField[];
 }
 
+// Tipos para validação
+export type ValidationRule = 'required' | 'email' | 'phone' | 'minLength' | 'maxLength' | 'pattern' | 'custom';
+
+export interface ValidationConfig {
+  rule: ValidationRule;
+  value?: string | number | RegExp;
+  message?: string;
+  customValidator?: (value: unknown) => boolean;
+}
+
+export interface FieldValidation {
+  isValid: boolean;
+  errorMessage?: string;
+  isDirty?: boolean;
+}
+
+export interface FormValidationState {
+  [key: string]: FieldValidation;
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: FormValidationState;
+  errorCount: number;
+}
+
+export interface AsyncValidationResult {
+  isValid: boolean;
+  errorMessage?: string;
+  isLoading?: boolean;
+}
+
 export interface FormContextType {
   // Dados do formulário
   formData: FormData;
@@ -73,4 +105,11 @@ export interface FormContextType {
   errorMessage: string;
   retryOperation: () => void;
   clearError: () => void;
+  
+  // Estados de validação
+  validationState: FormValidationState;
+  validateField: (fieldName: string, value: unknown) => FieldValidation;
+  validateForm: () => ValidationResult;
+  clearFieldError: (fieldName: string) => void;
+  isFormValid: boolean;
 } 
