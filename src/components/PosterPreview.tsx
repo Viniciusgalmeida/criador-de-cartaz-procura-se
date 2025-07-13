@@ -27,6 +27,22 @@ export const PosterPreview = ({
     
     if (posterRef.current) {
       try {
+        // Pequeno delay para garantir que o DOM esteja completamente renderizado
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Obter dimensões reais exibidas na tela
+        const rect = posterRef.current.getBoundingClientRect();
+        const actualWidth = rect.width;
+        const actualHeight = rect.height;
+        
+        // Verificar se as dimensões são válidas
+        if (actualWidth === 0 || actualHeight === 0) {
+          console.warn('Dimensões inválidas detectadas, usando dimensões padrão');
+          throw new Error('Dimensões inválidas para captura');
+        }
+        
+        console.log('Capturando poster com dimensões:', { actualWidth, actualHeight });
+        
         // Configurações para html2canvas
         const canvas = await html2canvas(posterRef.current, {
           backgroundColor: '#ffffff',
@@ -34,8 +50,18 @@ export const PosterPreview = ({
           useCORS: true, // Para carregar imagens externas
           allowTaint: false,
           removeContainer: true,
-          width: posterRef.current.scrollWidth,
-          height: posterRef.current.scrollHeight
+          width: actualWidth,
+          height: actualHeight,
+          windowWidth: actualWidth,
+          windowHeight: actualHeight,
+          scrollX: 0,
+          scrollY: 0
+        });
+        
+        console.log('Canvas gerado com dimensões:', { 
+          canvasWidth: canvas.width, 
+          canvasHeight: canvas.height,
+          aspectRatio: canvas.width / canvas.height
         });
         
         // Criar link de download
@@ -47,6 +73,8 @@ export const PosterPreview = ({
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        
+        console.log('Download do cartaz iniciado com sucesso');
       } catch (error) {
         console.error('Erro ao gerar download do cartaz:', error);
         // Fallback silencioso - usuário pode tentar novamente
