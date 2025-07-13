@@ -93,29 +93,32 @@ export const PosterPreview = ({
     if (photos.length === 0) return null;
 
     if (photos.length === 1) {
-      // Uma foto: grande e centralizada
+      // Uma foto: grande e centralizada, preservando proporções
       return (
         <div className="flex justify-center mb-6">
-          <img 
-            src={photos[0]} 
-            alt="Pet" 
-            className="w-80 h-80 object-cover rounded-lg border-2 border-gray-300" 
-          />
+          <div className="max-w-80 max-h-80 flex items-center justify-center">
+            <img 
+              src={photos[0]} 
+              alt="Pet" 
+              className="max-w-full max-h-full object-contain rounded-lg border-2 border-gray-300" 
+            />
+          </div>
         </div>
       );
     }
 
     if (photos.length === 2) {
-      // Duas fotos: lado a lado centralizadas e maiores
+      // Duas fotos: lado a lado centralizadas, preservando proporções
       return (
         <div className="flex justify-center gap-4 mb-6">
           {photos.slice(0, 2).map((photo, index) => (
-            <img 
-              key={index}
-              src={photo} 
-              alt={`Pet ${index + 1}`} 
-              className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300" 
-            />
+            <div key={index} className="max-w-64 max-h-64 flex items-center justify-center">
+              <img 
+                src={photo} 
+                alt={`Pet ${index + 1}`} 
+                className="max-w-full max-h-full object-contain rounded-lg border-2 border-gray-300" 
+              />
+            </div>
           ))}
         </div>
       );
@@ -125,22 +128,28 @@ export const PosterPreview = ({
       // Três fotos: primeira à esquerda centralizada verticalmente, duas à direita menores empilhadas
       return (
         <div className="flex justify-center items-center gap-4 mb-6">
-          <img 
-            src={photos[0]} 
-            alt="Pet 1" 
-            className="w-64 h-80 object-cover rounded-lg border-2 border-gray-300" 
-          />
+          <div className="max-w-64 max-h-80 flex items-center justify-center">
+            <img 
+              src={photos[0]} 
+              alt="Pet 1" 
+              className="max-w-full max-h-full object-contain rounded-lg border-2 border-gray-300" 
+            />
+          </div>
           <div className="flex flex-col gap-4">
-            <img 
-              src={photos[1]} 
-              alt="Pet 2" 
-              className="w-48 h-38 object-cover rounded-lg border-2 border-gray-300" 
-            />
-            <img 
-              src={photos[2]} 
-              alt="Pet 3" 
-              className="w-48 h-38 object-cover rounded-lg border-2 border-gray-300" 
-            />
+            <div className="max-w-48 max-h-38 flex items-center justify-center">
+              <img 
+                src={photos[1]} 
+                alt="Pet 2" 
+                className="max-w-full max-h-full object-contain rounded-lg border-2 border-gray-300" 
+              />
+            </div>
+            <div className="max-w-48 max-h-38 flex items-center justify-center">
+              <img 
+                src={photos[2]} 
+                alt="Pet 3" 
+                className="max-w-full max-h-full object-contain rounded-lg border-2 border-gray-300" 
+              />
+            </div>
           </div>
         </div>
       );
