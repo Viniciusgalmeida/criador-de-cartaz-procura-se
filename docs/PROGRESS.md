@@ -4,6 +4,84 @@ Este arquivo documenta o progresso técnico do desenvolvimento do projeto seguin
 
 ---
 
+## 2025-07-13 17:12:00 -03 - Fix: Photo Proportions Preservation 📸
+
+### ✅ **Correção da Distorção de Fotos no Upload e Visualização**
+
+Seguindo feedback do usuário sobre distorção das fotos que "se deformam para caber no formato", implementei uma solução completa para preservar as proporções originais das fotos tanto no editor quanto no cartaz.
+
+### **🔍 Problema Identificado**
+
+**Causa da Distorção das Fotos:**
+- Uso de `object-cover` cortava/esticava as fotos para caber em containers de tamanho fixo
+- Thumbnails do editor forçavam altura fixa (`h-24`) causando distorção
+- Layout do cartaz usava dimensões fixas (`w-80 h-80`, `w-64 h-64`) que deformavam as fotos
+- As fotos não mantinham suas proporções originais
+
+### **💡 Solução Implementada**
+
+**Abordagem de Preservação de Proporções:**
+1. **✅ Substituição de `object-cover` por `object-contain`**: Preserva proporções sem cortar
+2. **✅ Containers Flexíveis**: Divs com `flex items-center justify-center` para centralização
+3. **✅ Dimensões Máximas**: Usa `max-w-full max-h-full` ao invés de dimensões fixas
+4. **✅ Background Neutro**: Adiciona `bg-gray-50` nos thumbnails do editor
+5. **✅ Todos os Layouts**: Suporte para 1, 2 e 3 fotos com proporções mantidas
+
+### **🛠️ Implementação Técnica**
+
+#### **Editor (Thumbnails)**
+```tsx
+// ANTES: Fotos distorcidas
+<img 
+  className="w-full h-24 object-cover rounded-lg border-2 border-gray-200" 
+/>
+
+// DEPOIS: Proporções preservadas
+<div className="w-full h-24 flex items-center justify-center bg-gray-50 rounded-lg border-2 border-gray-200 overflow-hidden">
+  <img 
+    className="max-w-full max-h-full object-contain rounded-lg" 
+  />
+</div>
+```
+
+#### **Cartaz (Layout de Fotos)**
+```tsx
+// ANTES: Fotos cortadas/esticadas
+<img 
+  className="w-80 h-80 object-cover rounded-lg border-2 border-gray-300" 
+/>
+
+// DEPOIS: Proporções mantidas
+<div className="max-w-80 max-h-80 flex items-center justify-center">
+  <img 
+    className="max-w-full max-h-full object-contain rounded-lg border-2 border-gray-300" 
+  />
+</div>
+```
+
+### **✅ Verificações de QA Realizadas**
+
+- **ESLint**: ✅ Apenas warnings (não errors)
+- **TypeScript**: ✅ Sem erros de tipagem
+- **Build**: ✅ Compilação bem-sucedida
+- **Layouts**: ✅ Todos os layouts de fotos (1, 2, 3) funcionando corretamente
+
+### **🎯 Resultados Obtidos**
+
+- **📸 Preservação Total**: Fotos mantêm proporções originais
+- **🎨 Consistência Visual**: Aparência idêntica entre editor e cartaz
+- **📱 Responsividade**: Funciona em diferentes tamanhos de tela
+- **💎 Qualidade**: Sem distorção, corte ou esticamento das fotos
+- **🔄 Experiência**: Usuário vê exatamente como as fotos aparecerão
+
+### **🔗 Commit e Branch**
+
+- **Branch**: `fix/photo-proportions-preservation`
+- **Commit**: `3e07777` - "fix: preserve original photo proportions in upload and poster display"
+- **Arquivos**: `PosterEditor.tsx` e `PosterPreview.tsx` atualizados
+
+---
+
 ## 2025-07-13 17:06:00 -03 - Fix: Accurate Poster Download Capture 🎯
 
 ### ✅ **Solução Simplificada para Captura Precisa do Cartaz**
