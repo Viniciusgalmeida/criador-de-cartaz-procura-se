@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { WelcomePopup } from '@/components/WelcomePopup';
 import { PosterEditor, PosterEditorRef } from '@/components/PosterEditor';
 import { PosterPreview } from '@/components/PosterPreview';
-import { LanguageSelector } from '@/components/LanguageSelector';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface PetData {
@@ -47,11 +46,7 @@ const Index = () => {
       {showWelcome && <WelcomePopup onClose={() => setShowWelcome(false)} />}
       
       <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-8 relative">
-          <div className="absolute top-0 right-0">
-            <LanguageSelector />
-          </div>
-          
+        <header className="text-center mb-8 relative">          
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
             {t('app.title')}
           </h1>
@@ -69,7 +64,7 @@ const Index = () => {
             />
           </div>
           
-          <div className="order-1 lg:order-2 sticky top-8">
+          <div className="order-1 lg:order-2 lg:sticky lg:top-8">
             <PosterPreview 
               petData={petData} 
               onValidate={validateRequiredFields}

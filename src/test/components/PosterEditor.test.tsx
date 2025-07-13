@@ -320,7 +320,7 @@ describe('PosterEditor Component', () => {
       renderWithProviders();
       
       expect(screen.getByPlaceholderText(/digite o nome do seu pet/i)).toBeInTheDocument();
-      expect(screen.getByPlaceholderText(/digite onde foi visto pela última vez/i)).toBeInTheDocument();
+      expect(screen.getByPlaceholderText(/Digite a rua, bairro, cidade, etc./i)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(/digite seu nome completo/i)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(/digite seu telefone/i)).toBeInTheDocument();
     });
