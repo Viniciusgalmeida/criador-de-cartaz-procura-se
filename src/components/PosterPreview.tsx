@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { PetData } from '@/pages/Index';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import html2canvas from 'html2canvas';
 
 interface PosterPreviewProps {
@@ -167,6 +168,7 @@ export const PosterPreview = ({
             <Download className="mr-2" size={16} />
             {t('poster.download')}
           </Button>
+          <LanguageSelector />
         </div>
       </CardHeader>
       <CardContent>
@@ -186,7 +188,6 @@ export const PosterPreview = ({
               <h1 className="text-4xl md:text-6xl font-black text-red-600 mb-2 tracking-wider">
                 {t('poster.title')}
               </h1>
-              <div className="h-1 bg-red-600 w-full mb-4"></div>
             </div>
 
             {/* Photos */}
@@ -262,6 +263,13 @@ export const PosterPreview = ({
                   <p className="text-2xl font-black text-red-600">{petData.ownerPhone}</p>
                 )}
               </div>
+            </div>
+
+            {/* Footer with site link */}
+            <div className="mt-4 text-center">
+              <p className="text-xs text-gray-400">
+                Feito no Criador de Cartaz Procura-se - <a href="https://criador-de-cartaz-procura-se.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">https://criador-de-cartaz-procura-se.vercel.app</a>
+              </p>
             </div>
 
 

@@ -24,7 +24,7 @@ const translations = {
     'editor.pet_name': 'Nome do Pet',
     'editor.pet_name_placeholder': 'Digite o nome do seu pet',
     'editor.last_seen': 'Último Local Visto',
-    'editor.last_seen_placeholder': 'Digite onde foi visto pela última vez',
+    'editor.last_seen_placeholder': 'Digite a rua, bairro, cidade, etc.',
     'editor.additional_info': 'Informações Adicionais (Opcional)',
     'editor.lost_time': 'Data e Horário que se perdeu',
     'editor.lost_time_placeholder': 'Ex: 15/01/2024 às 14h30',

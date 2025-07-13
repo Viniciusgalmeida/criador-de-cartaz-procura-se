@@ -91,7 +91,7 @@ describe('Language Integration with PosterEditor', () => {
       );
       
       expect(screen.getByPlaceholderText('Digite o nome do seu pet')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Digite onde foi visto pela última vez')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('Digite a rua, bairro, cidade, etc.')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Digite seu nome completo')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Digite seu telefone')).toBeInTheDocument();
     });
