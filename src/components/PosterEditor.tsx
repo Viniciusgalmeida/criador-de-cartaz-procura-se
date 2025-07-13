@@ -21,6 +21,7 @@ interface ValidationErrors {
   lastSeenAddress?: string;
   ownerName?: string;
   ownerPhone?: string;
+  photos?: string;
 }
 
 // Interface para métodos expostos via ref
@@ -40,8 +41,17 @@ export const PosterEditor = forwardRef<PosterEditorRef, PosterEditorProps>(({
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
 
   // Função para validar um campo específico
-  const validateField = (fieldName: keyof ValidationErrors, value: string): string | undefined => {
-    if (!value || value.trim() === '') {
+  const validateField = (fieldName: keyof ValidationErrors, value: string | string[]): string | undefined => {
+    if (fieldName === 'photos') {
+      // Validação específica para fotos (array)
+      if (!Array.isArray(value) || value.length === 0) {
+        return t('validation.required');
+      }
+      return undefined;
+    }
+    
+    // Validação para campos de texto
+    if (!value || (typeof value === 'string' && value.trim() === '')) {
       return t('validation.required');
     }
     return undefined;
@@ -56,6 +66,7 @@ export const PosterEditor = forwardRef<PosterEditorRef, PosterEditorProps>(({
     errors.lastSeenAddress = validateField('lastSeenAddress', petData.lastSeenAddress);
     errors.ownerName = validateField('ownerName', petData.ownerName);
     errors.ownerPhone = validateField('ownerPhone', petData.ownerPhone);
+    errors.photos = validateField('photos', petData.photos);
     
     // Remover campos sem erro
     Object.keys(errors).forEach(key => {
@@ -109,6 +120,9 @@ export const PosterEditor = forwardRef<PosterEditorRef, PosterEditorProps>(({
           ...petData,
           photos: [...petData.photos, ...newPhotos]
         });
+        
+        // Limpar erro de fotos quando usuário adiciona fotos
+        clearFieldError('photos');
       }
     }
     // Reset the input value so the same file can be selected again if needed
@@ -123,6 +137,9 @@ export const PosterEditor = forwardRef<PosterEditorRef, PosterEditorProps>(({
       ...petData,
       photos: newPhotos
     });
+    
+    // Se não há mais fotos, pode aparecer erro na próxima validação
+    // Mas não vamos validar automaticamente aqui
   };
 
   const addCustomField = () => {
@@ -199,6 +216,9 @@ export const PosterEditor = forwardRef<PosterEditorRef, PosterEditorProps>(({
             onChange={handlePhotoUpload} 
             className="hidden" 
           />
+          {validationErrors.photos && (
+            <p className="text-red-500 text-xs mt-1">{validationErrors.photos}</p>
+          )}
         </div>
 
         {/* Informações Obrigatórias - Nome do Pet e Local primeiro */}
