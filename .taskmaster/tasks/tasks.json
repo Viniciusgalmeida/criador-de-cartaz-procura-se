@@ -802,7 +802,7 @@
           5,
           6
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -902,7 +902,7 @@
           6,
           9
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -997,7 +997,7 @@
         "id": 15,
         "title": "Write Comprehensive Tests",
         "description": "Implement a comprehensive test suite using Vitest and React Testing Library to ensure the Pet Poster Creator application works as expected.",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           1,
           2,

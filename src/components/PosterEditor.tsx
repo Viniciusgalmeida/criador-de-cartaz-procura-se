@@ -185,11 +185,13 @@ export const PosterEditor = forwardRef<PosterEditorRef, PosterEditorProps>(({
           <div className="grid grid-cols-3 gap-4 mb-4">
             {petData.photos.map((photo, index) => (
               <div key={index} className="relative group">
-                <img 
-                  src={photo} 
-                  alt={`Pet ${index + 1}`} 
-                  className="w-full h-24 object-cover rounded-lg border-2 border-gray-200" 
-                />
+                <div className="w-full h-24 flex items-center justify-center bg-gray-50 rounded-lg border-2 border-gray-200 overflow-hidden">
+                  <img 
+                    src={photo} 
+                    alt={`Pet ${index + 1}`} 
+                    className="max-w-full max-h-full object-contain rounded-lg" 
+                  />
+                </div>
                 <button 
                   onClick={() => removePhoto(index)} 
                   className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
