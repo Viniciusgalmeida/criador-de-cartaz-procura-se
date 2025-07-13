@@ -4,6 +4,70 @@ Este arquivo documenta o progresso técnico do desenvolvimento do projeto seguin
 
 ---
 
+## 2025-07-13 15:48:00 -03 - Fix: Poster Download Distortion Issue 🔧
+
+### ✅ **Problema de Distorção no Download do Cartaz - RESOLVIDO**
+
+Seguindo rigorosamente o **CHECKLIST.md** e os padrões sistemáticos de desenvolvimento, resolvi o problema de distorção que ocorria no download do cartaz.
+
+### **🔍 Análise Técnica do Problema**
+
+**Problema Identificado:**
+- **Sintoma**: A imagem baixada do cartaz ficava distorcida em relação ao que aparece na tela
+- **Causa Raiz**: O `html2canvas` estava usando `scrollWidth` e `scrollHeight` que não correspondem às dimensões visuais reais do elemento na tela
+- **Impacto**: Proporções incorretas entre largura e altura no arquivo PNG baixado
+
+### **🛠️ Solução Implementada**
+
+**Mudanças Técnicas:**
+1. **Substituição de Dimensões**: Trocou `scrollWidth/scrollHeight` por `getBoundingClientRect()`
+2. **Validação de Dimensões**: Adicionada verificação para evitar capturas com dimensões inválidas
+3. **Delay de Renderização**: Pequeno delay (100ms) para garantir DOM completamente renderizado
+4. **Parâmetros Adicionais**: Incluído `windowWidth`, `windowHeight`, `scrollX`, `scrollY` para melhor rendering
+5. **Debug Logging**: Logs detalhados para troubleshooting futuro
+
+**Código Implementado:**
+```typescript
+// Obter dimensões reais exibidas na tela
+const rect = posterRef.current.getBoundingClientRect();
+const actualWidth = rect.width;
+const actualHeight = rect.height;
+
+// Configurações otimizadas para html2canvas
+const canvas = await html2canvas(posterRef.current, {
+  backgroundColor: '#ffffff',
+  scale: 2,
+  useCORS: true,
+  allowTaint: false,
+  removeContainer: true,
+  width: actualWidth,
+  height: actualHeight,
+  windowWidth: actualWidth,
+  windowHeight: actualHeight,
+  scrollX: 0,
+  scrollY: 0
+});
+```
+
+### **✅ Verificações de Qualidade (QA)**
+
+- **ESLint**: ✅ Passou (apenas warnings não-críticos)
+- **TypeScript**: ✅ Zero erros de tipagem
+- **Build**: ✅ Compilação bem-sucedida
+- **Funcionalidade**: ✅ Teste manual confirmou correção da distorção
+
+### **📋 Entregáveis**
+
+- **Branch**: `fix/poster-download-proportions`
+- **Commit**: `2a4a4f4` - "fix: resolve poster download distortion by using actual element dimensions"
+- **Arquivos Modificados**: `src/components/PosterPreview.tsx`
+
+### **🎯 Resultado Alcançado**
+
+A imagem baixada agora mantém proporções idênticas ao cartaz exibido na tela do usuário, independentemente do tamanho da viewport ou dispositivo utilizado.
+
+---
+
 ## 2025-07-10 17:46:30 -03 - Task 11: WhatsApp Sharing Functionality - REMOVED ❌
 
 ### ❌ **Task 11 Cancelled - Feature Already Implemented and Removed**
