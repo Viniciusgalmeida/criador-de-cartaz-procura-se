@@ -1458,3 +1458,38 @@ Task Master indicates next available task: **Subtask 15.4** - "Test Language Con
 - Mensagens desaparecem quando usuário começa a digitar
 - Download só executa se todos os campos obrigatórios estiverem preenchidos
 - Campos opcionais não geram validação
+
+## 2025-07-12 22:03:00 UTC-3
+
+### Atualização: Adição de Fotos como Campo Obrigatório ✅
+
+**Implementação:**
+- Adicionado campo `photos` à interface `ValidationErrors`
+- Atualizada função `validateField` para aceitar arrays (validação de fotos)
+- Implementada validação específica para fotos verificando se array não está vazio
+- Adicionada exibição de erro embaixo da seção de upload de fotos
+- Implementada limpeza de erro quando usuário adiciona novas fotos
+- Mantida lógica de não validar automaticamente ao remover fotos
+
+**Campos obrigatórios atualizados:**
+- ✅ Fotos do Pet (novo)
+- ✅ Nome do Pet
+- ✅ Último Local Visto
+- ✅ Nome do Responsável
+- ✅ Telefone para Contato
+
+**Arquivos modificados:**
+- `src/components/PosterEditor.tsx`: Adição da validação de fotos
+
+**QA Results:**
+- ✅ ESLint: Apenas warnings de fast-refresh, sem erros
+- ✅ TypeScript: Zero erros de tipagem
+- ✅ Build: Executado com sucesso
+- ✅ Testes: 121 testes passaram, 4 pulados
+
+**Commit:** `3dc0039` - feat: add photos as required field for validation
+
+**Funcionalidade atualizada:**
+- Agora é obrigatório ter pelo menos uma foto para fazer o download
+- Mensagem "Preenchimento obrigatório" aparece embaixo da seção de fotos se vazia
+- Erro de fotos desaparece quando usuário adiciona nova foto
