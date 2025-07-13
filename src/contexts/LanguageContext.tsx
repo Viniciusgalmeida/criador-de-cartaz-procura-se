@@ -49,6 +49,9 @@ const translations = {
     'poster.reward': 'RECOMPENSA:',
     'poster.contact': 'SE ENCONTRAR, ENTRE EM CONTATO:',
     
+    // Validation messages
+    'validation.required': 'Preenchimento obrigatório',
+    
   },
   en: {
     'app.title': 'Lost Pet Poster Generator',
@@ -89,6 +92,9 @@ const translations = {
     'poster.accessories': 'Accessories:',
     'poster.reward': 'REWARD:',
     'poster.contact': 'IF FOUND, PLEASE CONTACT:',
+    
+    // Validation messages
+    'validation.required': 'Required field',
     
   }
 };

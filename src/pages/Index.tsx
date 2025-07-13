@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { WelcomePopup } from '@/components/WelcomePopup';
-import { PosterEditor } from '@/components/PosterEditor';
+import { PosterEditor, PosterEditorRef } from '@/components/PosterEditor';
 import { PosterPreview } from '@/components/PosterPreview';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -22,6 +22,8 @@ export interface PetData {
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const { t } = useLanguage();
+  const posterEditorRef = useRef<PosterEditorRef>(null);
+  
   const [petData, setPetData] = useState<PetData>({
     photos: [],
     lastSeenAddress: '',
@@ -34,6 +36,11 @@ const Index = () => {
     reward: '',
     customFields: []
   });
+
+  // Função para validar campos obrigatórios
+  const validateRequiredFields = (): boolean => {
+    return posterEditorRef.current?.validateRequiredFields() ?? false;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
@@ -55,11 +62,18 @@ const Index = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
           <div className="order-2 lg:order-1">
-            <PosterEditor petData={petData} setPetData={setPetData} />
+            <PosterEditor 
+              ref={posterEditorRef}
+              petData={petData} 
+              setPetData={setPetData} 
+            />
           </div>
           
           <div className="order-1 lg:order-2 sticky top-8">
-            <PosterPreview petData={petData} />
+            <PosterPreview 
+              petData={petData} 
+              onValidate={validateRequiredFields}
+            />
           </div>
         </div>
       </div>

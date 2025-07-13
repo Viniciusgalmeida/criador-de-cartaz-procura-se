@@ -8,15 +8,23 @@ import html2canvas from 'html2canvas';
 
 interface PosterPreviewProps {
   petData: PetData;
+  onValidate?: () => boolean;
 }
 
 export const PosterPreview = ({
-  petData
+  petData,
+  onValidate
 }: PosterPreviewProps) => {
   const posterRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
 
   const downloadPoster = async () => {
+    // Validar campos obrigatórios antes de baixar
+    if (onValidate && !onValidate()) {
+      // Se validação falhar, não prosseguir com o download
+      return;
+    }
+    
     if (posterRef.current) {
       try {
         // Configurações para html2canvas
