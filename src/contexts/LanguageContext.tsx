@@ -27,7 +27,7 @@ const translations = {
     'editor.last_seen_placeholder': 'Digite onde foi visto pela última vez',
     'editor.additional_info': 'Informações Adicionais (Opcional)',
     'editor.lost_time': 'Data e Horário que se perdeu',
-    'editor.lost_time_placeholder': 'Ex: 15/01/2024 às 14h30 ou Ontem à tarde',
+    'editor.lost_time_placeholder': 'Ex: 15/01/2024 às 14h30',
     'editor.pet_description': 'Descrição do Pet',
     'editor.pet_description_placeholder': 'Descreva características físicas, comportamento, etc.',
     'editor.accessories': 'Acessórios/Coleira',
@@ -49,6 +49,9 @@ const translations = {
     'poster.reward': 'RECOMPENSA:',
     'poster.contact': 'SE ENCONTRAR, ENTRE EM CONTATO:',
     
+    // Validation messages
+    'validation.required': 'Preenchimento obrigatório',
+    
   },
   en: {
     'app.title': 'Lost Pet Poster Generator',
@@ -68,7 +71,7 @@ const translations = {
     'editor.last_seen_placeholder': 'Enter where it was last seen',
     'editor.additional_info': 'Additional Information (Optional)',
     'editor.lost_time': 'Date and Time Lost',
-    'editor.lost_time_placeholder': 'Ex: 01/15/2024 at 2:30 PM or Yesterday afternoon',
+    'editor.lost_time_placeholder': 'Ex: 01/15/2024 at 2:30 PM',
     'editor.pet_description': 'Pet Description',
     'editor.pet_description_placeholder': 'Describe physical characteristics, behavior, etc.',
     'editor.accessories': 'Accessories/Collar',
@@ -89,6 +92,9 @@ const translations = {
     'poster.accessories': 'Accessories:',
     'poster.reward': 'REWARD:',
     'poster.contact': 'IF FOUND, PLEASE CONTACT:',
+    
+    // Validation messages
+    'validation.required': 'Required field',
     
   }
 };

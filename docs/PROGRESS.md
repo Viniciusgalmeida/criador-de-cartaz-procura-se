@@ -1419,3 +1419,94 @@ Task Master indicates next available task: **Subtask 15.4** - "Test Language Con
 - Solution: Added loading states, retry mechanisms, and graceful fallbacks
 
 **Next Steps**: Ready for Subtask 4.4 (Implement form data validation) 
+
+## 2025-07-12 21:58:00 UTC-3
+
+### Subtarefa 13.1: Set up form state management ✅
+
+**Implementação:**
+- Configurado gerenciamento de estado de formulário usando useState para validação de campos obrigatórios
+- Implementada validação apenas para campos obrigatórios: Nome do Pet, Último Local Visto, Nome do Responsável, Telefone para Contato
+- Adicionado estado de validação (`ValidationErrors`) no componente PosterEditor
+- Criadas funções de validação para campos obrigatórios que mostram mensagem "Preenchimento obrigatório"
+- Implementada limpeza de erros quando usuário começa a digitar
+- Exposição da função de validação via `useImperativeHandle` e `forwardRef`
+- Integração com botão de download no PosterPreview que valida antes de baixar
+- Campos opcionais (Data/Horário, Descrição do Pet, Acessórios) não têm validação conforme solicitado
+
+**Arquivos modificados:**
+- `src/contexts/LanguageContext.tsx`: Adicionadas mensagens de validação
+- `src/components/PosterEditor.tsx`: Implementação completa do estado de validação
+- `src/pages/Index.tsx`: Integração da validação com ref
+- `src/components/PosterPreview.tsx`: Validação antes do download
+
+**Desafios encontrados:**
+- Necessidade de usar `forwardRef` e `useImperativeHandle` para expor função de validação
+- Mapeamento correto entre interface PetData e campos de validação
+- Garantir que validação só ocorra no download, não durante digitação
+
+**QA Results:**
+- ✅ ESLint: Apenas warnings de fast-refresh, sem erros
+- ✅ TypeScript: Zero erros de tipagem
+- ✅ Build: Executado com sucesso
+- ✅ Testes: 121 testes passaram, 4 pulados
+
+**Commit:** `b2d35c5` - feat: implement form validation for required fields on download
+
+**Funcionalidade:**
+- Quando usuário clica em "Baixar" sem preencher campos obrigatórios, aparecem mensagens de erro
+- Mensagens desaparecem quando usuário começa a digitar
+- Download só executa se todos os campos obrigatórios estiverem preenchidos
+- Campos opcionais não geram validação
+
+## 2025-07-12 22:03:00 UTC-3
+
+### Atualização: Adição de Fotos como Campo Obrigatório ✅
+
+**Implementação:**
+- Adicionado campo `photos` à interface `ValidationErrors`
+- Atualizada função `validateField` para aceitar arrays (validação de fotos)
+- Implementada validação específica para fotos verificando se array não está vazio
+- Adicionada exibição de erro embaixo da seção de upload de fotos
+- Implementada limpeza de erro quando usuário adiciona novas fotos
+- Mantida lógica de não validar automaticamente ao remover fotos
+
+**Campos obrigatórios atualizados:**
+- ✅ Fotos do Pet (novo)
+- ✅ Nome do Pet
+- ✅ Último Local Visto
+- ✅ Nome do Responsável
+- ✅ Telefone para Contato
+
+**Arquivos modificados:**
+- `src/components/PosterEditor.tsx`: Adição da validação de fotos
+
+**QA Results:**
+- ✅ ESLint: Apenas warnings de fast-refresh, sem erros
+- ✅ TypeScript: Zero erros de tipagem
+- ✅ Build: Executado com sucesso
+- ✅ Testes: 121 testes passaram, 4 pulados
+
+**Commit:** `3dc0039` - feat: add photos as required field for validation
+
+**Funcionalidade atualizada:**
+- Agora é obrigatório ter pelo menos uma foto para fazer o download
+- Mensagem "Preenchimento obrigatório" aparece embaixo da seção de fotos se vazia
+- Erro de fotos desaparece quando usuário adiciona nova foto
+
+## 2025-07-12 22:10:00 UTC-3
+
+### Refinamento: Remoção de texto ambíguo do placeholder ✅
+
+**Implementação:**
+- Removido texto "ou Ontem à tarde" do placeholder do campo "Data e Horário que se perdeu" em português
+- Removido texto "or Yesterday afternoon" do placeholder correspondente em inglês
+- Mantido apenas exemplo específico de data/horário para maior clareza
+- Placeholder em português: "Ex: 15/01/2024 às 14h30"
+- Placeholder em inglês: "Ex: 01/15/2024 at 2:30 PM"
+
+**Motivação:**
+- Melhor clareza e especificidade no formato esperado
+- Evita ambiguidade de termos como "ontem à tarde"
+- Mantém consistência entre as versões dos idiomas
+- Foca em exemplo objetivo de data e horário

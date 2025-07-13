@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useImperativeHandle, forwardRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,20 +12,101 @@ import { useLanguage } from '@/contexts/LanguageContext';
 interface PosterEditorProps {
   petData: PetData;
   setPetData: (data: PetData) => void;
+  onValidationChange?: (isValid: boolean) => void;
 }
 
-export const PosterEditor = ({
+// Interface para erros de validação
+interface ValidationErrors {
+  petName?: string;
+  lastSeenAddress?: string;
+  ownerName?: string;
+  ownerPhone?: string;
+  photos?: string;
+}
+
+// Interface para métodos expostos via ref
+export interface PosterEditorRef {
+  validateRequiredFields: () => boolean;
+}
+
+export const PosterEditor = forwardRef<PosterEditorRef, PosterEditorProps>(({
   petData,
-  setPetData
-}: PosterEditorProps) => {
+  setPetData,
+  onValidationChange
+}, ref) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useLanguage();
+  
+  // Estado para erros de validação
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+
+  // Função para validar um campo específico
+  const validateField = (fieldName: keyof ValidationErrors, value: string | string[]): string | undefined => {
+    if (fieldName === 'photos') {
+      // Validação específica para fotos (array)
+      if (!Array.isArray(value) || value.length === 0) {
+        return t('validation.required');
+      }
+      return undefined;
+    }
+    
+    // Validação para campos de texto
+    if (!value || (typeof value === 'string' && value.trim() === '')) {
+      return t('validation.required');
+    }
+    return undefined;
+  };
+
+  // Função para validar todos os campos obrigatórios
+  const validateRequiredFields = (): boolean => {
+    const errors: ValidationErrors = {};
+    
+    // Validar campos obrigatórios
+    errors.petName = validateField('petName', petData.petName);
+    errors.lastSeenAddress = validateField('lastSeenAddress', petData.lastSeenAddress);
+    errors.ownerName = validateField('ownerName', petData.ownerName);
+    errors.ownerPhone = validateField('ownerPhone', petData.ownerPhone);
+    errors.photos = validateField('photos', petData.photos);
+    
+    // Remover campos sem erro
+    Object.keys(errors).forEach(key => {
+      if (!errors[key as keyof ValidationErrors]) {
+        delete errors[key as keyof ValidationErrors];
+      }
+    });
+    
+    setValidationErrors(errors);
+    
+    const isValid = Object.keys(errors).length === 0;
+    onValidationChange?.(isValid);
+    
+    return isValid;
+  };
+
+  // Expor funções via ref
+  useImperativeHandle(ref, () => ({
+    validateRequiredFields
+  }));
+
+  // Função para limpar erro de um campo específico
+  const clearFieldError = (fieldName: keyof ValidationErrors) => {
+    setValidationErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[fieldName];
+      return newErrors;
+    });
+  };
 
   const handleInputChange = (field: keyof PetData, value: string) => {
     setPetData({
       ...petData,
       [field]: value
     });
+    
+    // Limpar erro do campo quando usuário digita
+    if (field in validationErrors) {
+      clearFieldError(field as keyof ValidationErrors);
+    }
   };
 
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +120,9 @@ export const PosterEditor = ({
           ...petData,
           photos: [...petData.photos, ...newPhotos]
         });
+        
+        // Limpar erro de fotos quando usuário adiciona fotos
+        clearFieldError('photos');
       }
     }
     // Reset the input value so the same file can be selected again if needed
@@ -53,6 +137,9 @@ export const PosterEditor = ({
       ...petData,
       photos: newPhotos
     });
+    
+    // Se não há mais fotos, pode aparecer erro na próxima validação
+    // Mas não vamos validar automaticamente aqui
   };
 
   const addCustomField = () => {
@@ -129,6 +216,9 @@ export const PosterEditor = ({
             onChange={handlePhotoUpload} 
             className="hidden" 
           />
+          {validationErrors.photos && (
+            <p className="text-red-500 text-xs mt-1">{validationErrors.photos}</p>
+          )}
         </div>
 
         {/* Informações Obrigatórias - Nome do Pet e Local primeiro */}
@@ -144,6 +234,9 @@ export const PosterEditor = ({
               className="mt-1 border-purple-200 focus:border-purple-400" 
               placeholder={t('editor.pet_name_placeholder')} 
             />
+            {validationErrors.petName && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.petName}</p>
+            )}
           </div>
           <div>
             <Label htmlFor="lastSeenAddress" className="text-sm font-medium text-gray-700">
@@ -156,6 +249,9 @@ export const PosterEditor = ({
               className="mt-1 border-purple-200 focus:border-purple-400" 
               placeholder={t('editor.last_seen_placeholder')} 
             />
+            {validationErrors.lastSeenAddress && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.lastSeenAddress}</p>
+            )}
           </div>
         </div>
 
@@ -171,6 +267,9 @@ export const PosterEditor = ({
               className="mt-1 border-purple-200 focus:border-purple-400" 
               placeholder={t('editor.owner_name_placeholder')} 
             />
+            {validationErrors.ownerName && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.ownerName}</p>
+            )}
           </div>
           <div>
             <Label htmlFor="ownerPhone" className="text-sm font-medium text-gray-700">
@@ -183,6 +282,9 @@ export const PosterEditor = ({
               className="mt-1 border-purple-200 focus:border-purple-400" 
               placeholder={t('editor.owner_phone_placeholder')} 
             />
+            {validationErrors.ownerPhone && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.ownerPhone}</p>
+            )}
           </div>
         </div>
 
@@ -287,4 +389,4 @@ export const PosterEditor = ({
       </CardContent>
     </Card>
   );
-};
+});
