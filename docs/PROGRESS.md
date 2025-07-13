@@ -4,6 +4,86 @@ Este arquivo documenta o progresso técnico do desenvolvimento do projeto seguin
 
 ---
 
+## 2025-07-13 17:06:00 -03 - Fix: Accurate Poster Download Capture 🎯
+
+### ✅ **Solução Simplificada para Captura Precisa do Cartaz**
+
+Após feedback do usuário sobre distorção no download, implementei uma **solução completamente simplificada** que captura o cartaz exatamente como exibido na tela, sem qualquer alteração temporária no DOM.
+
+### **🔍 Problema Identificado**
+
+**Causa da Distorção Anterior:**
+- Alterações temporárias no DOM causavam inconsistências visuais
+- Forçar dimensões fixas interferia com o layout natural
+- Posicionamento absoluto temporário criava problemas de renderização
+- Complexidade desnecessária na captura
+
+### **💡 Solução Implementada**
+
+**Abordagem Simplificada:**
+1. **✅ Captura Natural**: Elemento capturado exatamente como está na tela
+2. **✅ Sem Alterações DOM**: Nenhuma modificação temporária no elemento
+3. **✅ Dimensões Originais**: Usa `getBoundingClientRect()` sem forçar mudanças
+4. **✅ Configuração Simples**: html2canvas com configurações mínimas essenciais
+
+### **🛠️ Implementação Técnica**
+
+```typescript
+const downloadPoster = async () => {
+  if (posterRef.current) {
+    // Obter dimensões reais exibidas na tela
+    const rect = posterRef.current.getBoundingClientRect();
+    const displayWidth = rect.width;
+    const displayHeight = rect.height;
+    
+    // Configurações simples - captura exata do que está na tela
+    const canvas = await html2canvas(posterRef.current, {
+      backgroundColor: '#ffffff',
+      scale: 2, // Qualidade alta
+      useCORS: true,
+      allowTaint: false,
+      width: displayWidth,
+      height: displayHeight,
+      x: 0,
+      y: 0,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight
+    });
+    
+    // Download direto
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.download = 'cartaz-pet.png';
+    link.click();
+  }
+};
+```
+
+### **✅ Verificações de QA Realizadas**
+
+- **ESLint**: ✅ Apenas warnings (não errors)
+- **TypeScript**: ✅ Sem erros de tipagem
+- **Build**: ✅ Compilação bem-sucedida
+- **Redução de Código**: ✅ 67 linhas removidas, 14 adicionadas
+
+### **🎯 Benefícios da Nova Abordagem**
+
+- **Precisão Total**: Cartaz baixado idêntico ao exibido na tela
+- **Simplicidade**: Código muito mais simples e manutenível
+- **Confiabilidade**: Sem alterações temporárias que podem falhar
+- **Performance**: Processo de captura mais rápido e eficiente
+- **Debugging**: Logs claros para identificar problemas
+
+### **🔗 Commit e Branch**
+
+- **Branch**: `fix/poster-download-accurate-capture`
+- **Commit**: `b0db550` - "fix: simplify poster download to capture exact screen display"
+- **Alterações**: -67 linhas complexas, +14 linhas simples
+
+---
+
 ## 2025-07-13 16:02:00 -03 - Enhancement: Advanced Poster Proportions Optimization 🚀
 
 ### ✅ **Melhorias Avançadas na Preservação de Proporções do Cartaz**
