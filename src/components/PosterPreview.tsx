@@ -26,15 +26,6 @@ export const PosterPreview = ({
     }
     
     if (posterRef.current) {
-      // Salvar estilos originais
-      const originalStyle = {
-        width: posterRef.current.style.width,
-        maxWidth: posterRef.current.style.maxWidth,
-        height: posterRef.current.style.height,
-        position: posterRef.current.style.position,
-        zIndex: posterRef.current.style.zIndex
-      };
-      
       try {
         // Pequeno delay para garantir que o DOM esteja completamente renderizado
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -50,68 +41,31 @@ export const PosterPreview = ({
           throw new Error('Dimensões inválidas para captura');
         }
         
-        console.log('Dimensões do display:', { displayWidth, displayHeight });
+        console.log('Capturando poster com dimensões exatas da tela:', { displayWidth, displayHeight });
         
-        // Definir dimensões fixas para captura (baseado no aspect ratio atual)
-        const aspectRatio = displayWidth / displayHeight;
-        let captureWidth = displayWidth;
-        let captureHeight = displayHeight;
-        
-        // Garantir dimensões mínimas para qualidade
-        const minWidth = 800;
-        if (captureWidth < minWidth) {
-          captureWidth = minWidth;
-          captureHeight = minWidth / aspectRatio;
-        }
-        
-        console.log('Dimensões de captura:', { captureWidth, captureHeight, aspectRatio });
-        
-        // Forçar dimensões fixas temporariamente
-        posterRef.current.style.width = `${captureWidth}px`;
-        posterRef.current.style.height = `${captureHeight}px`;
-        posterRef.current.style.maxWidth = `${captureWidth}px`;
-        posterRef.current.style.position = 'absolute';
-        posterRef.current.style.zIndex = '-9999';
-        
-        // Aguardar reflow
-        await new Promise(resolve => setTimeout(resolve, 200));
-        
-        // Obter novas dimensões após ajuste
-        const adjustedRect = posterRef.current.getBoundingClientRect();
-        console.log('Dimensões ajustadas:', { 
-          width: adjustedRect.width, 
-          height: adjustedRect.height 
-        });
-        
-        // Configurações otimizadas para html2canvas
+        // Configurações simples para html2canvas - captura exata do que está na tela
         const canvas = await html2canvas(posterRef.current, {
           backgroundColor: '#ffffff',
           scale: 2, // Qualidade alta (2x resolution)
           useCORS: true,
           allowTaint: false,
-          removeContainer: true,
-          width: captureWidth,
-          height: captureHeight,
-          windowWidth: captureWidth,
-          windowHeight: captureHeight,
-          scrollX: 0,
-          scrollY: 0,
+          // Não forçar dimensões - usar as dimensões naturais do elemento
+          width: displayWidth,
+          height: displayHeight,
+          // Posicionamento exato
           x: 0,
           y: 0,
-          // Forçar dimensões específicas
-          onclone: (clonedDoc) => {
-            const clonedElement = clonedDoc.querySelector('[data-poster-ref]') as HTMLElement;
-            if (clonedElement) {
-              clonedElement.style.width = `${captureWidth}px`;
-              clonedElement.style.height = `${captureHeight}px`;
-            }
-          }
+          scrollX: 0,
+          scrollY: 0,
+          // Manter as proporções da janela
+          windowWidth: window.innerWidth,
+          windowHeight: window.innerHeight
         });
         
-        console.log('Canvas final gerado:', { 
+        console.log('Canvas gerado com sucesso:', { 
           canvasWidth: canvas.width, 
           canvasHeight: canvas.height,
-          finalAspectRatio: canvas.width / canvas.height
+          aspectRatio: canvas.width / canvas.height
         });
         
         // Criar link de download
@@ -124,17 +78,10 @@ export const PosterPreview = ({
         link.click();
         document.body.removeChild(link);
         
-        console.log('Download do cartaz iniciado com sucesso');
+        console.log('Download do cartaz concluído com sucesso');
       } catch (error) {
         console.error('Erro ao gerar download do cartaz:', error);
         // Fallback silencioso - usuário pode tentar novamente
-      } finally {
-        // Restaurar estilos originais
-        posterRef.current.style.width = originalStyle.width;
-        posterRef.current.style.maxWidth = originalStyle.maxWidth;
-        posterRef.current.style.height = originalStyle.height;
-        posterRef.current.style.position = originalStyle.position;
-        posterRef.current.style.zIndex = originalStyle.zIndex;
       }
     }
   };
