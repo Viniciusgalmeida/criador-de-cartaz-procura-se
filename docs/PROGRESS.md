@@ -1493,3 +1493,20 @@ Task Master indicates next available task: **Subtask 15.4** - "Test Language Con
 - Agora é obrigatório ter pelo menos uma foto para fazer o download
 - Mensagem "Preenchimento obrigatório" aparece embaixo da seção de fotos se vazia
 - Erro de fotos desaparece quando usuário adiciona nova foto
+
+## 2025-07-12 22:10:00 UTC-3
+
+### Refinamento: Remoção de texto ambíguo do placeholder ✅
+
+**Implementação:**
+- Removido texto "ou Ontem à tarde" do placeholder do campo "Data e Horário que se perdeu" em português
+- Removido texto "or Yesterday afternoon" do placeholder correspondente em inglês
+- Mantido apenas exemplo específico de data/horário para maior clareza
+- Placeholder em português: "Ex: 15/01/2024 às 14h30"
+- Placeholder em inglês: "Ex: 01/15/2024 at 2:30 PM"
+
+**Motivação:**
+- Melhor clareza e especificidade no formato esperado
+- Evita ambiguidade de termos como "ontem à tarde"
+- Mantém consistência entre as versões dos idiomas
+- Foca em exemplo objetivo de data e horário
