@@ -267,7 +267,8 @@ export const PosterPreview = ({
 
             {/* Footer with site link */}
             <div className="mt-4 text-center">
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-gray-400 flex items-center justify-center gap-1">
+                <img src="/logo_gerador_cartaz.svg" alt="Logo" className="w-3 h-3" />
                 Feito no Criador de Cartaz Procura-se - <a href="https://criador-de-cartaz-procura-se.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">https://criador-de-cartaz-procura-se.vercel.app</a>
               </p>
             </div>
