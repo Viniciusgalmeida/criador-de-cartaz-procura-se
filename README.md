@@ -1,73 +1,164 @@
-# Welcome to your Lovable project
+# 🐕 Gerador de Cartaz Procura-se
 
-## Project info
+Uma aplicação web moderna para criar cartazes de animais perdidos de forma rápida e profissional. Desenvolvida com React, TypeScript e uma interface intuitiva.
 
-**URL**: https://lovable.dev/projects/d346cb43-1ab5-4928-93bc-bb85eaf764a8
+![Logo do Gerador de Cartaz](public/logo_gerador_cartaz_1080.png)
 
-## How can I edit this code?
+## ✨ Características
 
-There are several ways of editing your application.
+- 🎨 **Editor Visual Intuitivo**: Interface amigável para criar cartazes profissionais
+- 📱 **Design Responsivo**: Funciona perfeitamente em desktop e mobile
+- 🖼️ **Upload de Fotos**: Suporte para múltiplas fotos do animal
+- 📝 **Campos Personalizáveis**: Adicione informações específicas do seu pet
+- 🎯 **Preview em Tempo Real**: Veja o resultado final enquanto edita
+- 📤 **Exportação de Imagem**: Salve o cartaz como imagem para compartilhar
+- 🌍 **Suporte Multi-idioma**: Interface disponível em português e inglês
 
-**Use Lovable**
+## 🚀 Tecnologias Utilizadas
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d346cb43-1ab5-4928-93bc-bb85eaf764a8) and start prompting.
+- **React 18** - Framework principal
+- **TypeScript** - Tipagem estática para maior confiabilidade
+- **Vite** - Build tool rápida e moderna
+- **Tailwind CSS** - Framework CSS utilitário
+- **shadcn/ui** - Componentes UI de alta qualidade
+- **React Hook Form** - Gerenciamento de formulários
+- **html2canvas** - Exportação de imagens
+- **Vitest** - Framework de testes
+- **ESLint** - Linting de código
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📦 Instalação e Uso
 
-**Use your preferred IDE**
+### Pré-requisitos
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js 18+ 
+- npm ou yarn
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Passos para Instalação
 
-Follow these steps:
+```bash
+# 1. Clone o repositório
+git clone <URL_DO_REPOSITORIO>
+cd criador-de-cartaz-procura-se
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# 2. Instale as dependências
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 3. Inicie o servidor de desenvolvimento
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+A aplicação estará disponível em `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Scripts Disponíveis
 
-**Use GitHub Codespaces**
+```bash
+npm run dev          # Servidor de desenvolvimento
+npm run build        # Build de produção
+npm run preview      # Preview do build
+npm run lint         # Verificação ESLint
+npm run typecheck    # Verificação TypeScript
+npm run test         # Executar testes
+npm run test:run     # Executar todos os testes
+npm run test:ui      # Interface visual dos testes
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🎯 Como Usar
 
-## What technologies are used for this project?
+1. **Acesse a aplicação** no seu navegador
+2. **Preencha as informações** do animal perdido:
+   - Nome do pet
+   - Descrição física
+   - Último local visto
+   - Data/hora que se perdeu
+   - Nome e telefone do proprietário
+   - Acessórios (coleira, roupinha, etc.)
+   - Recompensa (opcional)
+3. **Adicione fotos** do animal (recomendado 2-3 fotos)
+4. **Personalize campos adicionais** se necessário
+5. **Visualize o preview** em tempo real
+6. **Exporte o cartaz** como imagem para compartilhar
 
-This project is built with:
+## 📁 Estrutura do Projeto
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+src/
+├── components/          # Componentes React
+│   ├── ui/             # Componentes UI base (shadcn/ui)
+│   ├── PosterEditor/   # Editor de cartaz
+│   ├── PosterPreview/  # Preview do cartaz
+│   └── WelcomePopup/   # Popup de boas-vindas
+├── contexts/           # Contextos React
+├── hooks/              # Hooks customizados
+├── lib/                # Utilitários e configurações
+├── pages/              # Páginas da aplicação
+├── types/              # Definições de tipos TypeScript
+└── test/               # Configurações de teste
+```
 
-## How can I deploy this project?
+## 🧪 Testes
 
-Simply open [Lovable](https://lovable.dev/projects/d346cb43-1ab5-4928-93bc-bb85eaf764a8) and click on Share -> Publish.
+O projeto utiliza Vitest para testes unitários e React Testing Library para testes de componentes.
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+# Executar todos os testes
+npm run test:run
 
-Yes, you can!
+# Executar testes em modo watch
+npm run test
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+# Interface visual dos testes
+npm run test:ui
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🔧 Desenvolvimento
+
+### Padrões de Código
+
+- **TypeScript Strict**: Código segue TypeScript strict mode
+- **ESLint**: Configurado com regras específicas do projeto
+- **Conventional Commits**: Padrão para mensagens de commit
+- **Componentes Funcionais**: Uso de hooks React
+- **Responsividade**: Design mobile-first
+
+### Estrutura de Commits
+
+```
+feat: adiciona funcionalidade de exportação
+fix: corrige bug no upload de imagens
+test: adiciona testes para componente PosterEditor
+docs: atualiza documentação
+refactor: melhora estrutura dos componentes
+```
+
+## 🌐 Deploy
+
+O projeto está configurado para deploy na Vercel com as seguintes configurações:
+
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Node.js Version**: 18.x
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Por favor:
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📞 Suporte
+
+Se você encontrar algum problema ou tiver sugestões, por favor:
+
+- Abra uma [issue](https://github.com/seu-usuario/criador-de-cartaz-procura-se/issues)
+- Entre em contato através do email: [seu-email@exemplo.com]
+
+---
+
+**Desenvolvido com ❤️ para ajudar a encontrar pets perdidos**

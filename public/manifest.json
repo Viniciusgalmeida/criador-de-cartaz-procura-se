@@ -1,0 +1,22 @@
+{
+  "name": "Gerador de Cartaz Procura-se",
+  "short_name": "Cartaz Procura-se",
+  "description": "Crie cartazes de procura-se para animais perdidos de forma rápida e profissional",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/logo_gerador_cartaz.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo_gerador_cartaz_540.png",
+      "sizes": "540x540",
+      "type": "image/png"
+    }
+  ]
+} 
