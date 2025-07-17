@@ -1,39 +1,40 @@
-# 🐕 Gerador de Cartaz Procura-se
 
-Uma aplicação web moderna para criar cartazes de animais perdidos de forma rápida e profissional. Desenvolvida com React, TypeScript e uma interface intuitiva.
+# 🐕 Lost Pet Poster Generator
 
-![Logo do Gerador de Cartaz](public/logo_gerador_cartaz_1080.png)
+A modern web application to create lost pet posters quickly and professionally. Built with React, TypeScript and an intuitive interface.
 
-## ✨ Características
+![Lost Pet Poster Generator Logo](public/logo_gerador_cartaz_1080.png)
 
-- 🎨 **Editor Visual Intuitivo**: Interface amigável para criar cartazes profissionais
-- 📱 **Design Responsivo**: Funciona perfeitamente em desktop e mobile
-- 🖼️ **Upload de Fotos**: Suporte para múltiplas fotos do animal
-- 📝 **Campos Personalizáveis**: Adicione informações específicas do seu pet
-- 🎯 **Preview em Tempo Real**: Veja o resultado final enquanto edita
-- 📤 **Exportação de Imagem**: Salve o cartaz como imagem para compartilhar
-- 🌍 **Suporte Multi-idioma**: Interface disponível em português e inglês
+## ✨ Features
 
-## 🚀 Tecnologias Utilizadas
+- 🎨 **Intuitive Visual Editor**: User-friendly interface to create professional posters
+- 📱 **Responsive Design**: Works perfectly on desktop and mobile
+- 🖼️ **Photo Upload**: Support for multiple pet photos
+- 📝 **Customizable Fields**: Add specific information about your pet
+- 🎯 **Real-time Preview**: See the final result while editing
+- 📤 **Image Export**: Save the poster as an image to share
+- 🌍 **Multi-language Support**: Interface available in Portuguese and English
 
-- **React 18** - Framework principal
-- **TypeScript** - Tipagem estática para maior confiabilidade
-- **Vite** - Build tool rápida e moderna
-- **Tailwind CSS** - Framework CSS utilitário
-- **shadcn/ui** - Componentes UI de alta qualidade
-- **React Hook Form** - Gerenciamento de formulários
-- **html2canvas** - Exportação de imagens
-- **Vitest** - Framework de testes
-- **ESLint** - Linting de código
+## 🚀 Technologies Used
 
-## 📦 Instalação e Uso
+- **React 18** - Main framework
+- **TypeScript** - Static typing for greater reliability
+- **Vite** - Fast and modern build tool
+- **Tailwind CSS** - Utility CSS framework
+- **shadcn/ui** - High-quality UI components
+- **React Hook Form** - Form management
+- **html2canvas** - Image export
+- **Vitest** - Testing framework
+- **ESLint** - Code linting
 
-### Pré-requisitos
+## 📦 Installation and Usage
+
+### Prerequisites
 
 - Node.js 18+ 
-- npm ou yarn
+- npm or yarn
 
-### Passos para Instalação
+### Installation Steps
 
 ```bash
 # 1. Clone o repositório
@@ -47,42 +48,43 @@ npm install
 npm run dev
 ```
 
-A aplicação estará disponível em `http://localhost:5173`
+The application will be available at [Lost Pet Poster Generator](https://criador-de-cartaz-procura-se.vercel.app/)
 
-### Scripts Disponíveis
+### Available Scripts
 
 ```bash
-npm run dev          # Servidor de desenvolvimento
-npm run build        # Build de produção
-npm run preview      # Preview do build
-npm run lint         # Verificação ESLint
-npm run typecheck    # Verificação TypeScript
-npm run test         # Executar testes
-npm run test:run     # Executar todos os testes
-npm run test:ui      # Interface visual dos testes
+npm run dev          # Development server
+npm run build        # Production build
+npm run preview      # Build preview
+npm run lint         # ESLint verification
+npm run typecheck    # TypeScript verification
+npm run test         # Run tests
+npm run test:run     # Run all tests
+npm run test:ui      # Visual test interface
 ```
 
-## 🎯 Como Usar
+## 🎯 How to Use
 
-1. **Acesse a aplicação** no seu navegador
-2. **Preencha as informações** do animal perdido:
-   - Nome do pet
-   - Descrição física
-   - Último local visto
-   - Data/hora que se perdeu
-   - Nome e telefone do proprietário
-   - Acessórios (coleira, roupinha, etc.)
-   - Recompensa (opcional)
-3. **Adicione fotos** do animal (recomendado 2-3 fotos)
-4. **Personalize campos adicionais** se necessário
-5. **Visualize o preview** em tempo real
-6. **Exporte o cartaz** como imagem para compartilhar
+1. **Access the application** in your browser
+2. **Fill in the lost pet information**:
+  - Pet name
+  - Physical description
+  - Last seen location
+  - Date/time when lost
+  - Owner's name and phone
+  - Accessories (collar, clothes, etc.)
+  - Reward (optional)
+3. **Add photos** of the animal (recommended 2-3 photos)
+4. **Customize additional fields** if needed
+5. **View the preview** in real-time
+6. **Export the poster** as an image to share
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
+
 
 ```
 src/
-├── components/          # Componentes React
+├── components/         # Componentes React
 │   ├── ui/             # Componentes UI base (shadcn/ui)
 │   ├── PosterEditor/   # Editor de cartaz
 │   ├── PosterPreview/  # Preview do cartaz
@@ -95,9 +97,9 @@ src/
 └── test/               # Configurações de teste
 ```
 
-## 🧪 Testes
+## 🧪 Testing
 
-O projeto utiliza Vitest para testes unitários e React Testing Library para testes de componentes.
+The project uses Vitest for unit testing and React Testing Library for component testing.
 
 ```bash
 # Executar todos os testes
@@ -110,17 +112,17 @@ npm run test
 npm run test:ui
 ```
 
-## 🔧 Desenvolvimento
+## 🔧 Development
 
-### Padrões de Código
+### Code Standards
 
-- **TypeScript Strict**: Código segue TypeScript strict mode
-- **ESLint**: Configurado com regras específicas do projeto
-- **Conventional Commits**: Padrão para mensagens de commit
-- **Componentes Funcionais**: Uso de hooks React
-- **Responsividade**: Design mobile-first
+- **TypeScript Strict**: Code follows TypeScript strict mode
+- **ESLint**: Configured with project-specific rules
+- **Conventional Commits**: Standard for commit messages
+- **Functional Components**: Use of React hooks
+- **Responsiveness**: Mobile-first design
 
-### Estrutura de Commits
+### Commit Structure
 
 ```
 feat: adiciona funcionalidade de exportação
@@ -132,33 +134,26 @@ refactor: melhora estrutura dos componentes
 
 ## 🌐 Deploy
 
-O projeto está configurado para deploy na Vercel com as seguintes configurações:
+The project is configured for deployment on Vercel with the following settings:
 
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist`
 - **Node.js Version**: 18.x
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
 
-## 🤝 Contribuição
+## 🤝 Contributing
 
-Contribuições são bem-vindas! Por favor:
+Contributions are welcome! Please:
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📞 Suporte
-
-Se você encontrar algum problema ou tiver sugestões, por favor:
-
-- Abra uma [issue](https://github.com/seu-usuario/criador-de-cartaz-procura-se/issues)
-- Entre em contato através do email: [seu-email@exemplo.com]
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
-**Desenvolvido com ❤️ para ajudar a encontrar pets perdidos**
+**Developed with ❤️ to help find lost pets**
